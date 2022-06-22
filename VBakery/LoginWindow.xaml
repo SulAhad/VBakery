@@ -1,0 +1,81 @@
+﻿<Window x:Class="VBakery.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VBakery"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="350" Width="400" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Rectangle 
+            Grid.Column="0"
+            Grid.Row="0"
+            Grid.ColumnSpan="5"
+            Grid.RowSpan="4">
+            <Rectangle.Fill>
+                <LinearGradientBrush
+                    >
+                    <GradientStop Color="Black" Offset="0"></GradientStop>
+                    <GradientStop Color="#4e4e4e" Offset="1"></GradientStop>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <StackPanel>
+            <Label
+                Foreground="White"
+                Content="Для входа введите Логин и Пароль"
+                FontSize="18"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+
+            </Label>
+            <Label
+                Foreground="White"
+                Content="Введите логин"
+                FontSize="15"
+                HorizontalAlignment="Center"
+                Margin="0 30 0 0"
+                >
+            </Label>
+            <TextBox
+                x:Name="Login"
+                Width="200"
+                Height="30"
+                Margin="0 0 0 0"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                FontSize="20"
+                >
+            </TextBox>
+            <Label
+                Foreground="White"
+                Content="Введите пароль"
+                FontSize="15"
+                HorizontalAlignment="Center"
+                Margin="0 10 0 0">
+            </Label>
+            <PasswordBox
+                x:Name="Password"
+                Width="200"
+                Height="30"
+                Margin="0 0 0 0"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                FontSize="20"
+                >
+            </PasswordBox>
+            <Button
+                Background="LightCoral"
+                Foreground="Azure"
+                Click="Enter"
+                Content="Войти"
+                FontSize="25"
+                FontWeight="Bold"
+                Width="250"
+                Height="40"
+                Margin="0 30 0 0"
+                >
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

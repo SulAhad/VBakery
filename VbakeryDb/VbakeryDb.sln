@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "VbakeryDb", "VbakeryDb\VbakeryDb.sqlproj", "{2F5CD3AD-E555-4BB8-80BC-A6F7E0B99B77}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F5CD3AD-E555-4BB8-80BC-A6F7E0B99B77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F5CD3AD-E555-4BB8-80BC-A6F7E0B99B77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F5CD3AD-E555-4BB8-80BC-A6F7E0B99B77}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2F5CD3AD-E555-4BB8-80BC-A6F7E0B99B77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F5CD3AD-E555-4BB8-80BC-A6F7E0B99B77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F5CD3AD-E555-4BB8-80BC-A6F7E0B99B77}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64E5B828-4C23-4364-B919-AB6F1AC3D34C}
+	EndGlobalSection
+EndGlobal
