@@ -1,22 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
 namespace VBakery
 {
-    /// <summary>
-    /// Логика взаимодействия для LoginWindow.xaml
-    /// </summary>
     public partial class LoginWindow : Window
     {
         public LoginWindow()
@@ -28,12 +15,12 @@ namespace VBakery
         {
             if (Login.Text == "кассир" && Password.Password == "100")
             {
+                PaymasterSales paymasterSales = new();
                 Login.ToolTip = "";
                 Password.ToolTip = "";
                 Login.Background = Brushes.Transparent;
-                Paymast paymaster = new();
-                paymaster.Show();
-                Close();
+                paymasterSales.Show();
+                this.Close();
             }
             if (Login.Text == "повар" && Password.Password == "100")
             {
@@ -42,7 +29,7 @@ namespace VBakery
                 Login.Background = Brushes.Transparent;
                 Kitchener kitchener = new();
                 kitchener.Show();
-                Close();
+                this.Close();
             }
             if (Login.Text == "доставщик" && Password.Password == "100")
             {
@@ -51,7 +38,7 @@ namespace VBakery
                 Login.Background = Brushes.Transparent;
                 Deliveryman deliveryman = new();
                 deliveryman.Show();
-                Close();
+                this.Close();
             }
             if (Login.Text == "директор" && Password.Password == "100")
             {
@@ -60,7 +47,7 @@ namespace VBakery
                 Login.Background = Brushes.Transparent;
                 Supervisor supervisor = new();
                 supervisor.Show();
-                Close();
+                this.Close();
             }
             else
             {
@@ -87,6 +74,12 @@ namespace VBakery
         private void Enter(object sender, RoutedEventArgs e)
         {
             CheckUser();
+        }
+        private void MouseDownRegistration(object sender, MouseButtonEventArgs e)
+        {
+            LoginWindowRegistration loginWindowRegistration = new();
+            loginWindowRegistration.Show();
+            this.Close();
         }
     }
 }

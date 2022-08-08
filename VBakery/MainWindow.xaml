@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1024" WindowState="Maximized">
+        Title="MainWindow" Height="768" Width="1024" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" ></ColumnDefinition>
@@ -37,7 +37,7 @@
             Grid.Row="0"
             Grid.ColumnSpan="3"
             Foreground="White"
-            Content="Привет! Давай начнем работу!"
+            Content="Приветствую. Давай начнем работу."
             x:Name="chek_user" 
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"

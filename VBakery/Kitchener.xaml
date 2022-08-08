@@ -5,32 +5,599 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VBakery"
         mc:Ignorable="d"
-        Title="Kitchener" Height="768" Width="1024" WindowState="Maximized" WindowStartupLocation="CenterScreen">
+        Title="Kitchener" Height="768" Width="1024" WindowStartupLocation="Manual" WindowStyle="None" WindowState="Maximized">
     <Grid>
-        <StackPanel>
-            <Label
-                Background="AliceBlue"
-                Content="В ОЖИДАНИИ ГОТОВКИ"
-                FontWeight="Bold"
-                FontSize="20"
-                HorizontalContentAlignment="Center"
-                Width="auto"
-                Height="40"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Top"
-                Foreground="Gray"
-                BorderThickness="1"
-                BorderBrush="Black"
-                />
-            <DataGrid  x:Name="dgTodoList" ItemsSource="{Binding}" FontSize="16" FontWeight="Bold" AutoGenerateColumns="True">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Path = id}"  IsReadOnly="True" Header="№" Width="180"/>
-                    <DataGridTextColumn Binding="{Binding Path = KitchenWeight}"  IsReadOnly="True" Header="Начинка" Width="180"/>
-                    <DataGridTextColumn Binding="{Binding Path = KitchenVisual}"  IsReadOnly="True" Header="Оформление" Width="180"/>
-                    <DataGridTextColumn Binding="{Binding Path = KitchenComm}"  IsReadOnly="True" Header="Комментарий" Width="180"/>
-                    <DataGridCheckBoxColumn Binding="{Binding Path = KitchenStatus}" IsReadOnly="False" Header="Статус" Width="80"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Rectangle 
+            Grid.Column="0"
+            Grid.Row="0"
+            Grid.ColumnSpan="10">
+            <Rectangle.Fill>
+                <LinearGradientBrush
+                    >
+                    <GradientStop Color="Indigo" Offset="0"></GradientStop>
+                    <GradientStop Color="#4e4e4e" Offset="1"></GradientStop>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        
+        <Image
+            Margin="1 1 1 1"
+            Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\image.jfif"
+            Grid.Column="0"
+            Grid.Row="0"
+            HorizontalAlignment="Left"
+            ></Image>
+        <Button
+            Click="ButtonClickClose"
+            BorderBrush="Transparent"
+            Grid.Column="9"
+            Grid.Row="0"
+            Background="Transparent">
+            <Image
+            Width="15"
+            Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\close.png"
+            >
+            </Image>
+        </Button>
+        <Button
+            Click="ButtonClickPlus"
+            BorderBrush="Transparent"
+            Grid.Column="8"
+            Grid.Row="0"
+            Background="Transparent">
+            <Image
+            Width="20"
+            Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\plus.png"
+            >
+            </Image>
+        </Button>
+        <Button
+            Click="ButtonClickMinus"
+            BorderBrush="Transparent"
+            Grid.Column="7"
+            Grid.Row="0"
+            Background="Transparent">
+            <Image
+            Width="20"
+            Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\minus.png"
+            >
+            </Image>
+        </Button>
+        <Label
+            Margin="30 0 0 0"
+            Grid.Column="0"
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Content="Вкусляндия"
+            Foreground="Wheat"
+            FontSize="20"
+            FontFamily="Monotype Corsiva"
+            >
+        </Label>
+        <TabControl
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="10"
+            Grid.RowSpan="9"
+            FontFamily="Segoe UI">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock
+                        Text="Заказы"
+                        Width="100"
+                        FontSize="15"
+                        Height="20"
+                        FontWeight="Normal"
+                        FontFamily="Segoe UI"
+                        >
+                    </TextBlock>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="20"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Rectangle 
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Grid.ColumnSpan="10">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush>
+                                    <GradientStop Color="AliceBlue" Offset="0"></GradientStop>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Border
+                            Grid.Row="5"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="9"
+                            BorderBrush="LightGray"
+                            BorderThickness="1 1 1 1"
+                            >
+                            <Label
+                                FontFamily="Segoe UI"
+                                x:Name="DownTrayKitchenerOrders"
+                                Foreground="Black"
+                                Background="AliceBlue"
+                                FontSize="12"
+                                Margin="1 1 1 1"
+                                Padding="1 1 1 1"
+                            
+                            ></Label>
+                        </Border>
+                        <Image x:Name="imageHome" Grid.Column="0" Grid.Row="0" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\dom.png" Width="20" MouseDown="MouseDownGotoHome"></Image>
+                        <Image x:Name="imageRefresh" Grid.Column="1" Grid.Row="0" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\refresh.png" Width="20" MouseDown="MouseDownRefresh"></Image>
+                        <Image x:Name="imageRecepts" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\recepts.png" Width="20" Grid.Row="0" Grid.Column="2"  Margin="0 1 0 1" MouseDown="OpenRecepts"></Image>
+                        <Image x:Name="imageChat" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\chat.png" Width="20" Grid.Row="0" Grid.Column="3"  Margin="0 1 0 1" MouseDown="OpenChat"></Image>
+                        <ScrollViewer
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="8"
+                            Grid.RowSpan="4"
+                            >
+                            <DataGrid 
+                                AlternatingRowBackground="White"
+                                RowBackground="AliceBlue"
+                                GridLinesVisibility="Horizontal"
+                                x:Name="UserList" 
+                                FontSize="16" 
+                                FontWeight="Normal" 
+                                AutoGenerateColumns="False" 
+                                FontFamily="Segoe UI"
+                                >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn
+                                        x:Name="id"
+                                        FontWeight="Light"
+                                        Binding="{Binding Id}"  
+                                        IsReadOnly="True" 
+                                        Header="№" 
+                                        Width="50"
+                                        FontFamily="Segoe UI"/>
+                                    <DataGridTemplateColumn 
+                                        x:Name="name"
+                                        IsReadOnly="True" 
+                                        Header="Имя"
+                                        Width="100">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock 
+                                                    FontFamily="Segoe UI"
+                                                    FontWeight="Light"
+                                                    Text="{Binding name}"  
+                                                    TextWrapping="Wrap">
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn 
+                                        x:Name="mobile" 
+                                        Binding="{Binding mobile}" 
+                                        IsReadOnly="True" 
+                                        FontWeight="Light"
+                                        Header="Телефон" 
+                                        Width="160" 
+                                        FontFamily="Segoe UI"/>
+                                    <DataGridTemplateColumn 
+                                        x:Name="weight" 
+                                        IsReadOnly="True" 
+                                        Header="Вес" 
+                                        Width="100">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock 
+                                                    FontFamily="Segoe UI"
+                                                    FontWeight="Light"
+                                                    Text="{Binding weight}"  
+                                                    TextWrapping="Wrap">
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn 
+                                        x:Name="nameProduct" 
+                                        IsReadOnly="True" 
+                                        Header="Название продукта" 
+                                        Width="200">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock 
+                                                    FontFamily="Segoe UI"
+                                                    FontWeight="Light"
+                                                    Text="{Binding nameProduct}"  
+                                                    TextWrapping="Wrap">
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn 
+                                        x:Name="comm" 
+                                        IsReadOnly="True" 
+                                        Header="Комментарии" 
+                                        Width="300">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock 
+                                                    FontFamily="Segoe UI"
+                                                    FontWeight="Light"
+                                                    Text="{Binding comm}"  
+                                                    TextWrapping="Wrap">
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn 
+                                        x:Name="dateTime"
+                                        IsReadOnly="True" 
+                                        Header="Дата заявки"
+                                        Width="100">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock 
+                                                    FontFamily="Segoe UI"
+                                                    FontWeight="Light"
+                                                    Text="{Binding dateTime}"  
+                                                    TextWrapping="Wrap">
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </ScrollViewer>
+                        <StackPanel
+                            Background="AliceBlue"
+                            Grid.Row="1"
+                            Grid.Column="8"
+                            Grid.RowSpan="4">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                    Text="Введите номер для удаления"
+                                    VerticalAlignment="Top"
+                                    Margin="1 40 1 10"
+                                    FontFamily="Segoe UI">
+                            </TextBlock>
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                Orientation="Horizontal">
+                                <TextBox
+                                    IsReadOnly="True"
+                                    x:Name="DeleteAndGoToDelivery"
+                                    Grid.Row="4"
+                                    Grid.Column="5"
+                                    Width="50"
+                                    Height="20"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    Margin="1 10 1 1"
+                                    FontFamily="Segoe UI">
+
+                                </TextBox>
+                                <ScrollBar 
+                                Value="1"
+                                Minimum="1" 
+                                Maximum="9999"
+                                SmallChange="1"
+                                ValueChanged="ScrollBar_ValueChanged"
+                                x:Name="numeric" RenderTransformOrigin="0.5,0.5"
+                                >
+                                    <ScrollBar.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="180.546"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </ScrollBar.RenderTransform>
+                                </ScrollBar>
+
+                                
+                            </StackPanel>
+                            <TextBlock
+                                x:Name="tb"
+                                    FontSize="12"
+                                Margin="2 20 2 2"></TextBlock>
+
+
+                            <Border
+                            Grid.Column="5"
+                            Grid.Row="4"
+                            Height="20"
+                            Width="100"
+                            Margin="1 20 1 1"
+                            >
+                                <Border.Effect>
+                                    <DropShadowEffect Color="LightGray"/>
+                                </Border.Effect>
+                                <Button
+                                Click="ButtonDeleteAndGoToDelivery"
+                                Content="Удалить"
+                                FontFamily="Segoe UI"></Button>
+                            </Border>
+
+                        </StackPanel>
+
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Background="LightGray">
+                <TabItem.Header>
+                    <TextBlock
+                        Text="Редактирование заказа"
+                        Width="auto"
+                        FontSize="15"
+                        Height="20"
+                        FontWeight="Normal"
+                        FontFamily="Segoe UI"
+                        >
+                    </TextBlock>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                            <ColumnDefinition Width="400"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="30"></RowDefinition>
+                            <RowDefinition Height="120"></RowDefinition>
+                            <RowDefinition Height="120"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="20"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Rectangle 
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Grid.ColumnSpan="5"
+                            Grid.RowSpan="8">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush>
+                                    <GradientStop Color="LightGray" Offset="0"></GradientStop>
+                                    <GradientStop Color="White" Offset="1"></GradientStop>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Border
+                            Grid.Row="6"
+                            Grid.Column="3"
+                            Background="GhostWhite" 
+                            BorderBrush="Silver" 
+                            BorderThickness="1" 
+                            Height="30"
+                            Width="130"
+                            VerticalAlignment="Bottom"
+                            >
+                            <Button
+                                Click="ButtonClickAdd"
+                                Content="Добавить" 
+                                FontFamily="Segoe UI"
+                            ></Button>
+                        </Border>
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Content="Введите имя"
+                            FontSize="16"
+                            Background="AliceBlue"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center" 
+                            FontFamily="Segoe UI" 
+                            Margin="1 1 1 1"
+                            Padding="1 1 1 1"
+                            ></Label>
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            x:Name="AddName"
+                            FontSize="16" FontFamily="Segoe UI"
+                            VerticalContentAlignment="Center" 
+                            Margin="1 1 1 1"
+                            Padding="1 1 1 1"
+                            ></TextBox>
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Content="Введите телефон"
+                            FontSize="16"
+                            Width="auto"
+                            Background="AliceBlue"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center" 
+                            FontFamily="Segoe UI" 
+                            Margin="1 1 1 1"
+                            Padding="1 1 1 1"
+                            ></Label>
+                        <TextBox
+                            Grid.Column="2"
+                            Grid.Row="2"
+                            x:Name="AddMobile"
+                            FontSize="16" 
+                            FontFamily="Segoe UI" 
+                            VerticalContentAlignment="Center" 
+                            Margin="1 1 1 1"
+                            Padding="1 1 1 1"
+                            ></TextBox>
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Content="Введите вес"
+                            FontSize="16"
+                            Width="auto"
+                            Background="AliceBlue"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center" 
+                            FontFamily="Segoe UI" 
+                            Margin="1 1 1 1"
+                            Padding="1 1 1 1"
+                            ></Label>
+                        <TextBox
+                            Grid.Column="2"
+                            Grid.Row="3"
+                            x:Name="AddWeight"
+                            FontSize="16" 
+                            FontFamily="Segoe UI" 
+                            VerticalContentAlignment="Center" 
+                            Margin="1 1 1 1"
+                            Padding="1 1 1 1"
+                            ></TextBox>
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Content="Название продукта"
+                            FontSize="16"
+                            Width="auto"
+                            Background="AliceBlue"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center" 
+                            FontFamily="Segoe UI" 
+                            Margin="1 1 1 1"
+                            Padding="1 1 1 1"
+                            ></Label>
+                        <TextBox
+                            Grid.Column="2"
+                            Grid.Row="4"
+                            x:Name="AddnameProduct"
+                            FontSize="16" 
+                            FontFamily="Segoe UI" 
+                            VerticalContentAlignment="Center" 
+                            Margin="1 1 1 1"
+                            Padding="1 1 1 1"
+                            ></TextBox>
+                        <Label
+                            Grid.Row="5"
+                            Grid.Column="1"
+                            Content="Введите адресс доставки"
+                            FontSize="16"
+                            Width="auto"
+                            Background="AliceBlue"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center" 
+                            FontFamily="Segoe UI" 
+                            Margin="1 1 1 1"
+                            Padding="1 1 1 1"
+                            ></Label>
+                        <ScrollViewer
+                            Grid.Column="2"
+                            Grid.Row="5"
+                            VerticalScrollBarVisibility="Auto"
+                            >
+                            <TextBox
+                                x:Name="AddAddress"
+                                FontSize="16"
+                                TextWrapping="Wrap" 
+                                FontFamily="Segoe UI" 
+                                VerticalContentAlignment="Top" 
+                                Padding="1 1 1 1"
+                                Margin="1 1 1 1"
+                            ></TextBox>
+                        </ScrollViewer>
+                        <Label
+                            Grid.Row="6"
+                            Grid.Column="1"
+                            Content="Комментарий..."
+                            FontSize="16"
+                            Width="auto"
+                            Background="AliceBlue"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center" 
+                            FontFamily="Segoe UI" 
+                            Margin="1 1 1 1"
+                            Padding="1 1 1 1"
+                            ></Label>
+                        <ScrollViewer
+                            Grid.Column="2"
+                            Grid.Row="6"
+                            VerticalScrollBarVisibility="Auto"
+                            >
+                            <TextBox
+                                x:Name="AddComm"
+                                FontSize="16"
+                                TextWrapping="Wrap" 
+                                FontFamily="Segoe UI" 
+                                VerticalContentAlignment="Top" 
+                                Margin="1 1 1 1"
+                                Padding="1 1 1 1"
+                            ></TextBox>
+                        </ScrollViewer>
+                        <Rectangle 
+                            Grid.Column="0" 
+                            Grid.Row="8"
+                            Grid.ColumnSpan="5" 
+                            Margin="1 1 1 1">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush>
+                                    <GradientStop 
+                                        x:Name="ErrorsColor" 
+                                        Color="AliceBlue" 
+                                        Offset="0"
+                                        >
+                                    </GradientStop>
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Label
+                            Grid.Row="8"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="5"
+                            x:Name="DownTrayAddRecipe"
+                            FontSize="14"
+                            Padding="1 1 1 1"
+                            Margin="1 1 1 1"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Segoe UI"
+                        ></Label>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </Window>

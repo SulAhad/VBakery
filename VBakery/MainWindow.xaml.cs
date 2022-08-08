@@ -25,18 +25,21 @@ namespace VBakery
         }//Клавиатура
         private void Paymaster_MouseDown(object sender, RoutedEventArgs e)
         {
-            LoginWindow loginWindow = new();
-            loginWindow.Show();
+            PaymasterSales paymasterSales = new();
+            paymasterSales.Show();
+            Close();
         }
         private void Kitchener_MouseDown(object sender, RoutedEventArgs e)
         {
-            LoginWindow loginWindow = new();
-            loginWindow.Show();
+            Kitchener kitchener = new();
+            kitchener.Show();
+            Close();
         }
         private void Deliveryman_MouseDown(object sender, RoutedEventArgs e)
         {
-            LoginWindow loginWindow = new();
-            loginWindow.Show();
+            Deliveryman deliveryman = new();
+            deliveryman.Show();
+            this.Close();
         }
         private void Buyer_MouseDown(object sender, RoutedEventArgs e)
         {
@@ -46,8 +49,8 @@ namespace VBakery
         }
         private void Supervisor_MouseDown(object sender, RoutedEventArgs e)
         {
-            LoginWindow loginWindow = new();
-            loginWindow.Show();
+            Supervisor supervisor = new();
+            supervisor.Show();
         }
     }
 }

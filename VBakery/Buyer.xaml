@@ -10,12 +10,12 @@
         WindowState="Maximized"
         Background="LightGray"
         WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
         >
+    <ScrollViewer VerticalScrollBarVisibility="Hidden">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" ></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -23,12 +23,16 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Rectangle 
+        <Rectangle
             Grid.Column="0"
             Grid.Row="0"
-            Grid.ColumnSpan="5"
-            Grid.RowSpan="4">
+            Grid.ColumnSpan="2"
+            Grid.RowSpan="8">
             <Rectangle.Fill>
                 <LinearGradientBrush
                     >
@@ -37,142 +41,262 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Button   
-            Content="назад"
-            Click="Window1"
-            Grid.Row="0" 
-            Grid.Column="0" 
-            BorderBrush="AliceBlue"
-            BorderThickness="1">
-        </Button>
-        <Button
-            Click="Window2"
-            Grid.Row="1" 
-            Grid.Column="0" 
-            BorderBrush="Transparent"
-            BorderThickness="0"
+            <Border
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                BorderBrush="Wheat"
+                BorderThickness="0 0 0 1"
+                Margin="0 20 0 20">
+                <Label
+                     Content="Меню"
+                     FontSize="30"
+                     FontStyle="Italic"
+                     FontFamily="Monotype Corsiva"
+                     HorizontalAlignment="Center"
+                     Foreground="Wheat"
+                     >
+                </Label>
+            </Border>
+
+            <Border
+                Grid.Column="0"
+                Grid.Row="1"
+                BorderBrush="Wheat"
+                BorderThickness="0 0 0 1">
+                <Image
+                    
+                    Source="E:\Мои проекты\C#\VBakery\VBakery\Images\fruct (2).png"
+                    Stretch="Uniform"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left" 
+                    MouseDown="MenuImage"
             >
-            <Image
-                Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Prazdichniy.jpeg"
-                Stretch="UniformToFill"
+                </Image>
+            </Border>
+            <ListBox 
+                Grid.Column="1"
+                Grid.Row="1"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                x:Name="Menu1"
+                
                 >
-            </Image>
-        </Button>
-        <Button 
-            Click="Window3"
-            Grid.Row="2" 
-            Grid.Column="0" 
-            BorderBrush="Transparent"
-            BorderThickness="0" 
-            >
-            <Image
-            Source="E:\Мои проекты\C#\VBakery\VBakery\Images\detskie.jpeg"
-            Stretch="UniformToFill">
-            </Image>
-        </Button>
-        <Button 
-            Click="Window4"
-            Grid.Row="3" 
-            Grid.Column="0" 
-            BorderBrush="Transparent"
-            BorderThickness="0" 
-            >
-            <Image
-                Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Fruktoviy.jpg"
-                Stretch="UniformToFill">
-            </Image>
-        </Button>
-        <Button 
-            Click="Window5"
-            Grid.Row="0" 
-            Grid.Column="1" 
-            BorderBrush="Transparent"
-            BorderThickness="0" 
-            >
-            <Image
-                Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Svadebniy.jpeg"
-                Stretch="UniformToFill">
-            </Image>
-        </Button>
-        <Button 
-            Click="Window6"
+                <ListBox.ItemTemplate >
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock
+                                Width="auto"
+                                TextWrapping="Wrap"
+                                Text="{Binding dbAreaName1}"
+                                x:Name="buyerNameHeader1" 
+                                 Foreground="Wheat"
+                                 FontSize="30"
+                                 FontFamily="Monotype Corsiva">
+                            </TextBlock>
+                            <TextBlock
+                                Width="600"
+                                TextWrapping="Wrap"
+                                Text="{Binding dbAreaConsist1}"
+                                x:Name="dbAreaConsist1"
+                                 Grid.Column="1"
+                                 Grid.Row="1"
+                                 Foreground="Wheat"
+                                 FontSize="30"
+                                 FontFamily="Monotype Corsiva"
+                                 >
+                            </TextBlock>
+                            <TextBlock
+                                Width="auto"
+                                TextWrapping="Wrap"
+                                Text="{Binding dbAreaPrice1}"
+                                x:Name="dbAreaPrice1"
+                                 Grid.Column="1"
+                                 Grid.Row="1"
+                                 Foreground="Wheat"
+                                 FontSize="30"
+                                 FontFamily="Monotype Corsiva"
+                                 >
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
-            Grid.Row="0" 
-            Grid.Column="2" 
-            BorderBrush="Transparent"
-            BorderThickness="0"
-            >
-            <Image
-                Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Krestiny.jpeg"
-                Stretch="UniformToFill">
-            </Image>
-        </Button>
-        <Button 
-            Click="Window7"
+            <Border
+                Grid.Column="1"
+                Grid.Row="2"
+                BorderBrush="Wheat"
+                BorderThickness="0 0 0 1">
+                <Image
+                    
+                     Source="E:\Мои проекты\C#\VBakery\VBakery\Images\2.png"
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left"
+                     MouseDown="MenuImage"
+                     >
+                </Image>
+            </Border>
+            <ListBox 
+                Grid.Column="0"
+                Grid.Row="2"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                x:Name="Menu2"
+                HorizontalAlignment="Right"
+                VerticalContentAlignment="Center"
+                VerticalAlignment="Center">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel >
+                            <Label
+                                Content="{Binding dbAreaName2}"
+                                x:Name="buyerNameHeader2" 
+                                 Foreground="Wheat"
+                                 FontSize="30"
+                                 FontFamily="Monotype Corsiva">
+                            </Label>
+                            <TextBlock
+                                TextWrapping="Wrap"
+                                Width="600"
+                                Text="{Binding dbAreaConsist2}"
+                                x:Name="dbAreaConsist2"
+                                 Grid.Column="1"
+                                 Grid.Row="1"
+                                 Foreground="Wheat"
+                                 FontSize="30"
+                                 FontFamily="Monotype Corsiva"
+                                 >
+                            </TextBlock>
+                            <Label
+                                Content="{Binding dbAreaPrice2}"
+                                x:Name="dbAreaPrice2"
+                                 Grid.Column="1"
+                                 Grid.Row="1"
+                                 Foreground="Wheat"
+                                 FontSize="30"
+                                 FontFamily="Monotype Corsiva"
+                                 >
+                            </Label>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
-            Grid.Row="0" 
-            Grid.Column="3" 
-            BorderBrush="Transparent"
-            BorderThickness="0"
-            >
-            <Image
-                Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Corporativ.jpeg"
-                Stretch="UniformToFill">
-            </Image>
-        </Button>
-        <Button 
-            Click="Window8"
+            <Border
+                Grid.Column="0"
+                Grid.Row="3"
+                BorderBrush="Wheat"
+                BorderThickness="0 0 0 1">
+                <Image
+                    Source="E:\Мои проекты\C#\VBakery\VBakery\Images\fruct (2).png"
+                    Stretch="Uniform"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    MouseDown="MenuImage"
+                    >
+                </Image>
+            </Border>
+            <ListBox 
+                Grid.Column="1"
+                Grid.Row="3"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                x:Name="Menu3"
+                VerticalContentAlignment="Center"
+                VerticalAlignment="Center">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel >
+                            <Label
+                                Content="{Binding dbAreaName3}"
+                                x:Name="buyerNameHeader3" 
+                                 Foreground="Wheat"
+                                 FontSize="30"
+                                 FontFamily="Monotype Corsiva">
+                            </Label>
+                            <TextBlock
+                                Width="600"
+                                TextWrapping="Wrap"
+                                Text="{Binding dbAreaConsist3}"
+                                x:Name="dbAreaConsist3"
+                                 Grid.Column="1"
+                                 Grid.Row="1"
+                                 Foreground="Wheat"
+                                 FontSize="30"
+                                 FontFamily="Monotype Corsiva"
+                                 >
+                            </TextBlock>
+                            <Label
+                                Content="{Binding dbAreaPrice3}"
+                                x:Name="dbAreaPrice3"
+                                 Grid.Column="1"
+                                 Grid.Row="1"
+                                 Foreground="Wheat"
+                                 FontSize="30"
+                                 FontFamily="Monotype Corsiva"
+                                 >
+                            </Label>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
-            Grid.Row="1" 
-            Grid.Column="1" 
-            BorderBrush="Transparent"
-            BorderThickness="0" 
-            >
-            <Image
-                Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Tematicheskiy.jpeg"
-                Stretch="UniformToFill">
-            </Image>
-        </Button>
-        <Button 
-            Click="Window9"
-            Grid.Row="1" 
-            Grid.Column="2" 
-            Grid.ColumnSpan="2"
-            Grid.RowSpan="3"
-            BorderThickness="0"
-            >
-            <Image
-                Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Galery.jpeg"
-                Stretch="UniformToFill">
-            </Image>
-        </Button>
-
-        <Button 
-            Click="Window11"
-            Grid.Row="2" 
-            Grid.Column="1" 
-            BorderBrush="Transparent"
-            BorderThickness="0"
-            >
-            <Image
-                Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Konditerskie.jpeg"
-                Stretch="UniformToFill">
-            </Image>
-        </Button>
-        <Button 
-            Click="Window14"
-            Grid.Row="3" 
-            Grid.Column="1" 
-            BorderBrush="AliceBlue"
-            BorderThickness="0"
-            >
-        </Button>
-        <StackPanel>
-            <TextBlock 
-                Background="Black"
-                Width="300"
-                   
-                   />
-        </StackPanel>
-    </Grid>
+            <Border
+                Grid.Column="1"
+                Grid.Row="4">
+                <Image
+                    Source="E:\Мои проекты\C#\VBakery\VBakery\Images\2.png"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    MouseDown="MenuImage"
+                    >
+                </Image>
+            </Border>
+            <ListBox 
+                Grid.Column="0"
+                Grid.Row="4"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                x:Name="Menu4"
+                VerticalContentAlignment="Center"
+                VerticalAlignment="Center">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel >
+                            <Label
+                                Content="{Binding dbAreaName4}"
+                                x:Name="buyerNameHeader4" 
+                                 Foreground="Wheat"
+                                 FontSize="30"
+                                 FontFamily="Monotype Corsiva">
+                            </Label>
+                            <TextBlock
+                                Width="600"
+                                TextWrapping="Wrap"
+                                Text="{Binding dbAreaConsist4}"
+                                x:Name="dbAreaConsist4"
+                                 Grid.Column="1"
+                                 Grid.Row="1"
+                                 Foreground="Wheat"
+                                 FontSize="30"
+                                 FontFamily="Monotype Corsiva"
+                                 >
+                            </TextBlock>
+                            <Label
+                                Content="{Binding dbAreaPrice4}"
+                                x:Name="dbAreaPrice4"
+                                 Grid.Column="1"
+                                 Grid.Row="1"
+                                 Foreground="Wheat"
+                                 FontSize="30"
+                                 FontFamily="Monotype Corsiva"
+                                 >
+                            </Label>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </ScrollViewer>
 </Window>

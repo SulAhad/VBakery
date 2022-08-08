@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Window_sale" Height="800" Width="500" WindowState="Maximized">
-    <Grid x:Name="mainElement">
+        Title="Window_sale" Height="500" Width="500" IsEnabled="True" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" BorderThickness="1 1 1 1" BorderBrush="LightGray">
+    <Grid x:Name="mainElement" >
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -21,39 +22,87 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Rectangle 
+            Grid.Column="0"
+            Grid.Row="0"
+            Grid.ColumnSpan="6">
+            <Rectangle.Fill>
+                <LinearGradientBrush
+                    >
+                    <GradientStop Color="Indigo" Offset="0"></GradientStop>
+                    <GradientStop Color="#4e4e4e" Offset="1"></GradientStop>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Image
+            Margin="1 1 1 1"
+            Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\image.jfif"
+            Grid.Column="0"
+            Grid.Row="0"
+            HorizontalAlignment="Left"
+            ></Image>
+        <Button
+            Click="ButtonClickClose"
+            BorderBrush="Transparent"
+            Grid.Column="6"
+            Grid.Row="0"
+            Background="Transparent"
+            HorizontalAlignment="Right"
+            Width="30"
+            >
+            <Image
+            Width="15"
+                
+            Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\close.png"
+            >
+            </Image>
+        </Button>
+        <Label
+            Margin="30 0 0 0"
+            Grid.Column="0"
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Content="Вкусляндия"
+            Foreground="Wheat"
+            FontSize="20"
+            FontFamily="Monotype Corsiva"
+            >
+        </Label>
         <TextBox x:Name="textBox" 
+                 Grid.Row="1"
+                 Grid.Column="0"
                  Grid.ColumnSpan="5" 
                  Margin="10,10,10,10" 
                  VerticalContentAlignment="Center" 
                  HorizontalContentAlignment="Right"
                  MaxLength="20" Cursor="Arrow"
                  FontSize="40">0</TextBox>
-        <Button Background="AliceBlue" Grid.Row="1" Grid.Column="1" FontSize="40">1</Button>
-        <Button Background="AliceBlue" Grid.Row="1" Grid.Column="2" FontSize="40">2</Button>
-        <Button Background="AliceBlue" Grid.Row="1" Grid.Column="3" FontSize="40">3</Button>
-        <Button Background="AliceBlue" Grid.Row="2" Grid.Column="1" FontSize="40">4</Button>
-        <Button Background="AliceBlue" Grid.Row="2" Grid.Column="2" FontSize="40">5</Button>
-        <Button Background="AliceBlue" Grid.Row="2" Grid.Column="3" FontSize="40">6</Button>
-        <Button Background="AliceBlue" Grid.Row="3" Grid.Column="1" FontSize="40">7</Button>
-        <Button Background="AliceBlue" Grid.Row="3" Grid.Column="2" FontSize="40">8</Button>
-        <Button Background="AliceBlue" Grid.Row="3" Grid.Column="3" FontSize="40">9</Button>
-        <Button Grid.Row="4" Grid.Column="1" FontSize="40">AC</Button>
-        <Button Grid.Row="4" Grid.Column="2" FontSize="40">0</Button>
-        <Button Grid.Row="4" Grid.Column="3" FontSize="40">,</Button>
-        <Button Grid.Row="1" Grid.Column="4" FontSize="40">-</Button>
-        <Button Grid.Row="2" Grid.Column="4" FontSize="40">+</Button>
-        <Button Grid.Row="1" Grid.Column="0" FontSize="40">/</Button>
-        <Button Grid.Row="2" Grid.Column="0" FontSize="40">*</Button>
-        <Button Grid.Row="3" Grid.Column="0" FontSize="40">+/-</Button>
-        <Button Grid.Row="4" Grid.Column="0" FontSize="40">&lt;</Button>
-        <Button Background="Orange" Grid.Row="3" Grid.Column="4" FontSize="40" Grid.RowSpan="2">=</Button>
+        <Button Background="AliceBlue" Grid.Row="2" Grid.Column="1" FontSize="40">1</Button>
+        <Button Background="AliceBlue" Grid.Row="2" Grid.Column="2" FontSize="40">2</Button>
+        <Button Background="AliceBlue" Grid.Row="2" Grid.Column="3" FontSize="40">3</Button>
+        <Button Background="AliceBlue" Grid.Row="3" Grid.Column="1" FontSize="40">4</Button>
+        <Button Background="AliceBlue" Grid.Row="3" Grid.Column="2" FontSize="40">5</Button>
+        <Button Background="AliceBlue" Grid.Row="3" Grid.Column="3" FontSize="40">6</Button>
+        <Button Background="AliceBlue" Grid.Row="4" Grid.Column="1" FontSize="40">7</Button>
+        <Button Background="AliceBlue" Grid.Row="4" Grid.Column="2" FontSize="40">8</Button>
+        <Button Background="AliceBlue" Grid.Row="4" Grid.Column="3" FontSize="40">9</Button>
+        <Button Grid.Row="5" Grid.Column="1" FontSize="40">AC</Button>
+        <Button Grid.Row="5" Grid.Column="2" FontSize="40">0</Button>
+        <Button Grid.Row="5" Grid.Column="3" FontSize="40">,</Button>
+        <Button Grid.Row="2" Grid.Column="4" FontSize="40">-</Button>
+        <Button Grid.Row="3" Grid.Column="4" FontSize="40">+</Button>
+        <Button Grid.Row="2" Grid.Column="0" FontSize="40">/</Button>
+        <Button Grid.Row="3" Grid.Column="0" FontSize="40">*</Button>
+        <Button Grid.Row="4" Grid.Column="0" FontSize="40">+/-</Button>
+        <Button Grid.Row="5" Grid.Column="0" FontSize="40">&lt;</Button>
+        <Button Background="Orange" Grid.Row="4" Grid.Column="4" FontSize="40" Grid.RowSpan="2">=</Button>
 
-        <Button Click="ButtonClick_back" Grid.Row="0" Grid.Column="5" FontSize="20">Назад</Button>
-                                             
-        <Button Grid.Row="1" Grid.Column="5" FontSize="40">&lt;-</Button>
-        <Button Grid.Row="2" Grid.Column="5" FontSize="40">-&gt;</Button>
-                                             
-        <Button Grid.Row="3" Grid.Column="5" FontSize="40">(</Button>
-        <Button Grid.Row="4" Grid.Column="5" FontSize="40">)</Button>
+        <Button Click="ButtonClick_back" Grid.Row="1" Grid.Column="5" FontSize="20">Назад</Button>
+
+        <Button Grid.Row="2" Grid.Column="5" FontSize="40">&lt;-</Button>
+        <Button Grid.Row="3" Grid.Column="5" FontSize="40">-&gt;</Button>
+
+        <Button Grid.Row="4" Grid.Column="5" FontSize="40">(</Button>
+        <Button Grid.Row="5" Grid.Column="5" FontSize="40">)</Button>
     </Grid>
 </Window>

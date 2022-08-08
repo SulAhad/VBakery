@@ -300,9 +300,11 @@ namespace VBakery
         }
         private void ButtonClick_back(object sender, RoutedEventArgs e)
         {
-            Paymast paymaster = new();
-            paymaster.Show();
             Close();
+        }
+        private void ButtonClickClose(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

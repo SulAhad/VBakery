@@ -1,0 +1,274 @@
+﻿<Window x:Class="VBakery.ChatRoom"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VBakery"
+        mc:Ignorable="d"
+        Title="ChatRoom" Height="768" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+    <Border>
+        <Border.Effect>
+            <DropShadowEffect Color="Gray"/>
+        </Border.Effect>
+        <Grid>
+            <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            </Grid.RowDefinitions>
+        <Rectangle 
+            Grid.Column="0"
+            Grid.Row="0"
+            Grid.ColumnSpan="8"
+            Grid.RowSpan="10">
+            <Rectangle.Fill>
+                <LinearGradientBrush
+                    >
+                    <GradientStop Color="AliceBlue" Offset="0"></GradientStop>
+                    <GradientStop Color="#4e4e4e" Offset="1"></GradientStop>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle 
+            Grid.Column="0"
+            Grid.Row="0"
+            Grid.ColumnSpan="8">
+            <Rectangle.Fill>
+                <LinearGradientBrush
+                    >
+                    <GradientStop Color="Indigo" Offset="0"></GradientStop>
+                    <GradientStop Color="#4e4e4e" Offset="1"></GradientStop>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Image
+            Margin="1 1 1 1"
+            Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\image.jfif"
+            Grid.Column="0"
+            Grid.Row="0"
+            HorizontalAlignment="Left"
+            ></Image>
+        <Button
+            Click="ButtonClickClose"
+            BorderBrush="Transparent"
+            Grid.Column="3"
+            Grid.Row="0"
+            Background="Transparent">
+            <Image
+            Width="15"
+            Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\close.png"
+            >
+            </Image>
+        </Button>
+        <Label
+            Margin="30 0 0 0"
+            Grid.Column="0"
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Content="Вкусляндия"
+            Foreground="Wheat"
+            FontSize="20"
+            FontFamily="Monotype Corsiva"
+            >
+        </Label>
+        <Border
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            BorderBrush="LightGray"
+            BorderThickness="1 1 1 1">
+            <Label
+            
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Right"
+            FontSize="20"
+            Foreground="Wheat"
+            Content="Чат"
+            FontFamily="Segoe UI"
+            ></Label>
+
+        </Border>
+            <ScrollViewer 
+                Background="Transparent"
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                Grid.RowSpan="4"
+                VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical" Background="Transparent">
+                    <DataGrid 
+                        AutoGenerateColumns="False"
+                        x:Name="Chat"                        
+                        Margin="1 1 1 1"
+                        Foreground="Black"
+                        FontFamily="Segoe UI"
+                        Background="Transparent">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Header="№"
+                                Width="auto"
+                                x:Name="IdChat" 
+                                Binding="{Binding Id}" 
+                                FontSize="10" 
+                                FontFamily="Segoe UI" 
+                                FontWeight="Light"
+                                />
+                            <DataGridTextColumn
+                                            Header="Время"
+                                            x:Name="time" 
+                                            Width="120"
+                                            Binding="{Binding Time}" 
+                                            FontSize="10" 
+                                            FontFamily="Segoe UI" 
+                                            FontWeight="Light"/>
+                            <DataGridTemplateColumn  
+                                            IsReadOnly="True" 
+                                            Header="Пользователь" 
+                                            Width="auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                                         Width="auto"
+                                                         x:Name="User" 
+                                                         VerticalAlignment="Center" 
+                                                         Text="{Binding User}" 
+                                                         FontSize="12" 
+                                                         HorizontalAlignment="Center" 
+                                                         FontFamily="Segoe UI"
+                                                         FontWeight="Normal">
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn 
+                                            IsReadOnly="True" 
+                                            Header="Текст сообщения" 
+                                            Width="*"
+                                            CanUserResize="False"
+                                            MinWidth="200">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock 
+                                                        TextWrapping="Wrap"
+                                                        Width="auto"
+                                                        x:Name="chatRoom" 
+                                                        VerticalAlignment="Center" 
+                                                        Text="{Binding TextUser}" 
+                                                        FontSize="12" 
+                                                        HorizontalAlignment="Left" 
+                                                        FontFamily="Segoe UI"
+                                                        FontWeight="Normal">
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </ScrollViewer>
+            <!--<ListBox 
+            x:Name="Chat"
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.RowSpan="4"
+            Grid.ColumnSpan="4"
+            Margin="1 1 1 1"
+            Background="Transparent"
+            Foreground="Wheat"
+            FontFamily="Segoe UI">
+                <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock 
+                            x:Name="time" 
+                            Width="120"
+                            Text="{Binding Time}" 
+                            FontSize="10" 
+                            FontFamily="Segoe UI" 
+                            FontWeight="Light" 
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right">
+                            
+                        </TextBlock>
+                        <TextBlock 
+                            Width="80"
+                            x:Name="User" 
+                            VerticalAlignment="Center" 
+                            Text="{Binding User}" 
+                            FontSize="14" 
+                            HorizontalAlignment="Left" 
+                            FontFamily="Segoe UI"
+                            FontWeight="Normal">
+                            
+                        </TextBlock>
+                        <TextBlock 
+                            Width="auto"
+                            x:Name="chatRoom" 
+                            VerticalAlignment="Center" 
+                            Text="{Binding TextUser}" 
+                            FontSize="16" 
+                            HorizontalAlignment="Center" 
+                            FontFamily="Segoe UI"
+                            FontWeight="Normal">
+                            
+                        </TextBlock>
+                        
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>-->
+
+        <Border
+            Grid.Row="6"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            BorderBrush="LightGray"
+            BorderThickness="1 1 1 1"
+            >
+            <TextBox
+                x:Name="MessageUser"
+                Background="White"
+
+                Foreground="Black"
+                FontSize="16"
+                TextWrapping="Wrap" 
+                FontFamily="Segoe UI"
+            ></TextBox>
+        </Border>
+            <Button
+            Click="ClickButtonSendMessage"
+            Grid.Column="2"
+            Grid.Row="7"
+            Width="200"
+            Height="30"
+            Content="Отправить"
+            FontSize="16"
+            Foreground="Black"
+            Background="LightGray"
+            FontFamily="Segoe UI"
+            ></Button>
+            <Label
+                Background="Transparent"
+                x:Name="downTray"
+                Grid.Row="8"
+                Grid.ColumnSpan="4"
+                Padding="1 1 1 1"
+                ></Label>
+            <Label
+                Foreground="Transparent"
+                x:Name="chatUser"></Label>
+        </Grid>
+    </Border>
+</Window>
