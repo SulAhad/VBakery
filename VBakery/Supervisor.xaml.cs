@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using VBakery.DB;
@@ -11,41 +10,103 @@ namespace VBakery
 {
     public partial class Supervisor : Window
     {
+        private readonly int customerCount;
+        readonly RecipesContext recipesContext = new();
+        readonly MessagesContext messagesContext = new();
+        readonly OrderForBuyersContext orderForBuyersContext = new();
+        readonly TimerStartsContext timerStartsContext = new();
+        readonly TimerEndsContext timerEndsContext = new();
+        readonly LogOrdersContext logOrders = new();
+        readonly UsersContext usersContext = new();
         public Supervisor()
         {
             InitializeComponent();
+
+            //if(checkKitchen.IsChecked)
+            //{
+                
+            //}
+            //if (checkPymaster.IsChecked == true)
+            //{
+            //    accessTextBoxRegistration.Text = "Кассир";
+            //}
+            //if (checkDelivery.IsChecked == true)
+            //{
+            //    accessTextBoxRegistration.Text = "Доставщик";
+            //}
+            //if (checkBuyer.IsChecked == true)
+            //{
+            //    accessTextBoxRegistration.Text = "Покупатель";
+            //}
+            //if (checkSupervisor.IsChecked == true)
+            //{
+            //    accessTextBoxRegistration.Text = "Директор";
+            //}
+
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
+
             MethodGetDataRecept();//Повар
+
             StartWork();//Кассир
+
             EndWork();//Кассир
             UpdateOrderForBuyer();
+
             UpdateChatIfClickSend();
-            using OrderForBuyersContext db = new();
-            System.Int32 customerCount = db.OrderForBuyers.Count();
-            CountSales.Content = Convert.ToString(customerCount);
-            System.Int32 BuyerCount = db.OrderForBuyers.Count();
+
+            customerCount = orderForBuyersContext.OrderForBuyers.Count();//Подсчет количества продаж
+            CountSales.Content = Convert.ToString(customerCount) + " " + "заказов";//Вывод результата подсчета
+
+            System.Int32 BuyerCount = orderForBuyersContext.OrderForBuyers.Count();
             VisitBuyer.Text = Convert.ToString(BuyerCount);
-            UpdateDBBuyer();
-            UpdateFirstCourseList();
+
+            TotalSales.Content = orderForBuyersContext.OrderForBuyers.Sum(p => p.OrderPrice).ToString() + " " + "руб";//Получение общей суммы продаж из базы данных
+
+            LogOrder.ItemsSource = logOrders.LogOrders.ToList();
+
+            UserRegistration.ItemsSource = usersContext.Users.ToList();
         }
         public void UpdateChatIfClickSend()
         {
-            using MessagesContext db = new();
-            Chat.ItemsSource = db.Messages.ToList();
-        }
+            Chat.ItemsSource = messagesContext.Messages.ToList();
+        }//Обновить чат если нажата кнопка отправить
+        public void UpdateOrderForBuyer()
+        {
+            UserOrder.ItemsSource = orderForBuyersContext.OrderForBuyers.ToList();
+        }//Обновить список Заказов
+        public void ButtonClickPlus(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+        }//Кнопка расширить окно
+        public void ButtonClickMinus(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }//Кнопка свернуть окно
+        public void ButtonClickClose(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }//Кнопка закрыть окно
+
+
         public void ClickButtonSendMessage(object sender, RoutedEventArgs e)
         {
-            if(MessageUser.Text != "")
+            if (MessageUser.Text != "")
             {
-                using MessagesContext db = new MessagesContext();
-                Message toms = new Message
+                Message toms = new()
                 {
                     User = "Директор",
                     TextUser = MessageUser.Text,
                     Time = DateTime.Now.ToString()
                 };
-                db.Messages.Add(toms);
-                db.SaveChanges();
+                messagesContext.Messages.Add(toms);
+                messagesContext.SaveChanges();
                 UpdateChatIfClickSend();
                 MessageUser.Text = "";
                 downTrayChatRoom.Background = Brushes.AliceBlue;
@@ -56,8 +117,8 @@ namespace VBakery
                 downTrayChatRoom.Content = "Не ввели сообщение!";
                 downTrayChatRoom.Background = Brushes.LightCoral;
             }
-            
-        }
+
+        }//Отправить сообщение в чат
         public void UpdateDBBuyer()
         {
             using MenuArea1Context db1 = new();
@@ -71,7 +132,7 @@ namespace VBakery
 
             using MenuArea4Context db4 = new();
             Menu4.ItemsSource = db4.Menu4.ToList();
-        }
+        }// Обновление меню покупаетля
         private void HandlerKeyDownEvent(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -85,23 +146,18 @@ namespace VBakery
                     break;
             }
         }//Клавиатура
-        public void UpdateOrderForBuyer()
-        {
-            using OrderForBuyersContext db = new();
-            UserOrder.ItemsSource = db.OrderForBuyers.ToArray();
-        }
-        //Кассир
+
+
+        ////////////////Кассир
         public void StartWork()
         {
-            using TimerStartsContext db = new();
-            ListBeginTime.ItemsSource = db.TimerStarts.ToList();
-        }//Кассир
+            ListBeginTime.ItemsSource = timerStartsContext.TimerStarts.ToList();
+        }//Кассир начало работы
         public void EndWork()
         {
-            using TimerEndsContext db = new();
-            ListEndTime.ItemsSource = db.TimerEnds.ToList();
-        }//Кассир
-        private void GoBackToHome(object sender, RoutedEventArgs e)
+            ListEndTime.ItemsSource = timerEndsContext.TimerEnds.ToList();
+        }//Кассир конец работы
+        public void GoBackToHome(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show(
             "Вы точно хотите выйти?",
@@ -113,27 +169,10 @@ namespace VBakery
                 mainWindow.Show();
                 this.Close();
             }
-        }//Кнопка выхода
-        private void ButtonClickPlus(object sender, RoutedEventArgs e)
-        {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                this.WindowState = WindowState.Normal;
-            }
-            else
-            {
-                this.WindowState = WindowState.Maximized;
-            }
-        }//Кнопка расширить окно
-        private void ButtonClickMinus(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }//Кнопка свернуть окно
-        private void ButtonClickClose(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }//Кнопка закрыть окно
-        //Повар
+        }//Кнопка выхода домой
+
+
+        ///////////////////Повар
         private void AddNewRecipe(object sender, RoutedEventArgs e)
         {
             if (nameRecipe.Text == "")
@@ -153,72 +192,47 @@ namespace VBakery
             }
             else
             {
-                using RecipesContext db = new RecipesContext();
-                Recipe toms = new Recipe 
+                Recipe toms = new()
                 {
-                NameRecipe = nameRecipe.Text,
-                TextRecipe = RecipeArea.Text,
-                PriceRecipe = Convert.ToInt32(Price.Text)
+                    NameRecipe = nameRecipe.Text,
+                    TextRecipe = RecipeArea.Text,
+                    PriceRecipe = Convert.ToInt32(Price.Text)
                 };
-                db.Recipes.Add(toms);
-                db.SaveChanges();
+                recipesContext.Recipes.Add(toms);
+                recipesContext.SaveChanges();
                 DownTray.Content = "Добавлено в базу данных";
                 DownTray.Background = Brushes.LightGreen;
                 nameRecipe.Text = "";
                 RecipeArea.Text = "";
                 Price.Text = "";
             }
-        }//Повар
+        }//Повар добавить новый рецепт
         private void GetDataRecept(object sender, RoutedEventArgs e)
         {
             MethodGetDataRecept();
             DownTrayDeleteRecept.Content = "Обновлено:" + DateTime.Now.ToString();
             DownTrayDeleteRecept.Background = Brushes.LightGreen;
-        }//Повар
+        }//Повар получить данные рецепта из сервера
         private void MethodGetDataRecept()
         {
-            using RecipesContext db = new();
-            ReceptList.ItemsSource = db.Recipes.ToList();
+            ReceptList.ItemsSource = recipesContext.Recipes.ToList();
             DownTrayDeleteRecept.Content = "Обновлено:" + DateTime.Now.ToString();
             DownTrayDeleteRecept.Background = Brushes.LightGreen;
-        }//Повар
+        }//Повар получить данные рецепта из сервера
         private void ButtonClickDeleteFirstID(object sender, RoutedEventArgs e)
         {
-            using RecipesContext db = new RecipesContext();
-            Recipe recipe = new();
-            var item = db.Recipes.FirstOrDefault();
+            var item = recipesContext.Recipes.FirstOrDefault();
             if (item != null)
             {
-                db.Recipes.Remove(item);
-                db.SaveChanges();
+                recipesContext.Recipes.Remove(item);
+                recipesContext.SaveChanges();
                 MethodGetDataRecept();
                 DownTrayDeleteRecept.Background = Brushes.LightGreen;
                 DownTrayDeleteRecept.Content = "Удалена первая запись";
             }
         }//Кнопка удалить первую ID Кухня
-        private void ButtonClickDeleteLastID(object sender, RoutedEventArgs e)
-        {
-            //using ApplicationContext db = new ApplicationContext();
-            //Recipe recipe = new();
-            //// добавляем их в бд
-            //IEnumerable<string> auto = Recipe.OrderBy((s => s), db);
-            //var item = db.Recipes.LastOrDefault();
-
-
-
-            //if (item == null)
-            //{
-            //    db.Recipes.Remove(item);
-            //    db.SaveChanges();
-            //    MethodGetDataRecept();
-            //    DownTrayDeleteRecept.Background = Brushes.LightGreen;
-            //    DownTrayDeleteRecept.Content = "Удалена последняя запись";
-            //}
-        }//Кнопка удалить последнюю ID Кухня
         private void RemoveLastData(object sender, RoutedEventArgs e)
         {
-            using RecipesContext db = new RecipesContext();
-            Recipe recipe = new();
             if (SetId.Text == "")
             {
                 DownTrayDeleteRecept.Content = "Не ввели номер!";
@@ -228,12 +242,12 @@ namespace VBakery
             {
                 SetId.Text = SetId.Text.Trim();
                 int key = Convert.ToInt32(SetId.Text.Trim());
-                var item = db.Recipes.Find(key);
+                var item = recipesContext.Recipes.Find(key);
                 if (item != null)
                 {
 
-                    db.Recipes.Remove(item);
-                    db.SaveChanges();
+                    recipesContext.Recipes.Remove(item);
+                    recipesContext.SaveChanges();
                     MethodGetDataRecept();
                     DownTrayDeleteRecept.Background = Brushes.LightGreen;
                     DownTrayDeleteRecept.Content = "Удалена запись --" + SetId.Text;
@@ -244,32 +258,32 @@ namespace VBakery
                     MessageBox.Show("Введена некорреткная цифра!");
                 }
             }
-        }
-        //Покупатель
+        }//Удалить запись рецепта
+
+
+        ////////////////// //Покупатель
         private void RemoveLastOrder(object sender, RoutedEventArgs e)
         {
-            using OrderForBuyersContext db = new OrderForBuyersContext();
-            
-            if (SetIdBuyer.Text == "")
+            if (InputIdForDelete.Text == "")
             {
                 DownTrayBuyerOrders.Content = "Не ввели номер!";
                 DownTrayBuyerOrders.Background = Brushes.LightCoral;
             }
             else
             {
-                SetIdBuyer.Text = SetIdBuyer.Text.Trim();
-                int key = Convert.ToInt32(SetIdBuyer.Text.Trim());
-                var item = db.OrderForBuyers.Find(key);
-                
+                InputIdForDelete.Text = InputIdForDelete.Text.Trim();
+                int key = Convert.ToInt32(InputIdForDelete.Text.Trim());
+                var item = orderForBuyersContext.OrderForBuyers.Find(key);
+
                 if (item != null)
                 {
-                    db.OrderForBuyers.Remove(item);
-                    db.SaveChanges();
+                    orderForBuyersContext.OrderForBuyers.Remove(item);
+                    orderForBuyersContext.SaveChanges();
                     DownTrayBuyerOrders.Background = Brushes.LightGreen;
-                    DownTrayBuyerOrders.Content = "Удалена запись --" + SetIdBuyer.Text;
-                    SetIdBuyer.Text = "";
-                    UserOrder.ItemsSource = db.OrderForBuyers.ToList();
-                    System.Int32 BuyerCount = db.OrderForBuyers.Count();
+                    DownTrayBuyerOrders.Content = "Удалена запись --" + InputIdForDelete.Text;
+                    InputIdForDelete.Text = "";
+                    UserOrder.ItemsSource = orderForBuyersContext.OrderForBuyers.ToList();
+                    System.Int32 BuyerCount = orderForBuyersContext.OrderForBuyers.Count();
                     VisitBuyer.Text = Convert.ToString(BuyerCount);
                 }
                 else
@@ -277,117 +291,78 @@ namespace VBakery
                     MessageBox.Show("Введена некорреткная цифра!");
                 }
             }
-        }
+        }//Удалить заказ покупаетля
         private void GetDataBuyer(object sender, RoutedEventArgs e)
         {
             UpdateOrderForBuyer();
-            using OrderForBuyersContext db = new();
-            System.Int32 BuyerCount = db.OrderForBuyers.Count();
+            System.Int32 BuyerCount = orderForBuyersContext.OrderForBuyers.Count();
             VisitBuyer.Text = Convert.ToString(BuyerCount);
             DownTrayBuyerOrders.Content = "Обновлено --" + DateTime.Now.ToString();
         }//Обновить данные покупатель
-        //Касса
+
+
+        ////////////////Касса
         private void ButtonDeleteTimeBegin(object sender, RoutedEventArgs e)
         {
-            using (TimerStartsContext db = new())
+            TimerStart user = timerStartsContext.TimerStarts.FirstOrDefault();
+            if (user != null)
             {
-                TimerStart user = db.TimerStarts.FirstOrDefault();
-                if (user != null)
-                {
-                    db.Remove(user);
-                    db.SaveChanges();
-                    StartWork();
-                }
+                timerStartsContext.Remove(user);
+                timerStartsContext.SaveChanges();
+                StartWork();
             }
-        }//Касса начало работы
+        }//Касса начало работы кнопка удалить
         private void ButtonDeleteTimeEnd(object sender, RoutedEventArgs e)
         {
-            using (TimerEndsContext db = new())
+            TimerEnd user = timerEndsContext.TimerEnds.FirstOrDefault();
+            if (user != null)
             {
-                TimerEnd user = db.TimerEnds.FirstOrDefault();
-                if (user != null)
-                {
-                    db.Remove(user);
-                    db.SaveChanges();
-                    EndWork();
-                }
+                timerEndsContext.Remove(user);
+                timerEndsContext.SaveChanges();
+                EndWork();
             }
-        }//Касса конец работы
-        private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            ScrollBar scrollBar = new();
-            scrollBar.Value = numeric.Value;
-            SetIdBuyer.Text = Convert.ToString(numeric.Value);
-        }
-        private void ScrollBar_ValueChanged1(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            ScrollBar scrollBar = new();
-            scrollBar.Value = numeric1.Value;
-            NumericId.Text = Convert.ToString(numeric1.Value);
+        }//Касса конец работы кнопка удалить
+        //private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        //{
+        //    ScrollBar scrollBar = new();
+        //    scrollBar.Value = numeric.Value;
+        //    SetIdBuyer.Text = Convert.ToString(numeric.Value);
+        //} //Кнопка прокурутки номера в окне покупаетля
+        //private void ScrollBar_ValueChangedChat(object sender, RoutedPropertyChangedEventArgs<double> e)
+        //{
+        //    ScrollBar scrollBar = new();
+        //    scrollBar.Value = numericChat.Value;
+        //    SetIdChat.Text = Convert.ToString(numericChat.Value);
+        //}//Кнопка прокурутки номера в окне чата
 
-        }
-        private void ScrollBar_ValueChangedChat(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            ScrollBar scrollBar = new();
-            scrollBar.Value = numericChat.Value;
-            SetIdChat.Text = Convert.ToString(numericChat.Value);
-        }
-        private void ButtonClickTextBlock(object sender, RoutedEventArgs e)
-        {
-            ListBox contentList = new ListBox();
-            using OrderForBuyersContext db = new();
-
-            TextBox textBox = new TextBox() { Text = "{Binding = Id }", Width = 50, Height = 50 };
-            TextBox textBox1 = new TextBox() { Text = "{Binding = name }", Width = 50, Height = 50 };
-            TextBox textBox2 = new TextBox() { Text = "{Binding = mobile }", Width = 50, Height = 50 };
-            TextBox textBox3 = new TextBox() { Text = "{Binding = weight }", Width = 50, Height = 50 };
-            TextBox textBox4 = new TextBox() { Text = "{Binding = nameProduct }", Width = 50, Height = 50 };
-            TextBox textBox5 = new TextBox() { Text = "{Binding = address }", Width = 50, Height = 50 };
-            TextBox textBox6 = new TextBox() { Text = "{Binding = comm }", Width = 50, Height = 50 };
-            TextBox textBox7 = new TextBox() { Text = "{Binding = data }", Width = 50, Height = 50 };
-            TextBox textBox8 = new TextBox() { Text = "{Binding = dateTime }", Width = 50, Height = 50 };
-            TextBox textBox9 = new TextBox() { Text = "{Binding = status }", Width = 50, Height = 50 };
-
-            //using OrderForBuyersContext db = new();//Кассир
-            //UserOrder.ItemsSource = db.OrderForBuyers.ToList();
-            contentList.ItemsSource = db.OrderForBuyers.ToList();
-
-            contentList.Items.Add(new TextBox()
-            {
-                Text = "rtbrtbrt"
-
-            });
-
-
-
-            //TextBlock label = new TextBlock();
-            //label.Text = "Имя файла";
-            //label.VerticalAlignment = VerticalAlignment.Top;
-            //label.Width = 100;
-            //Add(label);
-
-
-        }
+        ///Разные методы
         public void DoNotHaveName()
         {
             downTrayBuyer.Content = "Не ввели название";
             downTrayBuyer.Background = Brushes.LightCoral;
-        }
+        }//метод отсутствия имени
         public void DoNotHaveConsist()
         {
             downTrayBuyer.Content = "Не ввели состав";
             downTrayBuyer.Background = Brushes.LightCoral;
-        }
+        }//метод отсутствия состава
         public void DoNotHavePrice()
         {
             downTrayBuyer.Content = "Не ввели состав";
             downTrayBuyer.Background = Brushes.LightCoral;
-        }
+        }//метод отсутствия цены
         public void AddTextToTray()
         {
             downTrayBuyer.Content = "Добавлено в базу данных";
             downTrayBuyer.Background = Brushes.LightGreen;
-        }
+        }//метод подтвержедения снизу строки
+        private void ButtonClickUpdate(object sender, RoutedEventArgs e)
+        {
+            UpdateDBBuyer();
+        }// кнопка обновления окна покупателя
+
+
+        ///Тестовые методы отпарвки данных
         private void ButtonClickChangeArea1(object sender, RoutedEventArgs e)
         {
             if (changeAreaName1.Text == "")
@@ -405,7 +380,7 @@ namespace VBakery
             else
             {
                 using MenuArea1Context db = new();
-                MenuArea1 toms = new MenuArea1
+                MenuArea1 toms = new()
                 {
                     dbAreaName1 = changeAreaName1.Text,
                     dbAreaConsist1 = changeAreaConsist1.Text,
@@ -419,7 +394,7 @@ namespace VBakery
                 changeAreaPrice1.Text = "";
                 UpdateDBBuyer();
             }
-        }
+        }//первое поле
         private void ButtonClickChangeArea2(object sender, RoutedEventArgs e)
         {
             if (changeAreaName2.Text == "")
@@ -437,7 +412,7 @@ namespace VBakery
             else
             {
                 using MenuArea2Context db = new();
-                MenuArea2 toms = new MenuArea2
+                MenuArea2 toms = new()
                 {
                     dbAreaName2 = changeAreaName2.Text,
                     dbAreaConsist2 = changeAreaConsist2.Text,
@@ -451,7 +426,7 @@ namespace VBakery
                 changeAreaPrice2.Text = "";
                 UpdateDBBuyer();
             }
-        }
+        }//второе поле
         private void ButtonClickChangeArea3(object sender, RoutedEventArgs e)
         {
             if (changeAreaName3.Text == "")
@@ -469,7 +444,7 @@ namespace VBakery
             else
             {
                 using MenuArea3Context db = new();
-                MenuArea3 toms = new MenuArea3
+                MenuArea3 toms = new()
                 {
                     dbAreaName3 = changeAreaName3.Text,
                     dbAreaConsist3 = changeAreaConsist3.Text,
@@ -483,7 +458,7 @@ namespace VBakery
                 changeAreaPrice3.Text = "";
                 UpdateDBBuyer();
             }
-        }
+        }//3 поле
         private void ButtonClickChangeArea4(object sender, RoutedEventArgs e)
         {
             if (changeAreaName4.Text == "")
@@ -501,7 +476,7 @@ namespace VBakery
             else
             {
                 using MenuArea4Context db = new();
-                MenuArea4 toms = new MenuArea4
+                MenuArea4 toms = new()
                 {
                     dbAreaName4 = changeAreaName4.Text,
                     dbAreaConsist4 = changeAreaConsist4.Text,
@@ -515,160 +490,461 @@ namespace VBakery
                 changeAreaPrice4.Text = "";
                 UpdateDBBuyer();
             }
-        }
-        private void ButtonClickUpdate(object sender, RoutedEventArgs e)
-        {
-            UpdateDBBuyer();
-        }
+        }//4 поле 
         private void ButtonClickDeleteMenu1(object sender, RoutedEventArgs e)
         {
-            using (MenuArea1Context db = new())
+            using MenuArea1Context db = new();
+            MenuArea1 menu1 = db.Menu1.FirstOrDefault();
+            if (menu1 != null)
             {
-                MenuArea1 menu1 = db.Menu1.FirstOrDefault();
-                if (menu1 != null)
-                {
-                    db.Remove(menu1);
-                    db.SaveChanges();
-                    UpdateDBBuyer();
-                }
+                db.Remove(menu1);
+                db.SaveChanges();
+                UpdateDBBuyer();
             }
-        }
+        }// удаление первое поле
         private void ButtonClickDeleteMenu2(object sender, RoutedEventArgs e)
         {
-            using (MenuArea2Context db = new())
+            using MenuArea2Context db = new();
+            MenuArea2 menu2 = db.Menu2.FirstOrDefault();
+            if (menu2 != null)
             {
-                MenuArea2 menu2 = db.Menu2.FirstOrDefault();
-                if (menu2 != null)
-                {
-                    db.Remove(menu2);
-                    db.SaveChanges();
-                    UpdateDBBuyer();
-                }
+                db.Remove(menu2);
+                db.SaveChanges();
+                UpdateDBBuyer();
             }
-        }
+        }//удаление второе поле
         private void ButtonClickDeleteMenu3(object sender, RoutedEventArgs e)
         {
-            using (MenuArea3Context db = new())
+            using MenuArea3Context db = new();
+            MenuArea3 menu3 = db.Menu3.FirstOrDefault();
+            if (menu3 != null)
             {
-                MenuArea3 menu3 = db.Menu3.FirstOrDefault();
-                if (menu3 != null)
-                {
-                    db.Remove(menu3);
-                    db.SaveChanges();
-                    UpdateDBBuyer();
-                }
+                db.Remove(menu3);
+                db.SaveChanges();
+                UpdateDBBuyer();
             }
-        }
+        }// удаление 3 поле
         private void ButtonClickDeleteMenu4(object sender, RoutedEventArgs e)
         {
-            using (MenuArea4Context db = new())
+            using MenuArea4Context db = new();
+            MenuArea4 menu4 = db.Menu4.FirstOrDefault();
+            if (menu4 != null)
             {
-                MenuArea4 menu4 = db.Menu4.FirstOrDefault();
-                if (menu4 != null)
-                {
-                    db.Remove(menu4);
-                    db.SaveChanges();
-                    UpdateDBBuyer();
-                }
+                db.Remove(menu4);
+                db.SaveChanges();
+                UpdateDBBuyer();
             }
-        }
-        private void AddFirstCourse(object sender, RoutedEventArgs e)
+        }// удаление 4 поле 
+
+        private void ButtonClickDeleteChat(object sender, RoutedEventArgs e)
         {
-            if (nameFirstCourse.Text == "")
+            var item = messagesContext.Messages.FirstOrDefault();
+            if (item == null)
             {
-                downTrayPaymaster.Content = "Не ввели название";
-                downTrayPaymaster.Background = Brushes.LightCoral;
-            }
-            if (NumericId.Text == "")
-            {
-                downTrayPaymaster.Content = "Не ввели цену";
-                downTrayPaymaster.Background = Brushes.LightCoral;
+                downTrayChatRoom.Content = "Отсутствует запись!";
+                downTrayChatRoom.Background = Brushes.LightCoral;
             }
             else
             {
-                using FirstCourseContext db = new FirstCourseContext();
-                FirstCourse toms = new FirstCourse
+                if (item != null)
                 {
-                    name = nameFirstCourse.Text,
-                    price = NumericId.Text
-                };
-                db.FirstCourses.Add(toms);
-                db.SaveChanges();
-                downTrayPaymaster.Content = "Добавлено в базу данных";
-                downTrayPaymaster.Background = Brushes.LightGreen;
-                nameFirstCourse.Text = "";
-                NumericId.Text = "";
+                    messagesContext.Remove(item);
+                    messagesContext.SaveChanges();
+                    UpdateChatIfClickSend();
+                    downTrayChatRoom.Content = "Удалена первая запись:" + "" + DateTime.Now.ToString();
+                    downTrayChatRoom.Background = Brushes.LightCoral;
+                }
             }
-        }
-        public void UpdateFirstCourseList()
-        {
-            using FirstCourseContext db = new();
-            FirstCourseList.ItemsSource = db.FirstCourses.ToList();
-        }
-        private void ButtonClickDeleteChat(object sender, RoutedEventArgs e)
-        {
-            using MessagesContext db = new MessagesContext();
-            Message toms = new Message();
-            var item = db.Messages.FirstOrDefault();
-            if (item != null)
-            {
-                db.Remove(item);
-                db.SaveChanges();
-                UpdateChatIfClickSend();
-                downTrayChatRoom.Content = "Удалена первая запись:" + "" + DateTime.Now.ToString();
-                downTrayChatRoom.Background = Brushes.LightCoral;
-            }
-        }
+        } //кнопка удаления чата первой строки
         private void ButtonRemoveId(object sender, RoutedEventArgs e)
         {
-            using MessagesContext db = new MessagesContext();
-            int key = Convert.ToInt32(SetIdChat.Text.Trim());
-            var item = db.Messages.Find(key);
-
-            if (item != null)
+            if (InputIdForDeleteChat.Text == "")
             {
-                db.Messages.Remove(item);
-                db.SaveChanges();
-                UpdateChatIfClickSend();
-                downTrayChatRoom.Content = "Удалена запись:" + "" + key + "" + DateTime.Now.ToString();
+                downTrayChatRoom.Content = "Не ввели номер!";
                 downTrayChatRoom.Background = Brushes.LightCoral;
             }
-        }
+            else
+            {
+                int key = Convert.ToInt32(InputIdForDeleteChat.Text.Trim());
+                var item = messagesContext.Messages.Find(key);
+
+                if (item != null)
+                {
+                    messagesContext.Messages.Remove(item);
+                    messagesContext.SaveChanges();
+                    UpdateChatIfClickSend();
+                    downTrayChatRoom.Content = "Удалена запись:" + "==" + key + " --" + DateTime.Now.ToString();
+                    downTrayChatRoom.Background = Brushes.LightCoral;
+                }
+                else
+                {
+                    downTrayChatRoom.Content = "Нет такого значения!";
+                    downTrayChatRoom.Background = Brushes.LightCoral;
+                }
+            }
+
+        }// кнопка удаления чата по id
         private void ButtonUpdateChat(object sender, RoutedEventArgs e)
         {
             UpdateChatIfClickSend();
             downTrayChatRoom.Content = "Обновлено:" + "" + DateTime.Now.ToString();
             downTrayChatRoom.Background = Brushes.LightGreen;
+        }//кнопка обновления чата
+        public void ButtonClick_1(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 1;
         }
-        //СГП
-        //public void GetFinishedProduct()
-        //{
-        //    using OrderForBuyersContext db = new OrderForBuyersContext();
-        //    using FinishedProductContext db1 = new();
-        //    SetIdBuyer.Text = SetIdBuyer.Text.Trim();
-        //    string key = SetIdBuyer.Text.Trim();
-        //    var item = db.OrderForBuyers.Find(key);
-        //    db1.FinishedProducts.Add(db.OrderForBuyers.Find(item));
+        public void ButtonClick_2(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 2;
+        }
+        public void ButtonClick_3(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 3;
+        }
+        public void ButtonClick_4(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 4;
+        }
+        public void ButtonClick_5(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 5;
+        }
+        public void ButtonClick_6(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 6;
+        }
+        public void ButtonClick_7(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 7;
+        }
+        public void ButtonClick_8(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 8;
+        }
+        public void ButtonClick_9(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 9;
+        }
+        public void ButtonClick_0(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 0;
+        }
+        public void ButtonClickClear(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text = "";
+        }
+        public void ButtonClick_11(object sender, RoutedEventArgs e)
+        {
+            InputIdForDeleteChat.Text += 1;
+        }
+        public void ButtonClick_21(object sender, RoutedEventArgs e)
+        {
+            InputIdForDeleteChat.Text += 2;
+        }
+        public void ButtonClick_31(object sender, RoutedEventArgs e)
+        {
+            InputIdForDeleteChat.Text += 3;
+        }
+        public void ButtonClick_41(object sender, RoutedEventArgs e)
+        {
+            InputIdForDeleteChat.Text += 4;
+        }
+        public void ButtonClick_51(object sender, RoutedEventArgs e)
+        {
+            InputIdForDeleteChat.Text += 5;
+        }
+        public void ButtonClick_61(object sender, RoutedEventArgs e)
+        {
+            InputIdForDeleteChat.Text += 6;
+        }
+        public void ButtonClick_71(object sender, RoutedEventArgs e)
+        {
+            InputIdForDeleteChat.Text += 7;
+        }
+        public void ButtonClick_81(object sender, RoutedEventArgs e)
+        {
+            InputIdForDeleteChat.Text += 8;
+        }
+        public void ButtonClick_91(object sender, RoutedEventArgs e)
+        {
+            InputIdForDeleteChat.Text += 9;
+        }
+        public void ButtonClick_01(object sender, RoutedEventArgs e)
+        {
+            InputIdForDeleteChat.Text += 0;
+        }
+        public void ButtonClickClear1(object sender, RoutedEventArgs e)
+        {
+            InputIdForDeleteChat.Text = "";
+        }
+        private void WrapPanelVisible(object sender, MouseButtonEventArgs e)
+        {
+            WrapPanelNums.Visibility = Visibility.Visible;
+        }
+        public void ButnClick_1(object sender, RoutedEventArgs e)
+        {
+            Price.Text += 1;
+        }
 
+        public void ButnClick_2(object sender, RoutedEventArgs e)
+        {
+            Price.Text += 2;
+        }
 
-        //    if (item != null)
-        //    {
-        //        var item2 = key;
+        public void ButnClick_3(object sender, RoutedEventArgs e)
+        {
+            Price.Text += 3;
+        }
 
+        public void ButnClick_4(object sender, RoutedEventArgs e)
+        {
+            Price.Text += 4;
+        }
 
-        //        db.SaveChanges();
+        public void ButnClick_5(object sender, RoutedEventArgs e)
+        {
+            Price.Text += 5;
+        }
 
+        public void ButnClick_6(object sender, RoutedEventArgs e)
+        {
+            Price.Text += 6;
+        }
 
-        //        db.OrderForBuyers.Remove(item);
-        //        db.SaveChanges();
-        //        DownTrayBuyerOrders.Background = Brushes.LightGreen;
-        //        DownTrayBuyerOrders.Content = "Удалена запись --" + SetIdBuyer.Text;
-        //        SetIdBuyer.Text = "";
-        //        UserOrder.ItemsSource = db.OrderForBuyers.ToList();
-        //    }
+        public void ButnClick_7(object sender, RoutedEventArgs e)
+        {
+            Price.Text += 7;
+        }
 
+        public void ButnClick_8(object sender, RoutedEventArgs e)
+        {
+            Price.Text += 8;
+        }
 
+        public void ButnClick_9(object sender, RoutedEventArgs e)
+        {
+            Price.Text += 9;
+        }
 
-        //}
+        public void ButnClick_0(object sender, RoutedEventArgs e)
+        {
+            Price.Text += 0;
+        }
+
+        public void ButnClickClearNums(object sender, RoutedEventArgs e)
+        {
+            Price.Text = "";
+        }
+
+        private void ButtonClickRegistrationUser(object sender, RoutedEventArgs e)
+        {
+            bool flag = true;
+            if (nameTextBoxRegistration.Text == "")
+            {
+                DownTrayRegistration.Content = "Не ввели имя!";
+                DownTrayRegistration.Background = Brushes.LightCoral;
+                flag = false;
+            }
+            if (lastNameTextBoxRegistration.Text == "")
+            {
+                DownTrayRegistration.Content = "Не ввели фамилию!";
+                DownTrayRegistration.Background = Brushes.LightCoral;
+                flag = false;
+            }
+            if (mobileTextBoxRegistration.Text == "")
+            {
+                DownTrayRegistration.Content = "Не ввели номер телефона!";
+                DownTrayRegistration.Background = Brushes.LightCoral;
+                flag = false;
+            }
+            if (passwordTextBoxRegistration.Text == "")
+            {
+                DownTrayRegistration.Content = "Не ввели пароль пользователя!";
+                DownTrayRegistration.Background = Brushes.LightCoral;
+                flag = false;
+            }
+            if (flag)
+            {
+                
+                User usersContext1 = new User
+                {
+                    Name = nameTextBoxRegistration.Text,
+                    LastName = lastNameTextBoxRegistration.Text,
+                    Mobile = mobileTextBoxRegistration.Text,
+                    Password = passwordTextBoxRegistration.Text,
+                    DateOfRegistration = DateTime.Now.ToString(),
+                    CheckKitchen = 
+                    accessKitchen.Text,
+                    CheckPymaster = accessPaymast.Text,
+                    CheckDelivery = accessDelivery.Text,
+                    CheckBuyer = accessBuyer.Text,
+                    CheckSupervisor = accessSupervisor.Text
+                };
+                usersContext.Users.Add(usersContext1);
+                usersContext.SaveChanges();
+                UserRegistration.ItemsSource = usersContext.Users.ToList();
+                DownTrayRegistration.Content = "Пользователь зарегистрирован!";
+                DownTrayRegistration.Background = Brushes.LightGreen;
+                nameTextBoxRegistration.Text = "";
+                lastNameTextBoxRegistration.Text = "";
+                mobileTextBoxRegistration.Text = "";
+                passwordTextBoxRegistration.Text = "";
+                accessBuyer.Text = "";
+                accessBuyer.Background = Brushes.LightCoral;
+                accessKitchen.Text = "";
+                accessKitchen.Background = Brushes.LightCoral;
+                accessPaymast.Text = "";
+                accessPaymast.Background = Brushes.LightCoral;
+                accessDelivery.Text = "";
+                accessDelivery.Background = Brushes.LightCoral;
+                accessSupervisor.Text = "";
+                accessSupervisor.Background = Brushes.LightCoral;
+            }
+        }
+        private void ButtonClick_1Reg(object sender, RoutedEventArgs e)
+        {
+            RegIdSearch.Text += 1;
+        }
+
+        private void ButtonClick_2Reg(object sender, RoutedEventArgs e)
+        {
+            RegIdSearch.Text += 2;
+        }
+
+        private void ButtonClick_3Reg(object sender, RoutedEventArgs e)
+        {
+            RegIdSearch.Text += 3;
+        }
+
+        private void ButtonClick_4Reg(object sender, RoutedEventArgs e)
+        {
+            RegIdSearch.Text += 4;
+        }
+
+        private void ButtonClick_5Reg(object sender, RoutedEventArgs e)
+        {
+            RegIdSearch.Text += 5;
+        }
+
+        private void ButtonClick_6Reg(object sender, RoutedEventArgs e)
+        {
+            RegIdSearch.Text += 6;
+        }
+
+        private void ButtonClick_7Reg(object sender, RoutedEventArgs e)
+        {
+            RegIdSearch.Text += 7;
+        }
+
+        private void ButtonClick_8Reg(object sender, RoutedEventArgs e)
+        {
+            RegIdSearch.Text += 8;
+        }
+
+        private void ButtonClick_9Reg(object sender, RoutedEventArgs e)
+        {
+            RegIdSearch.Text += 9;
+        }
+
+        private void ButtonClick_0Reg(object sender, RoutedEventArgs e)
+        {
+            RegIdSearch.Text += 0;
+        }
+
+        private void ButtonClickClearReg(object sender, RoutedEventArgs e)
+        {
+            RegIdSearch.Text = "";
+        }
+
+        private void ButtonClickDeleteReg(object sender, RoutedEventArgs e)
+        {
+            if (RegIdSearch.Text == "")
+            {
+                DownTrayRegistration.Content = "Не ввели номер!";
+                DownTrayRegistration.Background = Brushes.LightCoral;
+            }
+            else
+            {
+                int key = Convert.ToInt32(RegIdSearch.Text.Trim());
+                var item = usersContext.Users.Find(key);
+
+                if (item != null)
+                {
+                    usersContext.Users.Remove(item);
+                    usersContext.SaveChanges();
+                    UpdateChatIfClickSend();
+                    DownTrayRegistration.Content = "Удалена запись:" + " " + key + " --" + DateTime.Now.ToString();
+                    DownTrayRegistration.Background = Brushes.LightCoral;
+                    RegIdSearch.Text = "";
+                    UserRegistration.ItemsSource = usersContext.Users.ToList();
+                }
+                else
+                {
+                    DownTrayRegistration.Content = "Нет такого значения!";
+                    DownTrayRegistration.Background = Brushes.LightCoral;
+                }
+            }
+        }
+        
+                
+                
+                
+                
+        private void checkKitchenCheked(object sender, RoutedEventArgs e)
+        {
+            accessKitchen.Text = "Повар";
+            Hidden.Text += "Повар";
+            accessKitchen.Background = Brushes.LightGreen;
+        }
+        private void checkPymasterCheked(object sender, RoutedEventArgs e)
+        {
+            accessPaymast.Text = "Кассир";
+            Hidden.Text += "Кассир";
+            accessPaymast.Background = Brushes.LightGreen;
+        }
+        private void checkDeliveryCheked(object sender, RoutedEventArgs e)
+        {
+            accessDelivery.Text = "Доставщик";
+            Hidden.Text += "Доставщик";
+            accessDelivery.Background = Brushes.LightGreen;
+        }
+        private void checkBuyerCheked(object sender, RoutedEventArgs e)
+        {
+            accessBuyer.Text = "Покупатель";
+            Hidden.Text += "Покупатель";
+            accessBuyer.Background = Brushes.LightGreen;
+        }
+        private void checkSupervisorCheked(object sender, RoutedEventArgs e)
+        {
+            accessSupervisor.Text = "Директор";
+            Hidden.Text += "Директор";
+            accessSupervisor.Background = Brushes.LightGreen;
+        }
+        private void checkBuyerUnchecked(object sender, RoutedEventArgs e)
+        {
+            accessBuyer.Text = "";
+            accessBuyer.Background = Brushes.LightCoral;
+        }
+        private void checkKitchenUnchecked(object sender, RoutedEventArgs e)
+        {
+            accessKitchen.Text = "";
+            accessKitchen.Background = Brushes.LightCoral;
+        }
+        private void checkPymasterUnchecked(object sender, RoutedEventArgs e)
+        {
+            accessPaymast.Text = "";
+            accessPaymast.Background = Brushes.LightCoral;
+        }
+        private void checkDeliveryUnchecked(object sender, RoutedEventArgs e)
+        {
+            accessDelivery.Text = "";
+            accessDelivery.Background = Brushes.LightCoral;
+        }
+        private void checkSupervisorUnchecked(object sender, RoutedEventArgs e)
+        {
+            accessSupervisor.Text = "";
+            accessSupervisor.Background = Brushes.LightCoral;
+        }
     }
 }

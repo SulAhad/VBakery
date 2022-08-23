@@ -1,65 +1,44 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.Data;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using VBakery.DB;
-using VBakery.MenuDB;
+using VBakery.Model;
 
 namespace VBakery
 {
     public partial class PaymasterSales : Window
     {
-        private DispatcherTimer timer;
-        public class ArrLst
-        {
-            public int[] array = new int[100];
-        }
+        LoginWindow loginWindow = new();
+        TimerEndsContext timerEndsContext = new();
+        TimerStartsContext timerStartsContext = new();
+        OrderForBuyersContext orderForBuyersContext = new();
         public PaymasterSales()
         {
-            InitializeComponent();
 
-            using FirstCourseContext db = new();
-            Button button = new();
+            InitializeComponent();
 
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
 
             subtotal.Text = "0";
             total.Text = "0";
+
             string time = DateTime.Now.ToString();
             OpenTime.Text = time;
-            var timer = new System.Windows.Threading.DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 1);
-            timer.IsEnabled = true;
+
+            DispatcherTimer timer = new()
+            {
+                Interval = new TimeSpan(0, 0, 1),
+                IsEnabled = true
+            };
+
             timer.Tick += (o, t) => { Times.Text = DateTime.Now.ToString(); };
             timer.Start();
-            LoginWindow loginWindow = new();
+
             TimeKitchener();
         }
-        void PrintText(object sender, SelectionChangedEventArgs args)
-        {
-            ListBoxItem lbi = ((sender as ListBox).SelectedItem as ListBoxItem);
-            TextArea.Text = "   You selected " + lbi.Content.ToString() + ".";
-        }
-        //public void TimerScreen()
-        //{
-        //    timer = new DispatcherTimer();
-        //    timer.Interval = new TimeSpan(0, 0, 2);
-        //    timer.Tick += new EventHandler(timer_Tick);
-        //    timer.Start();
-
-        //}
-        //private void timer_Tick(object sender, EventArgs e)
-        //{
-        //    LoginWindow loginWindow = new LoginWindow();
-        //    loginWindow.Show();
-        //    this.Close();
-        //}
         private void HandlerKeyDownEvent(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -82,438 +61,365 @@ namespace VBakery
                     break;
             }
         }//Клавиатура
-        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
         public void Button_Click(object sender, RoutedEventArgs e)
         {
+            int price = 12;
+            string name = "свекла(нарезка)";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                int A = 12;
-                NumArea.Text += A + "\r\n";
-                TextArea.Text += "свекла(нарезка)" + "\r\n";
-                subtotal.Text += A;
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                int A = 12;
-                NumArea.Text += A + "\r\n";
-                TextArea.Text += "свекла(нарезка)" + "\r\n";
-                subtotal.Text += A;
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            int price = 15;
+            string name = "макароны отварные";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                int B = 15;
-                NumArea.Text += B + "\r\n";
-                TextArea.Text += "макароны отварные" + "\r\n";
-                subtotal.Text += B;
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                int B = 15;
-                NumArea.Text += B + "\r\n";
-                TextArea.Text += "макароны отварные" + "\r\n";
-                subtotal.Text += B;
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
+            int price = 23;
+            string name = "Рассольник";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 23 + "\r\n";
-                TextArea.Text += "Рассольник" + "\r\n";
-                int C = 23;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[2] = C;
-                subtotal.Text += arrLst.array[2];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 23 + "\r\n";
-                TextArea.Text += "Рассольник" + "\r\n";
-                int C = 23;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[2] = C;
-                subtotal.Text += arrLst.array[2];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
+            int price = 16;
+            string name = "Салат из моркови с майонезом";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 16 + "\r\n";
-                TextArea.Text += "Салат из моркови с майонезом" + "\r\n";
-                int D = 16;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[3] = D;
-                subtotal.Text += arrLst.array[3];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 16 + "\r\n";
-                TextArea.Text += "Салат из моркови с майонезом" + "\r\n";
-                int D = 16;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[3] = D;
-                subtotal.Text += arrLst.array[3];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
+            int price = 15;
+            string name = "Рис";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 15 + "\r\n";
-                TextArea.Text += "Рис" + "\r\n";
-                int E = 15;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[4] = E;
-                subtotal.Text += arrLst.array[4];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 15 + "\r\n";
-                TextArea.Text += "Рис" + "\r\n";
-                int E = 15;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[4] = E;
-                subtotal.Text += arrLst.array[4];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_6(object sender, RoutedEventArgs e)
         {
+            int price = 27;
+            string name = "Суп вермишелевый";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 27 + "\r\n";
-                TextArea.Text += "Суп вермишелевый" + "\r\n";
-                int F = 27;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[5] = F;
-                subtotal.Text += arrLst.array[5];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 27 + "\r\n";
-                TextArea.Text += "Суп вермишелевый" + "\r\n";
-                int F = 27;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[5] = F;
-                subtotal.Text += arrLst.array[5];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_7(object sender, RoutedEventArgs e)
         {
+            int price = 13;
+            string name = "Салат из капусты";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 13 + "\r\n";
-                TextArea.Text += "Салат из капусты" + "\r\n";
-                int G = 13;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[6] = G;
-                subtotal.Text += arrLst.array[6];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 13 + "\r\n";
-                TextArea.Text += "Салат из капусты" + "\r\n";
-                int G = 13;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[6] = G;
-                subtotal.Text += arrLst.array[6];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_8(object sender, RoutedEventArgs e)
         {
+            int price = 22;
+            string name = "Нарезка: огурцы, помидоры";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 22 + "\r\n";
-                TextArea.Text += "Нарезка: огурцы, помидоры" + "\r\n";
-                int H = 22;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[7] = H;
-                subtotal.Text += arrLst.array[7];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 22 + "\r\n";
-                TextArea.Text += "Нарезка: огурцы, помидоры" + "\r\n";
-                int H = 22;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[7] = H;
-                subtotal.Text += arrLst.array[7];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
-
         }
         private void Button_Click_9(object sender, RoutedEventArgs e)
         {
+            int price = 4;
+            string name = "масло";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 4 + "\r\n";
-                TextArea.Text += "масло" + "\r\n";
-                int I = 4;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[8] = I;
-                subtotal.Text += arrLst.array[8];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 4 + "\r\n";
-                TextArea.Text += "масло" + "\r\n";
-                int I = 4;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[8] = I;
-                subtotal.Text += arrLst.array[8];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_10(object sender, RoutedEventArgs e)
         {
+            int price = 3;
+            string name = "Хлеб ржаной";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 3 + "\r\n";
-                TextArea.Text += "Хлеб ржаной" + "\r\n";
-                int J = 3;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[9] = J;
-                subtotal.Text += arrLst.array[9];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 3 + "\r\n";
-                TextArea.Text += "Хлеб ржаной" + "\r\n";
-                int J = 3;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[9] = J;
-                subtotal.Text += arrLst.array[9];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_11(object sender, RoutedEventArgs e)
         {
+            int price = 32;
+            string name = "Салат \"Лобио\"";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 32 + "\r\n";
-                TextArea.Text += "Салат \"Лобио\"" + "\r\n";
-                int K = 32;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[10] = K;
-                subtotal.Text += arrLst.array[10];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 32 + "\r\n";
-                TextArea.Text += "Салат \"Лобио\"" + "\r\n";
-                int K = 32;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[10] = K;
-                subtotal.Text += arrLst.array[10];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_12(object sender, RoutedEventArgs e)
         {
+            int price = 8;
+            string name = "Зелень нарезка";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 8 + "\r\n";
-                TextArea.Text += "Зелень нарезка" + "\r\n";
-                int L = 8;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[11] = L;
-                subtotal.Text += arrLst.array[11];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 8 + "\r\n";
-                TextArea.Text += "Зелень нарезка" + "\r\n";
-                int L = 8;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[11] = L;
-                subtotal.Text += arrLst.array[11];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_13(object sender, RoutedEventArgs e)
         {
+            int price = 15;
+            string name = "Компот из сухофруктов";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 15 + "\r\n";
-                TextArea.Text += "Компот из сухофруктов" + "\r\n";
-                int M = 15;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[12] = M;
-                subtotal.Text += arrLst.array[12];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 15 + "\r\n";
-                TextArea.Text += "Компот из сухофруктов" + "\r\n";
-                int M = 15;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[12] = M;
-                subtotal.Text += arrLst.array[12];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_14(object sender, RoutedEventArgs e)
         {
+            int price = 5;
+            string name = "Соус красный";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 5 + "\r\n";
-                TextArea.Text += "Соус красный" + "\r\n";
-                int N = 5;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[13] = N;
-                subtotal.Text += arrLst.array[13];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 5 + "\r\n";
-                TextArea.Text += "Соус красный" + "\r\n";
-                int N = 5;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[13] = N;
-                subtotal.Text += arrLst.array[13];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_15(object sender, RoutedEventArgs e)
         {
+            int price = 15;
+            string name = "Напиток ягодный";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 15 + "\r\n";
-                TextArea.Text += "Напиток ягодный" + "\r\n";
-                int O = 15;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[14] = O;
-                subtotal.Text += arrLst.array[14];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 15 + "\r\n";
-                TextArea.Text += "Напиток ягодный" + "\r\n";
-                int O = 15;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[14] = O;
-                subtotal.Text += arrLst.array[14];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_16(object sender, RoutedEventArgs e)
         {
+            int price = 5;
+            string name = "Майонез";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 5 + "\r\n";
-                TextArea.Text += "Майонез" + "\r\n";
-                int P = 5;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[15] = P;
-                subtotal.Text += arrLst.array[15];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 5 + "\r\n";
-                TextArea.Text += "Майонез" + "\r\n";
-                int P = 5;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[15] = P;
-                subtotal.Text += arrLst.array[15];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_17(object sender, RoutedEventArgs e)
         {
+            int price = 10;
+            string name = "Чай с лимоном";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 10 + "\r\n";
-                TextArea.Text += "Чай с лимоном" + "\r\n";
-                int Q = 10;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[16] = Q;
-                subtotal.Text += arrLst.array[16];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 10 + "\r\n";
-                TextArea.Text += "Чай с лимоном" + "\r\n";
-                int Q = 10;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[16] = Q;
-                subtotal.Text += arrLst.array[16];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_18(object sender, RoutedEventArgs e)
         {
+            int price = 5;
+            string name = "Сметана";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 5 + "\r\n";
-                TextArea.Text += "Сметана" + "\r\n";
-                int R = 5;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[17] = R;
-                subtotal.Text += arrLst.array[17];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 5 + "\r\n";
-                TextArea.Text += "Сметана" + "\r\n";
-                int R = 5;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[17] = R;
-                subtotal.Text += arrLst.array[17];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_19(object sender, RoutedEventArgs e)
         {
+            int price = 8;
+            string name = "Чай 0.2";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
-                NumArea.Text += 8 + "\r\n";
-                TextArea.Text += "Чай 0.2" + "\r\n";
-                int S = 8;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[18] = S;
-                subtotal.Text += arrLst.array[18];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
                 subtotal.Text += "+";
-                NumArea.Text += 8 + "\r\n";
-                TextArea.Text += "Чай 0.2" + "\r\n";
-                int S = 8;
-                ArrLst arrLst = new ArrLst();
-                arrLst.array[18] = S;
-                subtotal.Text += arrLst.array[18];
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
         }
         private void Button_Click_Total(object sender, RoutedEventArgs e)
@@ -531,28 +437,25 @@ namespace VBakery
         }
         private void Image_MouseDown_Lock(object sender, MouseButtonEventArgs e)
         {
-            LoginWindow loginWindow = new();
-            loginWindow.Show();
-            this.Close();
-            using TimerEndsContext db = new();
-            TimerEnd endTime = new TimerEnd
+            PaymasterSales paymaster = new();
+            loginWindow.ShowDialog();
+            paymaster.Close();
+            TimerEnd endTime = new()
             {
                 end = DateTime.Now.ToString()
             };
-            db.TimerEnds.Add(endTime);
-            db.SaveChanges();
+            timerEndsContext.TimerEnds.Add(endTime);
+            timerEndsContext.SaveChanges();
             
         }
         private void TimeKitchener()
         {
-
-            using TimerStartsContext db = new();
             TimerStart time = new TimerStart
             {
                 begin = OpenTime.Text,
             };
-            db.TimerStarts.Add(time);
-            db.SaveChanges();
+            timerStartsContext.TimerStarts.Add(time);
+            timerStartsContext.SaveChanges();
         }
         private void Button_Click_GotoKitchen(object sender, RoutedEventArgs e)
         {
@@ -565,25 +468,33 @@ namespace VBakery
             {
                 Errors.Text = "Заказ отправлен повару!";
                 ErrorsColor.Color = Color.FromRgb(0, 100, 0);
-                using OrderForBuyersContext db = new();
-                OrderForBuyer tim = new OrderForBuyer
+                
+                OrderForBuyer tim = new()
                 {
-                    name = "Кассир",
-                    nameProduct = TextArea.Text,
-                    address = "",
-                    comm = commForKitchen.Text,
-                    dateTime = DateTime.Now.ToString(),
-                    total = total.Text
-
-            };
-                db.OrderForBuyers.Add(tim);
-                db.SaveChanges();
+                    BuyerName = "Кассир",
+                    NameProduct = TextArea.Text,
+                    StaffComment = commForKitchen.Text,
+                    OrderDateTime = DateTime.Now.ToString(),
+                    OrderPrice = (int)Convert.ToSingle(total.Text)
+                };
+                LogOrdersContext dbLogOrder = new();
+                LogOrder logOrder = new LogOrder
+                {
+                    BuyerName = "Кассир",
+                    NameProduct = TextArea.Text,
+                    StaffComment = commForKitchen.Text,
+                    OrderDateTime = DateTime.Now.ToString(),
+                    OrderPrice = (int)Convert.ToSingle(total.Text)
+                };
+                dbLogOrder.LogOrders.Add(logOrder);
+                dbLogOrder.SaveChanges();
+                orderForBuyersContext.OrderForBuyers.Add(tim);
+                orderForBuyersContext.SaveChanges();
                 NumArea.Text = "";
                 TextArea.Text = "";
                 subtotal.Text = "0";
-                total.Text = "0";
+                total.Text = "0"; 
                 commForKitchen.Text = "";
-                
             }
         }
         private void Button_Click_Discount(object sender, RoutedEventArgs e)
@@ -603,8 +514,7 @@ namespace VBakery
         private void OpenCalculator(object sender, MouseButtonEventArgs e)
         {
             PaymasterCalculator paymasterCalculator = new();
-            paymasterCalculator.Show();
-            paymasterCalculator.Owner = this;
+            paymasterCalculator.ShowDialog();
         }
         private void Image_MouseDown_GetBackHome(object sender, MouseButtonEventArgs e)
         {
@@ -614,13 +524,12 @@ namespace VBakery
             MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
             {
-                using TimerEndsContext db = new();
-                TimerEnd endTime = new TimerEnd
+                TimerEnd endTime = new()
                 {
                     end = DateTime.Now.ToString()
                 };
-                db.TimerEnds.Add(endTime);
-                db.SaveChanges();
+                timerEndsContext.TimerEnds.Add(endTime);
+                timerEndsContext.SaveChanges();
                 MainWindow mainWindow = new();
                 mainWindow.Show();
                 this.Close();
@@ -629,20 +538,22 @@ namespace VBakery
         private void OpenRecepts(object sender, MouseButtonEventArgs e)
         {
             Recepts recepts = new();
-            recepts.Show();
-
+            recepts.ShowDialog();
         }
         private void openChat(object sender, MouseButtonEventArgs e)
         {
-
             ChatRoom chatRoom = new();
-
-            chatRoom.Show();
+            chatRoom.ShowDialog();
             chatRoom.chatUser.Content = "Кассир";
         }
         private void ButtonClickClose(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private void Image_MouseDown_FindOrder(object sender, MouseButtonEventArgs e)
+        {
+            Orders orders = new();
+            orders.ShowDialog();
         }
     }
 }

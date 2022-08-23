@@ -7,11 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="block.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.16.0" />
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.17" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="block.png" />
   </ItemGroup>
 
 </Project>

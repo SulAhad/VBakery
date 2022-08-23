@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:VBakery"
         mc:Ignorable="d"
         Title="PaymasterSales" Height="768" Width="1014" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
-    <Grid>
+    <Grid x:Name="KitchenerWindow" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -165,7 +165,7 @@
             </Rectangle.Fill>
         </Rectangle>
         <Image Grid.Row="2" Grid.Column="4" Width="20" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\strelka.png" MouseDown="Image_MouseDown_Clear"></Image>
-        <Image Grid.Row="2" Grid.Column="5" Width="20" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\poisk.png"></Image>
+        <Image MouseDown="Image_MouseDown_FindOrder" Grid.Row="2" Grid.Column="5" Width="20" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\poisk.png"></Image>
         <Image Grid.Row="2" Grid.Column="6" Width="20" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\dom.png" MouseDown="Image_MouseDown_GetBackHome"></Image>
         <Rectangle Grid.Column="7" Grid.Row="2" Grid.ColumnSpan="3" Margin="2 2 2 2">
             <Rectangle.Fill>
@@ -187,29 +187,29 @@
             </Rectangle.Fill>
         </Rectangle>
 
-        <Button x:Name="bit" Grid.Column="7" Grid.Row="3" Margin="1 1 1 1" Click="Button_Click">
+        <Button Grid.Column="7" Grid.Row="3" Margin="1 1 1 1" Click="Button_Click">
             <TextBlock TextAlignment="Center" FontSize="13">свекла<LineBreak/>нарезка</TextBlock>
         </Button>
         <Button Grid.Column="8" Grid.Row="3" Margin="1 1 1 1" Click="Button_Click_1">
-            <TextBlock Text="{Binding name}" TextAlignment="Center" FontSize="13">Макароны<LineBreak/>отварные</TextBlock>
+            <TextBlock TextAlignment="Center" FontSize="13">Макароны<LineBreak/>отварные</TextBlock>
         </Button>
         <Button Grid.Column="9" Grid.Row="3" Margin="1 1 1 1" Click="Button_Click_3" >
-            <TextBlock Text="{Binding name}" TextAlignment="Center" FontSize="13">Рассольник</TextBlock>
+            <TextBlock TextAlignment="Center" FontSize="13">Рассольник</TextBlock>
         </Button>
         <Button Grid.Column="9" Grid.Row="4" Margin="1 1 1 1" Click="Button_Click_4">
-            <TextBlock Text="{Binding name}" TextAlignment="Center" FontSize="13">Салат из моркови<LineBreak/>с майонезом</TextBlock>
+            <TextBlock TextAlignment="Center" FontSize="13">Салат из моркови<LineBreak/>с майонезом</TextBlock>
         </Button>
         <Button Grid.Column="7" Grid.Row="4" Margin="1 1 1 1" Click="Button_Click_5">
-            <TextBlock Text="{Binding name}" TextAlignment="Center" FontSize="13">Рис</TextBlock>
+            <TextBlock TextAlignment="Center" FontSize="13">Рис</TextBlock>
         </Button>
         <Button Grid.Column="8" Grid.Row="4" Margin="1 1 1 1" Click="Button_Click_6">
-            <TextBlock Text="{Binding name}" TextAlignment="Center" FontSize="13">Суп<LineBreak/>вермишелевый</TextBlock>
+            <TextBlock TextAlignment="Center" FontSize="13">Суп<LineBreak/>вермишелевый</TextBlock>
         </Button>
         <Button Grid.Column="9" Grid.Row="5" Margin="1 1 1 1" Click="Button_Click_7">
-            <TextBlock Text="{Binding name}" TextAlignment="Center" FontSize="13">Салат<LineBreak/>из капусты</TextBlock>
+            <TextBlock TextAlignment="Center" FontSize="13">Салат<LineBreak/>из капусты</TextBlock>
         </Button>
         <Button Grid.Column="9" Grid.Row="6" Margin="1 1 1 1" Click="Button_Click_8">
-            <TextBlock Text="{Binding name}" TextAlignment="Center" FontSize="13">Нарезка:<LineBreak/>огурцы, помидоры</TextBlock>
+            <TextBlock TextAlignment="Center" FontSize="13">Нарезка:<LineBreak/>огурцы, помидоры</TextBlock>
         </Button>
         <Button Grid.Column="9" Grid.Row="7" Margin="1 1 1 1" Click="Button_Click_9">
             <TextBlock TextAlignment="Center" FontSize="13">масло</TextBlock>

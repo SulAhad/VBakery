@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -11,13 +12,13 @@ namespace VBakery
         public Deliveryman()
         {
             InitializeComponent();
-            Update();
+            UpdateOrderForDelivery();
         }
-        public void Update()
+        public void UpdateOrderForDelivery()
         {
-            using OrderForBuyersContext db = new();
-            UserList.ItemsSource = db.OrderForBuyers.ToList();
-            db.SaveChanges();
+            using OrderForDeliverysContext db = new();
+            UserList.ItemsSource = db.OrderForDeliverys.ToList();
+            DownTray.Content = "Обновлено --" + DateTime.Now.ToString();
         }
         private void HandlerKeyDownEvent(object sender, KeyEventArgs e)
         {
@@ -32,13 +33,11 @@ namespace VBakery
                     break;
             }
         }//Клавиатура
-        private void MouseDownRefresh(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void MouseDownRefresh(object sender, MouseButtonEventArgs e)
         {
-            using OrderForBuyersContext db = new();
-            UserList.ItemsSource = db.OrderForBuyers.ToArray();
-            DownTrayKitchenerOrders.Content = "Обновлено --" + System.DateTime.Now.ToString();
+            UpdateOrderForDelivery();
         }
-        private void MouseDownGotoHome(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void MouseDownGotoHome(object sender, MouseButtonEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show(
             "Вы точно хотите выйти?",
@@ -51,15 +50,15 @@ namespace VBakery
                 this.Close();
             }
         }
-        private void OpenRecepts(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OpenRecepts(object sender, MouseButtonEventArgs e)
         {
             Recepts recepts = new();
-            recepts.Show();
+            recepts.ShowDialog();
         }
-        private void OpenChat(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OpenChat(object sender, MouseButtonEventArgs e)
         {
             ChatRoom chatRoom = new();
-            chatRoom.Show();
+            chatRoom.ShowDialog();
             chatRoom.chatUser.Content = "Доставщик";
         }
         private void ButtonClickPlus(object sender, RoutedEventArgs e)
@@ -81,43 +80,94 @@ namespace VBakery
         {
             this.Close();
         }
-        private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            ScrollBar scrollBar = new();
-            scrollBar.Value = numeric.Value;
-            findId.Text = Convert.ToString(numeric.Value);
-        }
+        //private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        //{
+        //    ScrollBar scrollBar = new();
+        //    scrollBar.Value = numeric.Value;
+        //    findId.Text = Convert.ToString(numeric.Value);
+        //}
         private void ButtonDelete(object sender, RoutedEventArgs e)
         {
-            using OrderForBuyersContext db = new OrderForBuyersContext();
+            using OrderForDeliverysContext db = new();
 
-            if (findId.Text == "")
+            if (InputIdForDelete.Text == "")
             {
-                DownTrayKitchenerOrders.Content = "Не ввели номер!";
-                DownTrayKitchenerOrders.Background = Brushes.LightCoral;
+                DownTray.Content = "Не ввели номер!";
+                DownTray.Background = Brushes.LightCoral;
             }
             else
             {
-                findId.Text = findId.Text.Trim();
+                InputIdForDelete.Text = InputIdForDelete.Text.Trim();
 
-                int key = Convert.ToInt32(findId.Text.Trim());
+                int key = Convert.ToInt32(InputIdForDelete.Text.Trim());
 
-                var item = db.OrderForBuyers.Find(key);
+                var item = db.OrderForDeliverys.Find(key);
 
                 if (item != null)
                 {
-                    db.OrderForBuyers.Remove(item);
+                    db.OrderForDeliverys.Remove(item);
                     db.SaveChanges();
-                    DownTrayKitchenerOrders.Background = Brushes.LightGreen;
-                    DownTrayKitchenerOrders.Content = "Удалена запись --" + findId.Text;
-                    findId.Text = "";
-                    UserList.ItemsSource = db.OrderForBuyers.ToList();
+                    DownTray.Background = Brushes.LightGreen;
+                    DownTray.Content = "Удалена запись --" + InputIdForDelete.Text;
+                    InputIdForDelete.Text = "";
+                    UserList.ItemsSource = db.OrderForDeliverys.ToList();
                 }
                 else
                 {
                     MessageBox.Show("Не найдено такое значение!");
                 }
             }
+        }
+        public void ButtonClick_1(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 1;
+        }
+        public void ButtonClick_2(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 2;
+        }
+        public void ButtonClick_3(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 3;
+        }
+        public void ButtonClick_4(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 4;
+        }
+        public void ButtonClick_5(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 5;
+        }
+        public void ButtonClick_6(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 6;
+        }
+        public void ButtonClick_7(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 7;
+        }
+        public void ButtonClick_8(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 8;
+        }
+        public void ButtonClick_9(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 9;
+        }
+        public void ButtonClick_0(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 0;
+        }
+        public void ButtonClickClear(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text = "";
+        }
+        private void MouseDownLock(object sender, MouseButtonEventArgs e)
+        {
+            Deliveryman deliveryman = new();
+            deliveryman.Close();
+            LoginWindow loginWindow = new();
+            loginWindow.ShowDialog();
         }
     }
 }

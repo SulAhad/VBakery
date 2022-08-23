@@ -8,6 +8,7 @@ namespace VBakery
         public MainWindow()
         {
             InitializeComponent();
+            
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
         }
         private void HandlerKeyDownEvent(object sender, KeyEventArgs e)
@@ -47,7 +48,7 @@ namespace VBakery
             buyer.Show();
             Close();
         }
-        private void Supervisor_MouseDown(object sender, RoutedEventArgs e)
+        public void Supervisor_MouseDown(object sender, RoutedEventArgs e)
         {
             Supervisor supervisor = new();
             supervisor.Show();

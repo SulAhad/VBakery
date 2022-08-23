@@ -143,7 +143,7 @@
                             Grid.ColumnSpan="10">
                             <Rectangle.Fill>
                                 <LinearGradientBrush>
-                                    <GradientStop Color="AliceBlue" Offset="0"></GradientStop>
+                                    <GradientStop Color="LightGray" Offset="0"></GradientStop>
                                 </LinearGradientBrush>
                             </Rectangle.Fill>
                         </Rectangle>
@@ -156,7 +156,7 @@
                             >
                             <Label
                                 FontFamily="Segoe UI"
-                                x:Name="DownTrayKitchenerOrders"
+                                x:Name="DownTray"
                                 Foreground="Black"
                                 Background="AliceBlue"
                                 FontSize="12"
@@ -179,7 +179,7 @@
                                 AlternatingRowBackground="White"
                                 RowBackground="AliceBlue"
                                 GridLinesVisibility="Horizontal"
-                                x:Name="UserList" 
+                                x:Name="UserOrder" 
                                 FontSize="16" 
                                 FontWeight="Normal" 
                                 AutoGenerateColumns="False" 
@@ -204,20 +204,12 @@
                                                 <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
-                                                    Text="{Binding name}"  
+                                                    Text="{Binding BuyerName}"  
                                                     TextWrapping="Wrap">
                                                 </TextBlock>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
-                                    <DataGridTextColumn 
-                                        x:Name="mobile" 
-                                        Binding="{Binding mobile}" 
-                                        IsReadOnly="True" 
-                                        FontWeight="Light"
-                                        Header="Телефон" 
-                                        Width="160" 
-                                        FontFamily="Segoe UI"/>
                                     <DataGridTemplateColumn 
                                         x:Name="weight" 
                                         IsReadOnly="True" 
@@ -228,7 +220,7 @@
                                                 <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
-                                                    Text="{Binding weight}"  
+                                                    Text="{Binding WeightProduct}"  
                                                     TextWrapping="Wrap">
                                                 </TextBlock>
                                             </DataTemplate>
@@ -244,7 +236,7 @@
                                                 <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
-                                                    Text="{Binding nameProduct}"  
+                                                    Text="{Binding NameProduct}"  
                                                     TextWrapping="Wrap">
                                                 </TextBlock>
                                             </DataTemplate>
@@ -260,7 +252,7 @@
                                                 <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
-                                                    Text="{Binding comm}"  
+                                                    Text="{Binding StaffComment}"  
                                                     TextWrapping="Wrap">
                                                 </TextBlock>
                                             </DataTemplate>
@@ -276,7 +268,7 @@
                                                 <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
-                                                    Text="{Binding dateTime}"  
+                                                    Text="{Binding OrderDateTime}"  
                                                     TextWrapping="Wrap">
                                                 </TextBlock>
                                             </DataTemplate>
@@ -302,18 +294,20 @@
                                 Orientation="Horizontal">
                                 <TextBox
                                     IsReadOnly="True"
-                                    x:Name="DeleteAndGoToDelivery"
+                                    x:Name="InputIdForDelete"
                                     Grid.Row="4"
                                     Grid.Column="5"
-                                    Width="50"
-                                    Height="20"
+                                    Width="150"
+                                    Height="40"
                                     HorizontalContentAlignment="Center"
                                     VerticalAlignment="Top"
+                                    VerticalContentAlignment="Center"
                                     Margin="1 10 1 1"
-                                    FontFamily="Segoe UI">
+                                    FontFamily="Segoe UI"
+                                    FontSize="20">
 
                                 </TextBox>
-                                <ScrollBar 
+                                <!--<ScrollBar 
                                 Value="1"
                                 Minimum="1" 
                                 Maximum="9999"
@@ -329,21 +323,37 @@
                                             <TranslateTransform/>
                                         </TransformGroup>
                                     </ScrollBar.RenderTransform>
-                                </ScrollBar>
+                                </ScrollBar>-->
 
-                                
+
                             </StackPanel>
                             <TextBlock
                                 x:Name="tb"
                                     FontSize="12"
-                                Margin="2 20 2 2"></TextBlock>
-
-
+                                Margin="2 20 2 2">
+                                
+                            </TextBlock>
+                            <Button Click="ButtonClickClear" Width="150" Height="20" Content="Очистить" Margin="1 1 1 10"></Button>
+                            <WrapPanel
+                                Width="auto"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                                <Button Margin="1 1 1 1" Click="ButtonClick_1" Width="45" Height="40">1</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_2" Width="45" Height="40">2</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_3" Width="45" Height="40">3</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_4" Width="45" Height="40">4</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_5" Width="45" Height="40">5</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_6" Width="45" Height="40">6</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_7" Width="45" Height="40">7</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_8" Width="45" Height="40">8</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_9" Width="45" Height="40">9</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_0" Width="45" Height="40">0</Button>
+                            </WrapPanel>
                             <Border
                             Grid.Column="5"
                             Grid.Row="4"
                             Height="20"
-                            Width="100"
+                            Width="150"
                             Margin="1 20 1 1"
                             >
                                 <Border.Effect>
@@ -356,7 +366,8 @@
                             </Border>
 
                         </StackPanel>
-
+                        <Image Margin="1 1 1 30 " Source="/block.png" Width="50" Height="50" Grid.Row="4" Grid.Column="8"  MouseDown="MouseDownLock" VerticalAlignment="Bottom"
+                               HorizontalAlignment="Center"></Image>
                     </Grid>
                 </TabItem.Content>
             </TabItem>

@@ -155,7 +155,7 @@
                             >
                             <Label
                                 FontFamily="Segoe UI"
-                                x:Name="DownTrayKitchenerOrders"
+                                x:Name="DownTray"
                                 Foreground="Black"
                                 Background="AliceBlue"
                                 FontSize="12"
@@ -168,6 +168,7 @@
                         <Image Grid.Column="1" Grid.Row="0" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\refresh.png" Width="20" MouseDown="MouseDownRefresh"></Image>
                         <Image Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\recepts.png" Width="20" Grid.Row="0" Grid.Column="2"  Margin="0 1 0 1" MouseDown="OpenRecepts"></Image>
                         <Image Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\chat.png" Width="20" Grid.Row="0" Grid.Column="3"  Margin="0 1 0 1" MouseDown="OpenChat"></Image>
+                        
 
 
                         <DataGrid 
@@ -199,7 +200,7 @@
                                             <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
-                                                    Text="{Binding name}"  
+                                                    Text="{Binding BuyerName}"  
                                                     TextWrapping="Wrap">
                                             </TextBlock>
                                         </DataTemplate>
@@ -215,7 +216,7 @@
                                             <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
-                                                    Text="{Binding mobile}"  
+                                                    Text="{Binding BuyerMobile}"  
                                                     TextWrapping="Wrap">
                                             </TextBlock>
                                         </DataTemplate>
@@ -231,7 +232,7 @@
                                             <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
-                                                    Text="{Binding weight}"  
+                                                    Text="{Binding WeightProduct}"  
                                                     TextWrapping="Wrap">
                                             </TextBlock>
                                         </DataTemplate>
@@ -247,7 +248,7 @@
                                             <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
-                                                    Text="{Binding nameProduct}"  
+                                                    Text="{Binding NameProduct}"  
                                                     TextWrapping="Wrap">
                                             </TextBlock>
                                         </DataTemplate>
@@ -263,7 +264,7 @@
                                             <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
-                                                    Text="{Binding address}"  
+                                                    Text="{Binding DeliveryAddress}"  
                                                     TextWrapping="Wrap">
                                             </TextBlock>
                                         </DataTemplate>
@@ -279,14 +280,14 @@
                                             <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
-                                                    Text="{Binding comm}"  
+                                                    Text="{Binding StaffComment}"  
                                                     TextWrapping="Wrap">
                                             </TextBlock>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn 
-                                        Binding="{Binding data}" 
+                                        Binding="{Binding DeliveryDate}" 
                                         FontWeight="Light"
                                         Header="Дата доставки" 
                                         Width="160" 
@@ -310,17 +311,19 @@
                                 Orientation="Horizontal">
                                 <TextBox
                                     IsReadOnly="True"
-                                    x:Name="findId"
+                                    x:Name="InputIdForDelete"
                                     Grid.Row="4"
                                     Grid.Column="5"
-                                    Width="50"
-                                    Height="20"
+                                    Width="150"
+                                    Height="40"
                                     HorizontalContentAlignment="Center"
                                     VerticalAlignment="Top"
+                                    VerticalContentAlignment="Center"
                                     Margin="1 10 1 1"
-                                    FontFamily="Segoe UI">
+                                    FontFamily="Segoe UI"
+                                    FontSize="20">
                                 </TextBox>
-                                <ScrollBar 
+                                <!--<ScrollBar 
                                 Value="1"
                                 Minimum="1" 
                                 Maximum="9999"
@@ -336,13 +339,29 @@
                                             <TranslateTransform/>
                                         </TransformGroup>
                                     </ScrollBar.RenderTransform>
-                                </ScrollBar>
+                                </ScrollBar>-->
                             </StackPanel>
+                            <Button Click="ButtonClickClear" Width="150" Height="20" Content="Очистить" Margin="1 10 1 10"></Button>
+                            <WrapPanel
+                                Width="auto"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                                <Button Margin="1 1 1 1" Click="ButtonClick_1" Width="45" Height="40">1</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_2" Width="45" Height="40">2</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_3" Width="45" Height="40">3</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_4" Width="45" Height="40">4</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_5" Width="45" Height="40">5</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_6" Width="45" Height="40">6</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_7" Width="45" Height="40">7</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_8" Width="45" Height="40">8</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_9" Width="45" Height="40">9</Button>
+                                <Button Margin="1 1 1 1" Click="ButtonClick_0" Width="45" Height="40">0</Button>
+                            </WrapPanel>
                             <Border
                             Grid.Column="5"
                             Grid.Row="4"
                             Height="20"
-                            Width="100"
+                            Width="150"
                             Margin="1 20 1 1"
                             >
                                 <Border.Effect>
@@ -351,9 +370,12 @@
                                 <Button
                                 Click="ButtonDelete"
                                 Content="Удалить"
+                                    
                                 FontFamily="Segoe UI"></Button>
                             </Border>
                         </StackPanel>
+                        <Image Margin="1 1 1 30 " Source="/block.png" Width="50" Height="50" Grid.Row="4" Grid.Column="8"  MouseDown="MouseDownLock" VerticalAlignment="Bottom"
+                               HorizontalAlignment="Center"></Image>
                     </Grid>
                 </TabItem.Content>
             </TabItem>

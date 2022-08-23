@@ -1,24 +1,32 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using VBakery.DB;
+using System.Linq;
+using VBakery.Model;
+
 namespace VBakery
 {
     public partial class Kitchener : Window
     {
+        
         public Kitchener()
         {
             InitializeComponent();
-            using OrderForBuyersContext db = new();
-            UserList.ItemsSource = db.OrderForBuyers.ToArray();
-            DownTrayKitchenerOrders.Content = "Обновлено --" + DateTime.Now.ToString();
+
+            UpdateOrderForBuyer();
+
+
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
+
             imageHome.ToolTip = "Выйти на главную страницу";
             imageRecepts.ToolTip = "Открыть рецепты";
             imageChat.ToolTip = "Открыть лист претензий";
+
+            
+            
         }
         private void HandlerKeyDownEvent(object sender, KeyEventArgs e)
         {
@@ -33,14 +41,18 @@ namespace VBakery
                     break;
             }
         }//Клавиатура
-        private void MouseDownRefresh(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        public void UpdateOrderForBuyer()
         {
             using OrderForBuyersContext db = new();
-            UserList.ItemsSource = db.OrderForBuyers.ToArray();
-            DownTrayKitchenerOrders.Background = Brushes.LightGreen;
-            DownTrayKitchenerOrders.Content = "Обновлено --" + DateTime.Now.ToString();
+            UserOrder.ItemsSource = db.OrderForBuyers.ToList();
+            DownTray.Background = Brushes.LightGreen;
+            DownTray.Content = "Обновлено --" + DateTime.Now.ToString();
         }
-        private void MouseDownGotoHome(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void MouseDownRefresh(object sender, MouseButtonEventArgs e)
+        {
+            UpdateOrderForBuyer();
+        }
+        public void MouseDownGotoHome(object sender, MouseButtonEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show(
             "Вы точно хотите выйти?",
@@ -53,15 +65,15 @@ namespace VBakery
                 this.Close();
             }
         }
-        private void OpenRecepts(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OpenRecepts(object sender, MouseButtonEventArgs e)
         {
             Recepts recepts = new();
-            recepts.Show();
+            recepts.ShowDialog();
         }
-        private void OpenChat(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void OpenChat(object sender, MouseButtonEventArgs e)
         {
             ChatRoom chatRoom = new();
-            chatRoom.Show();
+            chatRoom.ShowDialog();
             chatRoom.chatUser.Content = "Повар";
         }
         private void ButtonClickPlus(object sender, RoutedEventArgs e)
@@ -83,6 +95,7 @@ namespace VBakery
         {
             this.Close();
         }
+
         private void ButtonClickAdd(object sender, RoutedEventArgs e)
         {
             if (AddName.Text == "" || AddMobile.Text == "" || AddWeight.Text == "" || AddnameProduct.Text == "" || AddAddress.Text == "" || AddComm.Text == "")
@@ -94,16 +107,29 @@ namespace VBakery
             {
                 using OrderForBuyersContext db = new();
                 {
-                    OrderForBuyer BuyerKitchener = new OrderForBuyer
+                    OrderForBuyer BuyerKitchener = new ()
                     {
-                        name = "Повар" + "\n" + AddName.Text,
-                        mobile = AddMobile.Text,
-                        weight = AddWeight.Text,
-                        nameProduct = AddnameProduct.Text,
-                        address = AddAddress.Text,
-                        comm = AddComm.Text,
-                        dateTime = DateTime.Now.ToString()
+                        BuyerName = "Повар" + "\n" + AddName.Text,
+                        BuyerMobile = AddMobile.Text,
+                        WeightProduct = AddWeight.Text,
+                        NameProduct = AddnameProduct.Text,
+                        DeliveryDate = AddAddress.Text,
+                        StaffComment = AddComm.Text,
+                        OrderDateTime = DateTime.Now.ToString()
                     };
+                    LogOrdersContext dbLogOrder = new();
+                    LogOrder logOrder = new LogOrder
+                    {
+                        BuyerName = "Повар" + "\n" + AddName.Text,
+                        BuyerMobile = AddMobile.Text,
+                        WeightProduct = AddWeight.Text,
+                        NameProduct = AddnameProduct.Text,
+                        DeliveryDate = AddAddress.Text,
+                        StaffComment = AddComm.Text,
+                        OrderDateTime = DateTime.Now.ToString()
+                    };
+                    dbLogOrder.LogOrders.Add(logOrder);
+                    dbLogOrder.SaveChanges();
                     db.OrderForBuyers.Add(BuyerKitchener);
                     db.SaveChanges();
                     DownTrayAddRecipe.Content = "Добавлено!";
@@ -121,24 +147,24 @@ namespace VBakery
         {
             using OrderForBuyersContext db = new OrderForBuyersContext();
 
-            if (DeleteAndGoToDelivery.Text == "")
+            if (InputIdForDelete.Text == "")
             {
-                DownTrayKitchenerOrders.Content = "Не ввели номер!";
-                DownTrayKitchenerOrders.Background = Brushes.LightCoral;
+                DownTray.Content = "Не ввели номер!";
+                DownTray.Background = Brushes.LightCoral;
             }
             else
             {
-                DeleteAndGoToDelivery.Text = DeleteAndGoToDelivery.Text.Trim();
-                int key = Convert.ToInt32(DeleteAndGoToDelivery.Text.Trim());
+                InputIdForDelete.Text = InputIdForDelete.Text.Trim();
+                int key = Convert.ToInt32(InputIdForDelete.Text.Trim());
                 var item = db.OrderForBuyers.Find(key);
                 if (item != null)
                 {
                     db.OrderForBuyers.Remove(item);
                     db.SaveChanges();
-                    DownTrayKitchenerOrders.Background = Brushes.LightGreen;
-                    DownTrayKitchenerOrders.Content = "Удалена запись --" + DeleteAndGoToDelivery.Text;
-                    DeleteAndGoToDelivery.Text = "";
-                    UserList.ItemsSource = db.OrderForBuyers.ToList();
+                    DownTray.Background = Brushes.LightGreen;
+                    DownTray.Content = "Удалена запись --" + InputIdForDelete.Text;
+                    InputIdForDelete.Text = "";
+                    UserOrder.ItemsSource = db.OrderForBuyers.ToList();
                 }
                 else
                 {
@@ -146,11 +172,63 @@ namespace VBakery
                 }
             }
         }
-        private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        //private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        //{
+        //    ScrollBar scrollBar = new();
+        //    scrollBar.Value = numeric.Value;
+        //    DeleteAndGoToDelivery.Text = Convert.ToString(numeric.Value);
+        //}
+
+        public void ButtonClick_1(object sender, RoutedEventArgs e)
         {
-            ScrollBar scrollBar = new();
-            scrollBar.Value = numeric.Value;
-            DeleteAndGoToDelivery.Text = Convert.ToString(numeric.Value);
+            InputIdForDelete.Text += 1;
+        }
+        public void ButtonClick_2(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 2;
+        }
+        public void ButtonClick_3(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 3;
+        }
+        public void ButtonClick_4(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 4;
+        }
+        public void ButtonClick_5(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 5;
+        }
+        public void ButtonClick_6(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 6;
+        }
+        public void ButtonClick_7(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 7;
+        }
+        public void ButtonClick_8(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 8;
+        }
+        public void ButtonClick_9(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 9;
+        }
+        public void ButtonClick_0(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text += 0;
+        }
+        public void ButtonClickClear(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text = "";
+        }
+
+        private void MouseDownLock(object sender, MouseButtonEventArgs e)
+        {
+            LoginWindow loginWindow = new();
+            loginWindow.ShowDialog();
+            this.Close();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VBakery.DB;
 using VBakery.MenuDB;
+using VBakery.Model;
 
 namespace VBakery
 {
@@ -15,6 +16,32 @@ namespace VBakery
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=OrderForBuyer.db");
+        }
+    }
+    public class LogOrdersContext : DbContext
+    {
+        public DbSet<LogOrder> LogOrders => Set<LogOrder>();
+        public LogOrdersContext()
+        {
+            Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source=LogOrder.db");
+        }
+    }
+    public class OrderForDeliverysContext : DbContext
+    {
+        public DbSet<OrderForDelivery> OrderForDeliverys => Set<OrderForDelivery>();
+        public OrderForDeliverysContext()
+        {
+            Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source=OrderForDelivery.db");
         }
     }
     public class RecipesContext : DbContext
@@ -147,19 +174,6 @@ namespace VBakery
             optionsBuilder.UseSqlite("Data Source=Menu4.db");
         }
     }
-    public class FirstCourseContext : DbContext
-    {
-        public DbSet<FirstCourse> FirstCourses => Set<FirstCourse>();
-        public FirstCourseContext()
-        {
-            Database.EnsureCreated();
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("Data Source=FirstCourse.db");
-        }
-    }
     public class SecondCourseContext : DbContext
     {
         public DbSet<SecondCourse> SecondCourses => Set<SecondCourse>();
@@ -184,7 +198,7 @@ namespace VBakery
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=ThirdCourse.db");
-        }
+        }  
     }
 }
 

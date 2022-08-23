@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using VBakery.DB;
+using VBakery.Model;
 
 namespace VBakery
 {
@@ -91,18 +92,49 @@ namespace VBakery
                 OrderForBuyersContext db = new();
                 OrderForBuyer tim = new OrderForBuyer
                 {
-                    name = name.Text,
-                    mobile = mobile.Text,
-                    weight = weight.Text,
-                    nameProduct = nameProduct.Text,
-                    address = address.Text,
-                    comm = comm.Text,
-                    data = dateOrder.Text,
-                    dateTime = DateTime.Now.ToString()
+                    BuyerName = name.Text,
+                    BuyerMobile = mobile.Text,
+                    WeightProduct = weight.Text,
+                    NameProduct = nameProduct.Text,
+                    DeliveryAddress = address.Text,
+                    StaffComment = comm.Text,
+                    DeliveryDate = dateOrder.Text,
+                    OrderDateTime = DateTime.Now.ToString(),
+                    OrderPrice = 800*Convert.ToInt32(weight.Text)
+                };
+                OrderForDeliverysContext dbDelivery = new();
+                OrderForDelivery order = new OrderForDelivery
+                {
+                    BuyerName = name.Text,
+                    BuyerMobile = mobile.Text,
+                    WeightProduct = weight.Text,
+                    NameProduct = nameProduct.Text,
+                    DeliveryAddress = address.Text,
+                    StaffComment = comm.Text,
+                    DeliveryDate = dateOrder.Text,
+                    OrderDateTime = DateTime.Now.ToString(),
+                    OrderPrice = 800 * Convert.ToInt32(weight.Text)
+                };
+                LogOrdersContext dbLogOrder = new();
+                LogOrder logOrder = new LogOrder
+                {
+                    BuyerName = name.Text,
+                    BuyerMobile = mobile.Text,
+                    WeightProduct = weight.Text,
+                    NameProduct = nameProduct.Text,
+                    DeliveryAddress = address.Text,
+                    StaffComment = comm.Text,
+                    DeliveryDate = dateOrder.Text,
+                    OrderDateTime = DateTime.Now.ToString(),
+                    OrderPrice = 800 * Convert.ToInt32(weight.Text)
                 };
                 db.OrderForBuyers.Add(tim);
                 db.SaveChanges();
-                
+                dbDelivery.OrderForDeliverys.Add(order);
+                dbDelivery.SaveChanges();
+                dbLogOrder.LogOrders.Add(logOrder);
+                dbLogOrder.SaveChanges();
+
                 MessageBox.Show("Спасибо" + "\n" + name.Text + "\n" + "за заказ");
                 Buyer buyer = new();
                 buyer.Show();
