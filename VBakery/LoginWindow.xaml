@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:VBakery"
         mc:Ignorable="d"
         Title="LoginWindow" Height="768" Width="1024" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" WindowState="Maximized">
-    <Grid>
-        <Rectangle >
+    <Grid >
+        <Rectangle>
             <Rectangle.Fill>
                 <LinearGradientBrush
                     >
@@ -16,10 +16,10 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <StackPanel VerticalAlignment="Center">
+        <StackPanel VerticalAlignment="Center" x:Name="stack">
             <Label
                 Foreground="White"
-                Content="Для входа введите Логин и Пароль"
+                Content="Добро пожаловать!"
                 FontSize="18"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center">
@@ -27,13 +27,15 @@
             </Label>
             <Label
                 Foreground="White"
-                Content="Введите логин"
+                Content="Логин"
                 FontSize="15"
                 HorizontalAlignment="Center"
                 Margin="0 30 0 0"
                 >
             </Label>
             <TextBox
+                Background="Transparent"
+                Foreground="Wheat"
                 Cursor="IBeam"
                 x:Name="Login"
                 Width="200"
@@ -46,12 +48,14 @@
             </TextBox>
             <Label
                 Foreground="White"
-                Content="Введите пароль"
+                Content="Пароль"
                 FontSize="15"
                 HorizontalAlignment="Center"
                 Margin="0 10 0 0">
             </Label>
             <PasswordBox
+                Background="Transparent"
+                Foreground="Wheat"
                 Cursor="IBeam"
                 x:Name="Password"
                 Width="200"
@@ -62,26 +66,33 @@
                 FontSize="20"
                 >
             </PasswordBox>
-            <!--<Label
+            <Label
+                x:Name="registrationLabel"
+                Visibility="Hidden"
                 MouseDown="MouseDownRegistration"
                 Content="Зарегистрироваться!"
                 Foreground="Wheat"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
                 Margin="0 10 0 0"
-                ></Label>-->
-            <Button
-                Background="LightCoral"
-                Foreground="Azure"
-                Click="Enter"
+                ></Label>
+            <Label
+                Cursor="Hand"
+                x:Name="EnterButton"
+                Foreground="Wheat"
+                Padding="1 1 1 1"
+                MouseDown="Enter"
                 Content="Войти"
-                FontSize="25"
-                FontWeight="Bold"
-                Width="250"
-                Height="40"
+                FontSize="20"
+                Width="200"
+                Height="30"
                 Margin="0 30 0 0"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                MouseEnter="EnterButton_MouseEnter"
+                MouseLeave="EnterButton_MouseLeave"
                 >
-            </Button>
+            </Label>
         </StackPanel>
     </Grid>
 </Window>

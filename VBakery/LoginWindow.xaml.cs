@@ -1,6 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
 using VBakery.DB;
 
 namespace VBakery
@@ -13,6 +18,16 @@ namespace VBakery
         {
             InitializeComponent();
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
+            System.Int32 UserCount = usersContext.Users.Count();
+            
+            if (UserCount > 0)
+            {
+                registrationLabel.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                registrationLabel.Visibility = Visibility.Visible;
+            }
         }
         private void CheckUser()
         {
@@ -31,6 +46,7 @@ namespace VBakery
                             {
                                 //CheckPaymaster();
                                 mainWindow.Show();
+                                mainWindow.chek_user.Content = "Приветствую" + " " + Login.Text + "!" + " " + "Давай начнем работу.";
                                 this.Close();
                             }
                         }
@@ -39,9 +55,24 @@ namespace VBakery
             }
             else
             {
-                MessageBox.Show("Не введены Лоин или пароль");
+                Login.Background = new SolidColorBrush(Colors.LightCoral);
+                Password.Background = new SolidColorBrush(Colors.LightCoral);
+                Login.ToolTip = "Не ввели логин";
+                Password.ToolTip = "Не ввели пароль";
+                
+                DispatcherTimer dispatcherTimer = new();
+                dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 4);
+                dispatcherTimer.Start();
             }
             
+        }
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Login.Background = new SolidColorBrush(Colors.Transparent);
+            Password.Background = new SolidColorBrush(Colors.Transparent);
+            Login.ToolTip = null;
+            Password.ToolTip = null;
         }
         public void CheckPaymaster()
         {
@@ -70,9 +101,6 @@ namespace VBakery
                 case Key.Enter:
                     CheckUser();
                     break;
-                case Key.Escape:
-                    Close();
-                    break;
                 default:
                     break;
             }
@@ -86,6 +114,16 @@ namespace VBakery
             LoginWindowRegistration loginWindowRegistration = new();
             loginWindowRegistration.Show();
             this.Close();
+        }
+
+        private void EnterButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            EnterButton.Background = Brushes.Gray;
+        }
+
+        private void EnterButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            EnterButton.Background = Brushes.Transparent;
         }
     }
 }

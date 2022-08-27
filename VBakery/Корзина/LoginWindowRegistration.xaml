@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VBakery"
         mc:Ignorable="d"
-        Title="LoginWindowRegistration" Height="550" Width="400" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+        Title="LoginWindowRegistration" Height="768" Width="1024" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" WindowState="Maximized">
     <Grid>
         <Rectangle >
             <Rectangle.Fill>
@@ -16,7 +16,7 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <StackPanel>
+        <StackPanel  VerticalAlignment="Center">
             <Border 
             VerticalAlignment="Top"
             HorizontalAlignment="Center"
@@ -103,10 +103,9 @@
                 Margin="0 5 0 0"
                 Width="200"
                 Height="30"
-                FontSize="16"
-                >
-
+                FontSize="16">
                     </TextBox>
+
                 </StackPanel>
             </Border>
             <Border 
@@ -172,7 +171,9 @@
                 FontSize="16"
                 VerticalContentAlignment="Center"
                 HorizontalContentAlignment="Center"
-                ></Button>
+                >
+            </Button>
         </StackPanel>
+        
     </Grid>
 </Window>

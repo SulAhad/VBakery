@@ -37,7 +37,6 @@
             Grid.Row="0"
             Grid.ColumnSpan="3"
             Foreground="White"
-            Content="Приветствую. Давай начнем работу."
             x:Name="chek_user" 
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"
@@ -45,20 +44,27 @@
             BorderBrush="LightGray"
                 >
         </Label>
-        <Button
+        <Label
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
             Visibility="Visible"
             BorderBrush="#4e4e4e"
             Foreground="White"
             Content="Кассир"
             Grid.Column="1"
             Grid.Row="1"
+            BorderThickness="1"
             x:Name="paymaster"
             FontSize="36"
             Background="Transparent"
-            Click="Paymaster_MouseDown"
+            MouseDown="Paymaster_MouseDown"
+            MouseEnter="paymaster_MouseEnter"
+            MouseLeave="paymaster_MouseLeave"
             >
-        </Button>
-        <Button
+        </Label>
+        <Label
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
             Visibility="Visible"
             Foreground="White"
             Grid.Column="2"
@@ -68,10 +74,12 @@
             Content="Повар"
             FontSize="36"
             BorderBrush="Transparent" 
-            Click="Kitchener_MouseDown"
+            MouseDown="Kitchener_MouseDown"
+            MouseEnter="kitchener_MouseEnter"
+            MouseLeave="kitchener_MouseLeave"
             >
-        </Button>
-        <Button
+        </Label>
+        <Label
             Visibility="Visible"
             Foreground="White"
             Grid.Column="3"
@@ -82,10 +90,14 @@
             FontSize="36"
             BorderThickness="1"
             BorderBrush="#4e4e4e" 
-            Click="Deliveryman_MouseDown"
+            MouseDown="Deliveryman_MouseDown"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            MouseEnter="deliveryman_MouseEnter"
+            MouseLeave="deliveryman_MouseLeave"
             >
-        </Button>
-        <Button
+        </Label>
+        <Label
             Visibility="Visible"
             Foreground="White"
             Grid.Column="1"
@@ -96,13 +108,19 @@
             FontSize="36"
             BorderThickness="1"
             BorderBrush="Transparent" 
-            Click="Buyer_MouseDown"
+            MouseDown="Buyer_MouseDown"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            MouseEnter="buyer_MouseEnter"
+            MouseLeave="buyer_MouseLeave"
             >
-        </Button>
-        <Button
+        </Label>
+        <Label
+            MouseEnter="Supervisor_MouseEnter"
+            MouseLeave="Supervisor_MouseLeave"
             Visibility="Visible"
             x:Name="Supervisor"
-            Click="Supervisor_MouseDown"
+            MouseDown="Supervisor_MouseDown"
             Foreground="White"
             Grid.Column="2"
             Grid.Row="2"
@@ -111,7 +129,9 @@
             FontSize="36"
             BorderThickness="1"
             BorderBrush="#4e4e4e" 
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
             >
-        </Button>
+        </Label>
     </Grid>
 </Window>

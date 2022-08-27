@@ -188,7 +188,7 @@
         </Rectangle>
 
         <Button Grid.Column="7" Grid.Row="3" Margin="1 1 1 1" Click="Button_Click">
-            <TextBlock TextAlignment="Center" FontSize="13">свекла<LineBreak/>нарезка</TextBlock>
+            <TextBlock x:Name="BtnClickText" TextAlignment="Center" FontSize="13">Свекла</TextBlock>
         </Button>
         <Button Grid.Column="8" Grid.Row="3" Margin="1 1 1 1" Click="Button_Click_1">
             <TextBlock TextAlignment="Center" FontSize="13">Макароны<LineBreak/>отварные</TextBlock>

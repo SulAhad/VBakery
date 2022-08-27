@@ -3,11 +3,13 @@ using System.Windows.Media;
 using System.Linq;
 using VBakery.DB;
 using System;
+using System.Windows.Threading;
 
 namespace VBakery
 {
     public partial class LoginWindowRegistration : Window
     {
+        private string _phone;
         public LoginWindowRegistration()
         {
             InitializeComponent();
@@ -24,28 +26,8 @@ namespace VBakery
             Password.Password = Password.Password.Trim(' ');
             SecondPassword.Password = SecondPassword.Password.Trim(' ');
 
-            //if (Name.Text != "" || LastName.Text != "" || Mobile.Text != "" || Password.Password != "" || SecondPassword.Password != "")
-            //{
-            //    MessageBox.Show("Опаньки!");
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Задолбал!");
-            //}
         }
-        //public void ConnectDB()
-        //{
-        //    UsersContext usersContext = new();
-        //    User tim = new()
-        //    {
-        //        Name = Name.Text,
-        //        LastName = LastName.Text,
-        //        Mobile = Mobile.Text,
-        //        Password = Password.Password
-        //    };
-        //    usersContext.Users.Add(tim);
-        //    usersContext.SaveChanges();
-        //}
+
         private void Button_ClickRegistration(object sender, RoutedEventArgs e)
         {
             bool flag = true;
@@ -60,18 +42,21 @@ namespace VBakery
             {
                 Name.ToolTip = "Не ввели имя";
                 Name.Background = Brushes.LightCoral;
+                TimerForEmty();
                 flag = false;
             }
             if (LastName.Text.Length <= 2)
             {
                 LastName.ToolTip = "Не ввели фамилию";
                 LastName.Background = Brushes.LightCoral;
+                TimerForEmty();
                 flag = false;
             }
             if (Mobile.Text.Length <= 10)
             {
                 Mobile.ToolTip = "Не ввели телефон";
                 Mobile.Background = Brushes.LightCoral;
+                TimerForEmty();
                 flag = false;
             }
             if (Password.Password != SecondPassword.Password && Password.Password != "" && SecondPassword.Password != "")
@@ -80,6 +65,7 @@ namespace VBakery
                 Password.Background = Brushes.LightCoral;
                 SecondPassword.ToolTip = "Пароли не совпадают";
                 SecondPassword.Background = Brushes.LightCoral;
+                TimerForEmty();
                 flag = false;
             }
             if (flag)
@@ -95,36 +81,30 @@ namespace VBakery
                 };
                 usersContext.Users.Add(usersContext1);
                 usersContext.SaveChanges();
-                MessageBox.Show("Зарегал");
+                LoginWindow loginWindow = new();
+                loginWindow.Show();
+                this.Close();
 
-                //var u = usersContext.Users.Where(p => p.Name == Name.Text);
-                //foreach (User user in u)
-                //{
-                //    if (Name.Text != user.Name || false)
-                //    {
-                //            Registr();
-                //            MessageBox.Show("Зарегал");
-                //    }
-                //    if(Name.Text == user.Name)
-                //    {
-                //        _ = MessageBox.Show("Пользователь с таким именем уже зарегистрирован!");
-                //    }
-            //}
+                
             }
         }
-        //public void Registr()
-        //{
-        //    UsersContext usersContext = new();
-        //    User usersContext1 = new()
-        //    {
-        //        Name = Name.Text,
-        //        LastName = LastName.Text,
-        //        Mobile = Mobile.Text,
-        //        Password = Password.Password,
-        //        DateOfRegistration = DateTime.Now.ToString()
-        //    };
-        //    usersContext.Users.Add(usersContext1);
-        //    usersContext.SaveChanges();
-        //}
+        public void TimerForEmty()
+        {
+            DispatcherTimer dispatcherTimer = new();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 4);
+            dispatcherTimer.Start();
+        }
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Name.Background = new SolidColorBrush(Colors.Transparent);
+            LastName.Background = new SolidColorBrush(Colors.Transparent);
+            Mobile.Background = new SolidColorBrush(Colors.Transparent);
+            Password.Background = new SolidColorBrush(Colors.Transparent);
+            Name.ToolTip = null;
+            LastName.ToolTip = null;
+            Mobile.ToolTip = null;
+            Password.ToolTip = null;
+        }
     }
 }

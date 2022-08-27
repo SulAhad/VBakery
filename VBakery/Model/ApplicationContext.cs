@@ -200,5 +200,18 @@ namespace VBakery
             optionsBuilder.UseSqlite("Data Source=ThirdCourse.db");
         }  
     }
+    public class MenuContext : DbContext
+    {
+        public DbSet<Menu> Menus => Set<Menu>();
+        public MenuContext()
+        {
+            Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source=Menu.db");
+        }
+    }
 }
 

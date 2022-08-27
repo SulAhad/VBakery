@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Data;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using VBakery.DB;
 using VBakery.Model;
+using Menu = VBakery.DB.Menu;
 
 namespace VBakery
 {
@@ -15,15 +18,17 @@ namespace VBakery
         TimerEndsContext timerEndsContext = new();
         TimerStartsContext timerStartsContext = new();
         OrderForBuyersContext orderForBuyersContext = new();
+        readonly MenuContext menuContext = new();
         public PaymasterSales()
         {
 
             InitializeComponent();
-
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
 
             subtotal.Text = "0";
             total.Text = "0";
+
+
 
             string time = DateTime.Now.ToString();
             OpenTime.Text = time;
@@ -64,7 +69,7 @@ namespace VBakery
         public void Button_Click(object sender, RoutedEventArgs e)
         {
             int price = 12;
-            string name = "свекла(нарезка)";
+            string name = "Свекла";
             if (subtotal.Text == "0")
             {
                 subtotal.Text = "";
