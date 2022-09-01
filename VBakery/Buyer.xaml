@@ -13,22 +13,32 @@
         WindowStyle="None"
         >
     <ScrollViewer VerticalScrollBarVisibility="Hidden">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" ></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Rectangle
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" ></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <!--<Image
+                Grid.Column="0"
+                Grid.Row="0"
+                Grid.RowSpan="4"
+                Grid.ColumnSpan="2"
+                    Source="/sladkoe-pechene-macaron.jpg"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left" Height="900"
+                    >
+            </Image>-->
+            <Rectangle
             Grid.Column="0"
             Grid.Row="0"
             Grid.ColumnSpan="2"
@@ -86,15 +96,18 @@
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
                             <TextBlock
+                                Background="Transparent"
                                 Width="auto"
                                 TextWrapping="Wrap"
                                 Text="{Binding dbAreaName1}"
                                 x:Name="buyerNameHeader1" 
                                  Foreground="Wheat"
                                  FontSize="30"
-                                 FontFamily="Monotype Corsiva">
+                                 FontFamily="Monotype Corsiva"
+                                >
                             </TextBlock>
                             <TextBlock
+                                Background="Transparent"
                                 Width="600"
                                 TextWrapping="Wrap"
                                 Text="{Binding dbAreaConsist1}"
@@ -107,6 +120,7 @@
                                  >
                             </TextBlock>
                             <TextBlock
+                                Background="Transparent"
                                 Width="auto"
                                 TextWrapping="Wrap"
                                 Text="{Binding dbAreaPrice1}"
@@ -130,7 +144,7 @@
                 BorderThickness="0 0 0 1">
                 <Image
                     
-                     Source="E:\Мои проекты\C#\VBakery\VBakery\Images\2.png"
+                     Source="/2021-05-05-103236396-1024x1024.png"
                      VerticalAlignment="Top"
                      HorizontalAlignment="Left"
                      MouseDown="MenuImage"
@@ -189,7 +203,7 @@
                 BorderBrush="Wheat"
                 BorderThickness="0 0 0 1">
                 <Image
-                    Source="E:\Мои проекты\C#\VBakery\VBakery\Images\fruct (2).png"
+                    Source="/b24aeb3c.png"
                     Stretch="Uniform"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Left"
@@ -246,7 +260,7 @@
                 Grid.Column="1"
                 Grid.Row="4">
                 <Image
-                    Source="E:\Мои проекты\C#\VBakery\VBakery\Images\2.png"
+                    Source="/605.png"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Left"
                     MouseDown="MenuImage"

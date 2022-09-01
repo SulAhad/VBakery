@@ -109,7 +109,7 @@ namespace VBakery
                 {
                     OrderForBuyer BuyerKitchener = new ()
                     {
-                        BuyerName = "Повар" + "\n" + AddName.Text,
+                        BuyerName = "\"Повар\"" + "\n" + AddName.Text,
                         BuyerMobile = AddMobile.Text,
                         WeightProduct = AddWeight.Text,
                         NameProduct = AddnameProduct.Text,
@@ -120,7 +120,7 @@ namespace VBakery
                     LogOrdersContext dbLogOrder = new();
                     LogOrder logOrder = new LogOrder
                     {
-                        BuyerName = "Повар" + "\n" + AddName.Text,
+                        BuyerName = "\"Повар\"" + "\n" + AddName.Text,
                         BuyerMobile = AddMobile.Text,
                         WeightProduct = AddWeight.Text,
                         NameProduct = AddnameProduct.Text,

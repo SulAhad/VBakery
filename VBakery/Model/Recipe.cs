@@ -5,6 +5,6 @@
         public int Id { get; set; }
         public string NameRecipe { get; set; }
         public string TextRecipe { get; set; }
-        public int PriceRecipe { get; set; }
+        public string PriceRecipe { get; set; }
     }
 }

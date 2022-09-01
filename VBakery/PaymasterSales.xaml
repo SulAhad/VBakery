@@ -186,17 +186,23 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-
-        <Button Grid.Column="7" Grid.Row="3" Margin="1 1 1 1" Click="Button_Click">
-            <TextBlock x:Name="BtnClickText" TextAlignment="Center" FontSize="13">Свекла</TextBlock>
+        <ScrollViewer Grid.Column="7" 
+            Grid.Row="3"
+            Grid.ColumnSpan="3"
+            Grid.RowSpan="7" VerticalScrollBarVisibility="Hidden">
+            <WrapPanel x:Name="WrapPanelAddButton"></WrapPanel>
+        </ScrollViewer>
+        
+        <!--<Button Grid.Column="7" Grid.Row="3" Margin="1 1 1 1" Click="Button_Click">
+            <TextBlock x:Name="BtnClickText" TextAlignment="Center" FontSize="13"></TextBlock>
         </Button>
         <Button Grid.Column="8" Grid.Row="3" Margin="1 1 1 1" Click="Button_Click_1">
-            <TextBlock TextAlignment="Center" FontSize="13">Макароны<LineBreak/>отварные</TextBlock>
+            <TextBlock x:Name="BtnClickText2" TextAlignment="Center" FontSize="13"></TextBlock>
         </Button>
         <Button Grid.Column="9" Grid.Row="3" Margin="1 1 1 1" Click="Button_Click_3" >
-            <TextBlock TextAlignment="Center" FontSize="13">Рассольник</TextBlock>
-        </Button>
-        <Button Grid.Column="9" Grid.Row="4" Margin="1 1 1 1" Click="Button_Click_4">
+            <TextBlock x:Name="BtnClickText3" TextAlignment="Center" FontSize="13"></TextBlock>
+        </Button>-->
+        <!--<Button Grid.Column="9" Grid.Row="4" Margin="1 1 1 1" Click="Button_Click_4">
             <TextBlock TextAlignment="Center" FontSize="13">Салат из моркови<LineBreak/>с майонезом</TextBlock>
         </Button>
         <Button Grid.Column="7" Grid.Row="4" Margin="1 1 1 1" Click="Button_Click_5">
@@ -223,7 +229,28 @@
         <Button Grid.Column="9" Grid.Row="10" Margin="1 1 1 1" Click="Button_Click_12">
             <TextBlock TextAlignment="Center" FontSize="13">Зелень<LineBreak/>нарезка</TextBlock>
         </Button>
-        
+        <Button  Grid.Column="8" Grid.Row="5" Margin="1 1 1 1" Click="Button_Click_13">
+            <TextBlock TextAlignment="Center" FontSize="13">Компот<LineBreak/>из сухофруктов</TextBlock>
+        </Button>
+        <Button Grid.Column="8" Grid.Row="6" Margin="1 1 1 1" Click="Button_Click_14">
+            <TextBlock TextAlignment="Center" FontSize="13">Соус красный</TextBlock>
+        </Button>
+        <Button Grid.Column="8" Grid.Row="7" Margin="1 1 1 1" Click="Button_Click_15">
+            <TextBlock TextAlignment="Center" FontSize="13">Напиток<LineBreak/>ягодный</TextBlock>
+        </Button>
+        <Button Grid.Column="8" Grid.Row="8" Margin="1 1 1 1" Click="Button_Click_16" >
+            <TextBlock TextAlignment="Center" FontSize="13">Майонез</TextBlock>
+        </Button>
+        <Button Grid.Column="8" Grid.Row="9" Margin="1 1 1 1" Click="Button_Click_17">
+            <TextBlock TextAlignment="Center" FontSize="13">Чай с<LineBreak/>лимоном</TextBlock>
+        </Button>
+        <Button Grid.Column="8" Grid.Row="10" Margin="1 1 1 1" Click="Button_Click_18">
+            <TextBlock TextAlignment="Center" FontSize="13">Сметана</TextBlock>
+        </Button>
+        <Button Grid.Column="7" Grid.Row="5" Margin="1 1 1 1" Click="Button_Click_19">
+            <TextBlock TextAlignment="Center" FontSize="13">Чай 0.2</TextBlock>
+        </Button>-->
+
         <!--<ListBox 
             Grid.Row="3"
             Grid.Column="7"
@@ -249,27 +276,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>-->
-        <Button  Grid.Column="8" Grid.Row="5" Margin="1 1 1 1" Click="Button_Click_13">
-            <TextBlock TextAlignment="Center" FontSize="13">Компот<LineBreak/>из сухофруктов</TextBlock>
-        </Button>
-        <Button Grid.Column="8" Grid.Row="6" Margin="1 1 1 1" Click="Button_Click_14">
-            <TextBlock TextAlignment="Center" FontSize="13">Соус красный</TextBlock>
-        </Button>
-        <Button Grid.Column="8" Grid.Row="7" Margin="1 1 1 1" Click="Button_Click_15">
-            <TextBlock TextAlignment="Center" FontSize="13">Напиток<LineBreak/>ягодный</TextBlock>
-        </Button>
-        <Button Grid.Column="8" Grid.Row="8" Margin="1 1 1 1" Click="Button_Click_16" >
-            <TextBlock TextAlignment="Center" FontSize="13">Майонез</TextBlock>
-        </Button>
-        <Button Grid.Column="8" Grid.Row="9" Margin="1 1 1 1" Click="Button_Click_17">
-            <TextBlock TextAlignment="Center" FontSize="13">Чай с<LineBreak/>лимоном</TextBlock>
-        </Button>
-        <Button Grid.Column="8" Grid.Row="10" Margin="1 1 1 1" Click="Button_Click_18">
-            <TextBlock TextAlignment="Center" FontSize="13">Сметана</TextBlock>
-        </Button>
-        <Button Grid.Column="7" Grid.Row="5" Margin="1 1 1 1" Click="Button_Click_19">
-            <TextBlock TextAlignment="Center" FontSize="13">Чай 0.2</TextBlock>
-        </Button>
         <!--<Button Grid.Column="7" Grid.Row="6" Margin="1 1 1 1"></Button>
         <Button Grid.Column="7" Grid.Row="7" Margin="1 1 1 1"></Button>
         <Button Grid.Column="7" Grid.Row="8" Margin="1 1 1 1"></Button>
@@ -422,31 +428,43 @@
             HorizontalAlignment="Center"
             >
         </TextBlock>
-        <Button 
-            Click="Button_Click_Total"
+        <Label 
+            x:Name="MouseDownClickTotal"
+            MouseLeave="Label_MouseLeave"
+            MouseEnter="Label_MouseEnter"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            MouseDown="Button_Click_Total"
             Grid.Column="4"
             Grid.Row="10"
             Grid.ColumnSpan="3"
             Content="Итог"
-            FontSize="20"
+            FontSize="25"
             Foreground="Wheat"
             Background="Black"
             Margin="1 1 1 1"
             >
-        </Button>
-        <Button
+        </Label>
+        <Label
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
             x:Name="Click_GotoKitchen"
-            Click="Button_Click_GotoKitchen"
+            MouseDown="Button_Click_GotoKitchen"
             Grid.Column="7"
             Grid.Row="10"
             FontSize="13"
             Foreground="Black"
             Background="LightCoral"
-            Margin="1 1 1 1">
-            <TextBlock
+            Margin="1 1 1 1"
+            MouseEnter="Click_GotoKitchen_MouseEnter"
+            MouseLeave="Click_GotoKitchen_MouseLeave">
+            <Label.Content>
+                <AccessText TextWrapping="Wrap" Text="Отправить заказ"/>
+            </Label.Content>
+            <!--<TextBlock
                 TextAlignment="Center">Отправить<LineBreak/>заказ
-            <LineBreak/>повару</TextBlock>
-        </Button>
+            <LineBreak/>повару</TextBlock>-->
+        </Label>
         <Rectangle Grid.Column="0" Grid.Row="11"
             Grid.ColumnSpan="11" Margin="1 1 1 1">
             <Rectangle.Fill>

@@ -18,6 +18,19 @@ namespace VBakery
             optionsBuilder.UseSqlite("Data Source=OrderForBuyer.db");
         }
     }
+    public class PriceForMenusContext : DbContext
+    {
+        public DbSet<PriceForMenu> PriceForMenus => Set<PriceForMenu>();
+        public PriceForMenusContext()
+        {
+            Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source=PriceForMenu.db");
+        }
+    }
     public class LogOrdersContext : DbContext
     {
         public DbSet<LogOrder> LogOrders => Set<LogOrder>();

@@ -524,13 +524,8 @@
                                 </Label>
                             </TabItem.Header>
                             <TabItem.Content>
-                                <Grid Margin="2,0,-2,0">
+                                <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
                                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -538,624 +533,60 @@
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="30"></RowDefinition>
-                                        <RowDefinition Height="25"></RowDefinition>
-                                        <RowDefinition Height="90"></RowDefinition>
-                                        <RowDefinition Height="25"></RowDefinition>
-                                        <RowDefinition Height="25"></RowDefinition>
-                                        <RowDefinition Height="90"></RowDefinition>
-                                        <RowDefinition Height="25"></RowDefinition>
-                                        <RowDefinition Height="25"></RowDefinition>
-                                        <RowDefinition Height="90"></RowDefinition>
-                                        <RowDefinition Height="25"></RowDefinition>
-                                        <RowDefinition Height="25"></RowDefinition>
-                                        <RowDefinition Height="90"></RowDefinition>
-                                        <RowDefinition Height="25"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
+                                        <RowDefinition Height="30"></RowDefinition>
                                         <RowDefinition Height="20"></RowDefinition>
                                     </Grid.RowDefinitions>
-
-                                    <ScrollViewer
-                                        Grid.Row="1"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="3"
-                                        VerticalScrollBarVisibility="Auto">
-                                        <TextBox
-                                            Text=""
-                                            TextWrapping="Wrap"
-                                            x:Name="changeAreaName1"
-                                            Background="AliceBlue"
-                                            FontSize="14"
-                                            VerticalContentAlignment="Center">
-                                        </TextBox>
-                                    </ScrollViewer>
-                                    <ScrollViewer
-                                        Grid.Row="2"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="3"
-                                        VerticalScrollBarVisibility="Auto">
-                                        <TextBox
-                                            TextWrapping="Wrap"
-                                            Text=""
-                                            x:Name="changeAreaConsist1"
-                                            Background="AliceBlue"
-                                            FontSize="14"
-                                            >
-                                        </TextBox>
-                                    </ScrollViewer>
-                                    <ScrollViewer
-                                        Grid.Row="3"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="3"
-                                        VerticalScrollBarVisibility="Auto"
-                                        Margin="0 0 0 1">
-                                        <TextBox
-                                            TextWrapping="Wrap"
-                                            Text=""
-                                            x:Name="changeAreaPrice1"
-                                            Background="AliceBlue"
-                                            FontSize="14"
-                                            VerticalContentAlignment="Center">
-                                        </TextBox>
-                                    </ScrollViewer>
-                                    <Button
-                                        Background="AliceBlue"
-                                        Grid.Column="4"
-                                        Grid.Row="1"
-                                        Grid.RowSpan="3"
-                                        Width="100"
-                                        Height="30"
-                                        Content="Изменить"
-                                        Click="ButtonClickChangeArea1"
-                                        
-                                        >
-
-                                    </Button>
-                                    <Button
-                                        Background="AliceBlue"
-                                        Grid.Column="4"
+                                    <Label
                                         Grid.Row="0"
-                                        Grid.ColumnSpan="2"
-                                        Width="100"
-                                        Height="30"
-                                        Content="Обновить"
-                                        Click="ButtonClickUpdate"
-                                        
-                                        >
-
-                                    </Button>
-                                    <ScrollViewer
-                                        Grid.Row="4"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="3"
-                                        VerticalScrollBarVisibility="Auto"
-                                        Margin="0 1 0 0">
-                                        <TextBox
-                                            Text=""
-                                            TextWrapping="Wrap"
-                                            x:Name="changeAreaName2"
-                                            Background="AliceBlue"
-                                            FontSize="14"
-                                            VerticalContentAlignment="Center">
-                                        </TextBox>
-                                    </ScrollViewer>
-                                    <ScrollViewer
-                                        Grid.Row="5"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="3"
-                                        VerticalScrollBarVisibility="Auto">
-                                        <TextBox
-                                            TextWrapping="Wrap"
-                                            Text=""
-                                            x:Name="changeAreaConsist2"
-                                            Background="AliceBlue"
-                                            FontSize="14"
-                                            >
-                                        </TextBox>
-                                    </ScrollViewer>
-                                    <ScrollViewer
-                                        Grid.Row="6"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="3"
-                                        VerticalScrollBarVisibility="Auto">
-                                        <TextBox
-                                            TextWrapping="Wrap"
-                                            Text=""
-                                            x:Name="changeAreaPrice2"
-                                            Background="AliceBlue"
-                                            FontSize="14"
-                                            VerticalContentAlignment="Center">
-                                        </TextBox>
-                                    </ScrollViewer>
-                                    <Button
-                                        Background="AliceBlue"
-                                        Grid.Column="4"
-                                        Grid.Row="4"
-                                        Grid.RowSpan="3"
-                                        Width="100"
-                                        Height="30"
-                                        Content="Изменить"
-                                        Click="ButtonClickChangeArea2"
-                                        
-                                        >
-
-                                    </Button>
-                                    <Button
-                                        Background="AliceBlue"
-                                        Grid.Column="5"
-                                        Grid.Row="4"
-                                        Grid.RowSpan="3"
-                                        Width="100"
-                                        Height="30"
-                                        Content="Удалить"
-                                        Click="ButtonClickDeleteMenu2"
-                                        
-                                        >
-
-                                    </Button>
-                                    <Button
-                                        Background="AliceBlue"
-                                        Grid.Column="5"
-                                        Grid.Row="1"
-                                        Grid.RowSpan="3"
-                                        Width="100"
-                                        Height="30"
-                                        Content="Удалить"
-                                        Click="ButtonClickDeleteMenu1"
-                                        
-                                        >
-
-                                    </Button>
-                                    <Button
-                                        Background="AliceBlue"
-                                        Grid.Column="5"
-                                        Grid.Row="7"
-                                        Grid.RowSpan="3"
-                                        Width="100"
-                                        Height="30"
-                                        Content="Удалить"
-                                        Click="ButtonClickDeleteMenu3"
-                                        
-                                        >
-
-                                    </Button>
-                                    <Button
-                                        Background="AliceBlue"
-                                        Grid.Column="5"
-                                        Grid.Row="10"
-                                        Grid.RowSpan="3"
-                                        Width="100"
-                                        Height="30"
-                                        Content="Удалить"
-                                        Click="ButtonClickDeleteMenu4"
-                                        
-                                        >
-
-                                    </Button>
-                                    <ScrollViewer
-                                        Grid.Row="7"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="3"
-                                        VerticalScrollBarVisibility="Auto"
-                                        Margin="0 1 0 0">
-                                        <TextBox
-                                            Text=""
-                                            TextWrapping="Wrap"
-                                            x:Name="changeAreaName3"
-                                            Background="AliceBlue"
-                                            FontSize="14"
-                                            VerticalContentAlignment="Center">
-                                        </TextBox>
-                                    </ScrollViewer>
-                                    <ScrollViewer
-                                        Grid.Row="8"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="3"
-                                        VerticalScrollBarVisibility="Auto">
-                                        <TextBox
-                                            TextWrapping="Wrap"
-                                            Text=""
-                                            x:Name="changeAreaConsist3"
-                                            Background="AliceBlue"
-                                            FontSize="14"
-                                            >
-                                        </TextBox>
-                                    </ScrollViewer>
-                                    <ScrollViewer
-                                        Grid.Row="9"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="3"
-                                        VerticalScrollBarVisibility="Auto">
-                                        <TextBox
-                                            TextWrapping="Wrap"
-                                            Text=""
-                                            x:Name="changeAreaPrice3"
-                                            Background="AliceBlue"
-                                            FontSize="14"
-                                            VerticalContentAlignment="Center">
-                                        </TextBox>
-                                    </ScrollViewer>
-                                    <Button
-                                        Background="AliceBlue"
-                                        Grid.Column="4"
-                                        Grid.Row="7"
-                                        Grid.RowSpan="3"
-                                        Width="100"
-                                        Height="30"
-                                        Content="Изменить"
-                                        Click="ButtonClickChangeArea3"
-                                        
-                                        >
-
-                                    </Button>
-
-                                    <ScrollViewer
-                                        Grid.Row="10"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="3"
-                                        VerticalScrollBarVisibility="Auto"
-                                        Margin="0 1 0 0">
-                                        <TextBox
-                                            Text=""
-                                            TextWrapping="Wrap"
-                                            x:Name="changeAreaName4"
-                                            Background="AliceBlue"
-                                            FontSize="14"
-                                            VerticalContentAlignment="Center">
-                                        </TextBox>
-                                    </ScrollViewer>
-                                    <ScrollViewer
-                                        Grid.Row="11"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="3"
-                                        VerticalScrollBarVisibility="Auto">
-                                        <TextBox
-                                            TextWrapping="Wrap"
-                                            Text=""
-                                            x:Name="changeAreaConsist4"
-                                            Background="AliceBlue"
-                                            FontSize="14"
-                                            >
-                                        </TextBox>
-                                    </ScrollViewer>
-                                    <ScrollViewer
-                                        Grid.Row="12"
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="3"
-                                        VerticalScrollBarVisibility="Auto">
-                                        <TextBox
-                                            TextWrapping="Wrap"
-                                            Text=""
-                                            x:Name="changeAreaPrice4"
-                                            Background="AliceBlue"
-                                            FontSize="14"
-                                            VerticalContentAlignment="Center">
-                                        </TextBox>
-                                    </ScrollViewer>
-                                    <Button
-                                        Background="AliceBlue"
-                                        Grid.Column="4"
-                                        Grid.Row="10"
-                                        Grid.RowSpan="3"
-                                        Width="100"
-                                        Height="30"
-                                        Content="Изменить"
-                                        Click="ButtonClickChangeArea4"
-                                        
-                                        >
-
-                                    </Button>
-
-                                    <Label
-                                        Grid.Row="1"
                                         Grid.Column="0"
-                                        Content="Название"
-                                        HorizontalContentAlignment="Center">
-                                    </Label>
-                                    <Label
-                                        Grid.Row="2"
-                                        Grid.Column="0"
-                                        Content="Состав"
-                                        HorizontalContentAlignment="Center">
-                                    </Label>
-                                    <Label
-                                        Grid.Row="3"
-                                        Grid.Column="0"
-                                        Content="Цена"
+                                        Content="Название торта"
                                         HorizontalContentAlignment="Center"
-                                        VerticalContentAlignment="Center">
-                                    </Label>
-
+                                        VerticalContentAlignment="Center"
+                                        ></Label>
                                     <Label
-                                        Grid.Row="4"
-                                        Grid.Column="0"
-                                        Content="Название"
-                                        HorizontalContentAlignment="Center">
-                                    </Label>
-                                    <Label
-                                        Grid.Row="5"
-                                        Grid.Column="0"
-                                        Content="Состав"
-                                        HorizontalContentAlignment="Center">
-                                    </Label>
-                                    <Label
-                                        Grid.Row="6"
-                                        Grid.Column="0"
-                                        Content="Цена"
-                                        HorizontalContentAlignment="Center"
-                                        VerticalContentAlignment="Center">
-                                    </Label>
-                                    <Label
-                                        Content="Страница пользователя"
                                         Grid.Row="0"
-                                        Grid.Column="6"
-                                        Grid.ColumnSpan="3"
-                                        HorizontalAlignment="Center"></Label>
-                                    <Label
-                                        Grid.Row="7"
-                                        Grid.Column="0"
-                                        Content="Название"
-                                        HorizontalContentAlignment="Center">
-                                    </Label>
-                                    <Label
-                                        Grid.Row="8"
-                                        Grid.Column="0"
-                                        Content="Состав"
-                                        HorizontalContentAlignment="Center">
-                                    </Label>
-                                    <Label
-                                        Grid.Row="9"
-                                        Grid.Column="0"
-                                        Content="Цена"
+                                        Grid.Column="1"
+                                        Content="Цена торта"
                                         HorizontalContentAlignment="Center"
-                                        VerticalContentAlignment="Center">
-                                    </Label>
+                                        VerticalContentAlignment="Center"
+                                        ></Label>
+                                    <TextBlock Text="Фруктовый торт" Grid.Column="0" Grid.Row="1"></TextBlock>
+                                    <TextBlock Text="Торт для мальчиков" Grid.Column="0" Grid.Row="2"></TextBlock>
+                                    <TextBlock Text="Шоколадный торт" Grid.Column="0" Grid.Row="3"></TextBlock>
+                                    <TextBlock Text="Муссовый торт" Grid.Column="0" Grid.Row="4"></TextBlock>
+                                    <TextBlock Text="Свадебный торт" Grid.Column="0" Grid.Row="5"></TextBlock>
+                                    <TextBlock Text="Торт на день рождения" Grid.Column="0" Grid.Row="6"></TextBlock>
+                                    <TextBlock Text="Детский торт" Grid.Column="0" Grid.Row="7"></TextBlock>
+                                    
+                                    <TextBox Grid.Column="1" Grid.Row="1" Name="priceFruct"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="2" Name="priceMan"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="3" Name="priceShoko"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="4" Name="priceMussoviy"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="5" Name="priceSvadebniy"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="6" Name="priceBirthday"></TextBox>
+                                    <TextBox Grid.Column="1" Grid.Row="7" Name="priceKids"></TextBox>
 
-                                    <Label
-                                        Grid.Row="10"
-                                        Grid.Column="0"
-                                        Content="Название"
-                                        HorizontalContentAlignment="Center">
-                                    </Label>
-                                    <Label
-                                        Grid.Row="11"
-                                        Grid.Column="0"
-                                        Content="Состав"
-                                        HorizontalContentAlignment="Center">
-                                    </Label>
-                                    <Label
-                                        Grid.Row="12"
-                                        Grid.Column="0"
-                                        Content="Цена"
-                                        HorizontalContentAlignment="Center"
-                                        VerticalContentAlignment="Center">
-                                    </Label>
-
-                                    <ListBox
-                                        x:Name="Menu1"
-                                        Grid.Row="1"
-                                        Grid.Column="6"
-                                        Grid.ColumnSpan="3"
-                                        Grid.RowSpan="3">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel>
-                                                    <ScrollViewer
-                                                        VerticalScrollBarVisibility="Auto"
-                                                        Margin="0 1 0 0">
-                                                        <TextBlock
-                                                            IsEnabled="False"
-                                                            Foreground="Black"
-                                                            Text="{Binding dbAreaName1}"
-                                                            TextWrapping="Wrap"
-                                                            x:Name="dbAreaName1"
-                                                            Background="AliceBlue"
-                                                            FontSize="14">
-                                                        </TextBlock>
-                                                    </ScrollViewer>
-                                                    <ScrollViewer
-                                                       
-                                                        VerticalScrollBarVisibility="Auto">
-                                                        <TextBlock
-                                                            IsEnabled="False"
-                                                            TextWrapping="Wrap"
-                                                            Text="{Binding dbAreaConsist1}"
-                                                            x:Name="dbAreaConsist1"
-                                                            Background="AliceBlue"
-                                                            FontSize="14"
-                                                            >
-                                                        </TextBlock>
-                                                    </ScrollViewer>
-                                                    <ScrollViewer
-                                                        
-                                                        VerticalScrollBarVisibility="Auto">
-                                                        <TextBox
-                                                            IsEnabled="False"
-                                                            TextWrapping="Wrap"
-                                                            Text="{Binding dbAreaPrice1}"
-                                                            x:Name="dbAreaPrice1"
-                                                            Background="AliceBlue"
-                                                            FontSize="14"
-                                                            VerticalContentAlignment="Center"
-                                                            Margin="0 0 0 1">
-                                                        </TextBox>
-                                                    </ScrollViewer>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-
-
-                                    <ListBox
-                                        x:Name="Menu2"
-                                        Grid.Row="4"
-                                        Grid.Column="6"
-                                        Grid.ColumnSpan="3"
-                                        Grid.RowSpan="3">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel>
-                                                    <ScrollViewer
-                                                        VerticalScrollBarVisibility="Auto"
-                                                        Margin="0 1 0 0">
-                                                        <TextBlock
-                                                            Text="{Binding dbAreaName2}"
-                                                            TextWrapping="Wrap"
-                                                            x:Name="dbAreaName2"
-                                                            Background="AliceBlue"
-                                                            FontSize="14"
-                                                            >
-                                                        </TextBlock>
-                                                    </ScrollViewer>
-                                                    <ScrollViewer
-                                                    
-                                                        VerticalScrollBarVisibility="Auto">
-                                                        <TextBlock
-                                                            TextWrapping="Wrap"
-                                                            Text="{Binding dbAreaConsist2}"
-                                                            x:Name="dbAreaConsist2"
-                                                            Background="AliceBlue"
-                                                            FontSize="14"
-                                                        >
-                                                        </TextBlock>
-                                                    </ScrollViewer>
-                                                    <ScrollViewer
-                                                        
-                                                        VerticalScrollBarVisibility="Auto">
-                                                        <TextBlock
-                                                            TextWrapping="Wrap"
-                                                            Text="{Binding dbAreaPrice2}"
-                                                            x:Name="dbAreaPrice2"
-                                                            Background="AliceBlue"
-                                                            FontSize="14"
-                                                            
-                                                            Margin="0 0 0 1">
-                                                        </TextBlock>
-                                                    </ScrollViewer>
-                                                </StackPanel>
-
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-
-
-                                    <ListBox
-                                        x:Name="Menu3"
-                                        Grid.Row="7"
-                                        Grid.Column="6"
-                                        Grid.ColumnSpan="3"
-                                        Grid.RowSpan="3">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel>
-                                                    <ScrollViewer
-                                                        
-                                                        VerticalScrollBarVisibility="Auto"
-                                                        Margin="0 1 0 0">
-                                                        <TextBlock
-                                                            Text="{Binding dbAreaName3}"
-                                                            TextWrapping="Wrap"
-                                                            x:Name="dbAreaName3"
-                                                            Background="AliceBlue"
-                                                            FontSize="14"
-                                                            >
-                                                        </TextBlock>
-                                                    </ScrollViewer>
-                                                    <ScrollViewer
-                                                        
-                                                        VerticalScrollBarVisibility="Auto">
-                                                        <TextBlock
-                                                            TextWrapping="Wrap"
-                                                            Text="{Binding dbAreaConsist3}"
-                                                            x:Name="dbAreaConsist3"
-                                                            Background="AliceBlue"
-                                                            FontSize="14"
-                                                            >
-                                                        </TextBlock>
-                                                    </ScrollViewer>
-                                                    <ScrollViewer
-                                                        
-                                                        VerticalScrollBarVisibility="Auto">
-                                                        <TextBlock
-                                                            TextWrapping="Wrap"
-                                                            Text="{Binding dbAreaPrice3}"
-                                                            x:Name="dbAreaPrice3"
-                                                            Background="AliceBlue"
-                                                            FontSize="14"
-                                                            
-                                                            Margin="0 0 0 1">
-                                                        </TextBlock>
-                                                    </ScrollViewer>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-
-
-                                    <ListBox
-                                        x:Name="Menu4"
-                                        Grid.Row="10"
-                                        Grid.Column="6"
-                                        Grid.ColumnSpan="3"
-                                        Grid.RowSpan="3">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel>
-                                                    <ScrollViewer
+                                    <Button Grid.Column="2" Grid.Row="7" Content="Добавить" Click="AddNameToBase">
                                         
-                                                        VerticalScrollBarVisibility="Auto"
-                                                        Margin="0 1 0 0">
-                                                        <TextBlock
-                                                            Text="{Binding dbAreaName4}"
-                                                            TextWrapping="Wrap"
-                                                            x:Name="dbAreaName4"
-                                                            Background="AliceBlue"
-                                                            FontSize="14"
-                                                            >
-                                                        </TextBlock>
-                                                    </ScrollViewer>
-                                                    <ScrollViewer
-                                        
-                                                        VerticalScrollBarVisibility="Auto">
-                                                        <TextBlock
-                                                            TextWrapping="Wrap"
-                                                            Text="{Binding dbAreaConsist4}"
-                                                            x:Name="dbAreaConsist4"
-                                                            Background="AliceBlue"
-                                                            FontSize="14"
-                                                            >
-                                                        </TextBlock>
-                                                    </ScrollViewer>
-                                                    <ScrollViewer
-                                        
-                                                        VerticalScrollBarVisibility="Auto">
-                                                        <TextBlock
-                                                            TextWrapping="Wrap"
-                                                            Text="{Binding dbAreaPrice4}"
-                                                            x:Name="dbAreaPrice4"
-                                                            Background="AliceBlue"
-                                                            FontSize="14"
-                                                            
-                                                            Margin="0 0 0 1">
-                                                        </TextBlock>
-                                                    </ScrollViewer>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-
-
+                                    </Button>
                                     <Label
                                         x:Name="downTrayBuyer"
                                         Grid.Column="0"
                                         Grid.Row="14"
-                                        Grid.ColumnSpan="9"
+                                        Grid.ColumnSpan="10"
                                         FontSize="14"
                                         Padding="1 1 1 1"
-                                        Margin="1 1 1 1"
+                                        Margin="1,1,1,1"
                                         Background="AliceBlue"
                                         >
                                     </Label>
+                                    
                                 </Grid>
                             </TabItem.Content>
                         </TabItem>
@@ -1719,7 +1150,7 @@
                                     VerticalAlignment="Center"
                                     HorizontalContentAlignment="Center"
                                     Background="Azure"/>
-                            <!--//Окно ввода ID-->
+                        <!--//Окно ввода ID-->
                         <!--<ScrollBar 
                             Grid.Row="0"
                             Grid.Column="1"
@@ -2137,7 +1568,7 @@
                                     </Grid>
                                 </TabItem.Content>
                             </TabItem>
-                            
+
                             <!--<TabItem>
                                 <TabItem.Header>
                                     <Label
@@ -2541,7 +1972,7 @@
                             Grid.Column="0"
                             Grid.Row="1"
                             Grid.ColumnSpan="2"
-                            Grid.RowSpan="8">   
+                            Grid.RowSpan="8">
                             <Rectangle.Fill>
                                 <LinearGradientBrush>
                                     <GradientStop Color="White" Offset="0"></GradientStop>
@@ -2567,7 +1998,7 @@
                             FontFamily="Segoe UI"
                             Padding="1 1 1 1"
                             >
-                            
+
                         </Label>
                         <Label 
                             Grid.Row="1" 
@@ -2629,7 +2060,7 @@
                             HorizontalContentAlignment="Right"
                             >
                         </Label>
-                        <Label
+                        <!--<Label
                             Grid.Row="6" 
                             Grid.Column="2"
                             Content="Открыть доступ"
@@ -2638,7 +2069,7 @@
                             VerticalContentAlignment="Center"
                             HorizontalContentAlignment="Right"
                             >
-                        </Label>
+                        </Label>-->
                         <Rectangle 
                             Grid.Column="2"
                             Grid.Row="8"
@@ -2661,7 +2092,7 @@
                             VerticalAlignment="Bottom"
                             >
                         </Label>
-                        
+
                         <TextBox
                             x:Name="RegIdSearch"
                             IsReadOnly="True"
@@ -2690,14 +2121,14 @@
                             <Button Margin="1 1 1 1" Click="ButtonClick_8Reg" Width="65" Height="40">8</Button>
                             <Button Margin="1 1 1 1" Click="ButtonClick_9Reg" Width="65" Height="40">9</Button>
                             <Button Margin="1 1 1 1" Click="ButtonClick_0Reg" Width="65" Height="40">0</Button>
-                            
+
                         </WrapPanel>
                         <StackPanel Grid.Row="8" 
                             Grid.Column="2">
                             <Button  Margin="1 1 1 1" Click="ButtonClickClearReg" Width="160" Height="40">Очистить</Button>
                             <Button Margin="1 1 1 1" Click="ButtonClickDeleteReg" Width="160" Height="40">Удалить</Button>
                         </StackPanel >
-                        
+
                         <TextBox
                             Grid.Row="2" 
                             Grid.Column="3"
@@ -2734,7 +2165,7 @@
                             HorizontalContentAlignment="Left"
                             Margin="1 1 1 1">
                         </TextBox>
-                        <StackPanel
+                        <!--<StackPanel
                             Orientation="Horizontal"
                             Grid.Row="6" 
                             Grid.Column="3">
@@ -2769,20 +2200,33 @@
                             Margin="1 1 1 1" Background="LightCoral" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                             </TextBox>
                             <TextBox Visibility="Hidden" Height="50" Width="50" IsReadOnly="True" FontSize="10" x:Name="Hidden" Margin="1 1 0 1" Background="LightCoral" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
-                            </TextBox><!--Сейчас не используется-->
-                        </StackPanel>
-                        
-                        <StackPanel
+                            </TextBox>-->
+                        <!--Сейчас не используется-->
+                        <!--
+                        </StackPanel>-->
+                        <Button
+                            Grid.Row="6"
+                            Grid.Column="3"
+                            Height="50"
+                            Click="ButtonClickRegistrationUser"
+                            Content="Зарегистрировать"
+                            FontSize="16"
+                            Margin="1 1 1 1">
+
+                        </Button>
+                        <!--<StackPanel
                             Grid.Row="7"
                             Grid.Column="3">
                             <WrapPanel
                                 Margin="1 1 1 10"
                             >
-                                <CheckBox Unchecked="checkKitchenUnchecked" Checked="checkKitchenCheked" x:Name="checkKitchen" Margin="1 1 1 1">Повар</CheckBox>
+                                -->
+                        <!--<CheckBox Unchecked="checkKitchenUnchecked" Checked="checkKitchenCheked" x:Name="checkKitchen" Margin="1 1 1 1">Повар</CheckBox>
                                 <CheckBox Unchecked="checkPymasterUnchecked" Checked="checkPymasterCheked" IsChecked="False" x:Name="checkPymaster" Margin="1 1 1 1">Кассир</CheckBox>
                                 <CheckBox Unchecked="checkDeliveryUnchecked" Checked="checkDeliveryCheked" IsChecked="False" x:Name="checkDelivery" Margin="1 1 1 1">Доставщик</CheckBox>
                                 <CheckBox Unchecked="checkBuyerUnchecked" Checked="checkBuyerCheked" IsChecked="False" x:Name="checkBuyer" Margin="1 1 1 1">Покупатель</CheckBox>
-                                <CheckBox Unchecked="checkSupervisorUnchecked" Checked="checkSupervisorCheked" IsChecked="False" x:Name="checkSupervisor" Margin="1 1 1 1">Директор</CheckBox>
+                                <CheckBox Unchecked="checkSupervisorUnchecked" Checked="checkSupervisorCheked" IsChecked="False" x:Name="checkSupervisor" Margin="1 1 1 1">Директор</CheckBox>-->
+                        <!--
 
                             </WrapPanel>
                             <Button
@@ -2793,8 +2237,8 @@
                             Margin="1 1 1 1">
 
                             </Button>
-                        </StackPanel>
-                        
+                        </StackPanel>-->
+
                         <ScrollViewer 
                             Grid.Row="2" 
                             Grid.Column="0"

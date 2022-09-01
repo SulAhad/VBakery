@@ -7,7 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="-.jpg_640x640.jpg" />
+    <None Remove="1.jpg" />
+    <None Remove="1417_8_359618132.jpeg" />
+    <None Remove="1503836608_dscn3444.jpg" />
+    <None Remove="1628069515_1-p-fruktovie-torti-foto-1.jpg" />
+    <None Remove="2021-05-05-103236396-1024x1024.png" />
+    <None Remove="605.png" />
+    <None Remove="69bd95991139b9f_300x300.jpg" />
+    <None Remove="b24aeb3c.png" />
+    <None Remove="background.jpg" />
     <None Remove="block.png" />
+    <None Remove="fruct %282%29.png" />
+    <None Remove="fruktovye-torty-svadebnye_0.jpg" />
+    <None Remove="Images\1.jpg" />
+    <None Remove="krasivyj-tort-s-fruktami-v-zhele.jpg" />
+    <None Remove="maxresdefault.jpg" />
+    <None Remove="sladkoe-pechene-macaron.jpg" />
+    <None Remove="ассортимент-кофе.jpg" />
+    <None Remove="Без названия.jfif" />
+    <None Remove="Безымянный.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,10 +35,29 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.17" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="block.png" />
+    <Resource Include="Images\-.jpg_640x640.jpg" />
+    <Resource Include="Images\1417_8_359618132.jpeg" />
+    <Resource Include="Images\1503836608_dscn3444.jpg" />
+    <Resource Include="Images\1628069515_1-p-fruktovie-torti-foto-1.jpg" />
+    <Resource Include="Images\69bd95991139b9f_300x300.jpg" />
+    <Resource Include="Images\Gallery\fruct %282%29.png" />
+    <Resource Include="Images\fruktovye-torty-svadebnye_0.jpg" />
+    <Resource Include="Images\2021-05-05-103236396-1024x1024.png" />
+    <Resource Include="Images\605.png" />
+    <Resource Include="Images\b24aeb3c.png" />
+    <Resource Include="Images\background.jpg" />
+    <Resource Include="Images\block.png" />
+    <Resource Include="Images\1.jpg" />
+    <Resource Include="Images\sladkoe-pechene-macaron.jpg" />
+    <Resource Include="Images\krasivyj-tort-s-fruktami-v-zhele.jpg" />
+    <Resource Include="Images\maxresdefault.jpg" />
+    <Resource Include="Images\ассортимент-кофе.jpg" />
+    <Resource Include="Images\Без названия.jfif" />
+    <Resource Include="Images\Безымянный.jpg" />
   </ItemGroup>
 
 </Project>

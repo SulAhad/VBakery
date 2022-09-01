@@ -2,10 +2,10 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:VBakery"
-             StartupUri="LoginWindow.xaml"
+             StartupUri="MainWindow.xaml"
              >
     <Application.Resources>
-        <Style x:Key="MyButtonStyle" TargetType="Button">
+        <!--<Style x:Key="MyButtonStyle" TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -21,7 +21,7 @@
                     <Setter Property="Background" Value="DarkGray"/>
                 </Trigger>
             </Style.Triggers>
-        </Style>
+        </Style>-->
         <!--<Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="LightGray"/>
             <Setter Property="Template">

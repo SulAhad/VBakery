@@ -1,11 +1,18 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using VBakery.DB;
 using VBakery.MenuDB;
+using VBakery.Model;
+using Brushes = System.Windows.Media.Brushes;
+
 namespace VBakery
 {
     public partial class Supervisor : Window
@@ -18,13 +25,16 @@ namespace VBakery
         readonly TimerEndsContext timerEndsContext = new();
         readonly LogOrdersContext logOrders = new();
         readonly UsersContext usersContext = new();
+        readonly PriceForMenusContext priceForMenusContext = new();
+        private ITypeDescriptorContext image;
+
         public Supervisor()
         {
             InitializeComponent();
 
             //if(checkKitchen.IsChecked)
             //{
-                
+
             //}
             //if (checkPymaster.IsChecked == true)
             //{
@@ -119,20 +129,6 @@ namespace VBakery
             }
 
         }//Отправить сообщение в чат
-        public void UpdateDBBuyer()
-        {
-            using MenuArea1Context db1 = new();
-            Menu1.ItemsSource = db1.Menu1.ToList();
-
-            using MenuArea2Context db2 = new();
-            Menu2.ItemsSource = db2.Menu2.ToList();
-
-            using MenuArea3Context db3 = new();
-            Menu3.ItemsSource = db3.Menu3.ToList();
-
-            using MenuArea4Context db4 = new();
-            Menu4.ItemsSource = db4.Menu4.ToList();
-        }// Обновление меню покупаетля
         private void HandlerKeyDownEvent(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -196,7 +192,7 @@ namespace VBakery
                 {
                     NameRecipe = nameRecipe.Text,
                     TextRecipe = RecipeArea.Text,
-                    PriceRecipe = Convert.ToInt32(Price.Text)
+                    PriceRecipe = Price.Text
                 };
                 recipesContext.Recipes.Add(toms);
                 recipesContext.SaveChanges();
@@ -356,186 +352,9 @@ namespace VBakery
             downTrayBuyer.Content = "Добавлено в базу данных";
             downTrayBuyer.Background = Brushes.LightGreen;
         }//метод подтвержедения снизу строки
-        private void ButtonClickUpdate(object sender, RoutedEventArgs e)
-        {
-            UpdateDBBuyer();
-        }// кнопка обновления окна покупателя
 
 
         ///Тестовые методы отпарвки данных
-        private void ButtonClickChangeArea1(object sender, RoutedEventArgs e)
-        {
-            if (changeAreaName1.Text == "")
-            {
-                DoNotHaveName();
-            }
-            if (changeAreaConsist1.Text == "")
-            {
-                DoNotHaveConsist();
-            }
-            if (changeAreaPrice1.Text == "")
-            {
-                DoNotHavePrice();
-            }
-            else
-            {
-                using MenuArea1Context db = new();
-                MenuArea1 toms = new()
-                {
-                    dbAreaName1 = changeAreaName1.Text,
-                    dbAreaConsist1 = changeAreaConsist1.Text,
-                    dbAreaPrice1 = changeAreaPrice1.Text
-                };
-                db.Menu1.Update(toms);
-                db.SaveChanges();
-                AddTextToTray();
-                changeAreaName1.Text = "";
-                changeAreaConsist1.Text = "";
-                changeAreaPrice1.Text = "";
-                UpdateDBBuyer();
-            }
-        }//первое поле
-        private void ButtonClickChangeArea2(object sender, RoutedEventArgs e)
-        {
-            if (changeAreaName2.Text == "")
-            {
-                DoNotHaveName();
-            }
-            if (changeAreaConsist2.Text == "")
-            {
-                DoNotHaveConsist();
-            }
-            if (changeAreaPrice2.Text == "")
-            {
-                DoNotHavePrice();
-            }
-            else
-            {
-                using MenuArea2Context db = new();
-                MenuArea2 toms = new()
-                {
-                    dbAreaName2 = changeAreaName2.Text,
-                    dbAreaConsist2 = changeAreaConsist2.Text,
-                    dbAreaPrice2 = changeAreaPrice2.Text
-                };
-                db.Menu2.Update(toms);
-                db.SaveChanges();
-                AddTextToTray();
-                changeAreaName2.Text = "";
-                changeAreaConsist2.Text = "";
-                changeAreaPrice2.Text = "";
-                UpdateDBBuyer();
-            }
-        }//второе поле
-        private void ButtonClickChangeArea3(object sender, RoutedEventArgs e)
-        {
-            if (changeAreaName3.Text == "")
-            {
-                DoNotHaveName();
-            }
-            if (changeAreaConsist3.Text == "")
-            {
-                DoNotHaveConsist();
-            }
-            if (changeAreaPrice3.Text == "")
-            {
-                DoNotHavePrice();
-            }
-            else
-            {
-                using MenuArea3Context db = new();
-                MenuArea3 toms = new()
-                {
-                    dbAreaName3 = changeAreaName3.Text,
-                    dbAreaConsist3 = changeAreaConsist3.Text,
-                    dbAreaPrice3 = changeAreaPrice3.Text
-                };
-                db.Menu3.Update(toms);
-                db.SaveChanges();
-                AddTextToTray();
-                changeAreaName3.Text = "";
-                changeAreaConsist3.Text = "";
-                changeAreaPrice3.Text = "";
-                UpdateDBBuyer();
-            }
-        }//3 поле
-        private void ButtonClickChangeArea4(object sender, RoutedEventArgs e)
-        {
-            if (changeAreaName4.Text == "")
-            {
-                DoNotHaveName();
-            }
-            if (changeAreaConsist4.Text == "")
-            {
-                DoNotHaveConsist();
-            }
-            if (changeAreaPrice4.Text == "")
-            {
-                DoNotHavePrice();
-            }
-            else
-            {
-                using MenuArea4Context db = new();
-                MenuArea4 toms = new()
-                {
-                    dbAreaName4 = changeAreaName4.Text,
-                    dbAreaConsist4 = changeAreaConsist4.Text,
-                    dbAreaPrice4 = changeAreaPrice4.Text
-                };
-                db.Menu4.Update(toms);
-                db.SaveChanges();
-                AddTextToTray();
-                changeAreaName4.Text = "";
-                changeAreaConsist4.Text = "";
-                changeAreaPrice4.Text = "";
-                UpdateDBBuyer();
-            }
-        }//4 поле 
-        private void ButtonClickDeleteMenu1(object sender, RoutedEventArgs e)
-        {
-            using MenuArea1Context db = new();
-            MenuArea1 menu1 = db.Menu1.FirstOrDefault();
-            if (menu1 != null)
-            {
-                db.Remove(menu1);
-                db.SaveChanges();
-                UpdateDBBuyer();
-            }
-        }// удаление первое поле
-        private void ButtonClickDeleteMenu2(object sender, RoutedEventArgs e)
-        {
-            using MenuArea2Context db = new();
-            MenuArea2 menu2 = db.Menu2.FirstOrDefault();
-            if (menu2 != null)
-            {
-                db.Remove(menu2);
-                db.SaveChanges();
-                UpdateDBBuyer();
-            }
-        }//удаление второе поле
-        private void ButtonClickDeleteMenu3(object sender, RoutedEventArgs e)
-        {
-            using MenuArea3Context db = new();
-            MenuArea3 menu3 = db.Menu3.FirstOrDefault();
-            if (menu3 != null)
-            {
-                db.Remove(menu3);
-                db.SaveChanges();
-                UpdateDBBuyer();
-            }
-        }// удаление 3 поле
-        private void ButtonClickDeleteMenu4(object sender, RoutedEventArgs e)
-        {
-            using MenuArea4Context db = new();
-            MenuArea4 menu4 = db.Menu4.FirstOrDefault();
-            if (menu4 != null)
-            {
-                db.Remove(menu4);
-                db.SaveChanges();
-                UpdateDBBuyer();
-            }
-        }// удаление 4 поле 
-
         private void ButtonClickDeleteChat(object sender, RoutedEventArgs e)
         {
             var item = messagesContext.Messages.FirstOrDefault();
@@ -766,7 +585,7 @@ namespace VBakery
             }
             if (flag)
             {
-                
+
                 User usersContext1 = new User
                 {
                     Name = nameTextBoxRegistration.Text,
@@ -774,12 +593,12 @@ namespace VBakery
                     Mobile = mobileTextBoxRegistration.Text,
                     Password = passwordTextBoxRegistration.Text,
                     DateOfRegistration = DateTime.Now.ToString(),
-                    CheckKitchen = 
-                    accessKitchen.Text,
-                    CheckPymaster = accessPaymast.Text,
-                    CheckDelivery = accessDelivery.Text,
-                    CheckBuyer = accessBuyer.Text,
-                    CheckSupervisor = accessSupervisor.Text
+                    //CheckKitchen =
+                    //accessKitchen.Text,
+                    //CheckPymaster = accessPaymast.Text,
+                    //CheckDelivery = accessDelivery.Text,
+                    //CheckBuyer = accessBuyer.Text,
+                    //CheckSupervisor = accessSupervisor.Text
                 };
                 usersContext.Users.Add(usersContext1);
                 usersContext.SaveChanges();
@@ -790,16 +609,16 @@ namespace VBakery
                 lastNameTextBoxRegistration.Text = "";
                 mobileTextBoxRegistration.Text = "";
                 passwordTextBoxRegistration.Text = "";
-                accessBuyer.Text = "";
-                accessBuyer.Background = Brushes.LightCoral;
-                accessKitchen.Text = "";
-                accessKitchen.Background = Brushes.LightCoral;
-                accessPaymast.Text = "";
-                accessPaymast.Background = Brushes.LightCoral;
-                accessDelivery.Text = "";
-                accessDelivery.Background = Brushes.LightCoral;
-                accessSupervisor.Text = "";
-                accessSupervisor.Background = Brushes.LightCoral;
+                //accessBuyer.Text = "";
+                //accessBuyer.Background = Brushes.LightCoral;
+                //accessKitchen.Text = "";
+                //accessKitchen.Background = Brushes.LightCoral;
+                //accessPaymast.Text = "";
+                //accessPaymast.Background = Brushes.LightCoral;
+                //accessDelivery.Text = "";
+                //accessDelivery.Background = Brushes.LightCoral;
+                //accessSupervisor.Text = "";
+                //accessSupervisor.Background = Brushes.LightCoral;
             }
         }
         private void ButtonClick_1Reg(object sender, RoutedEventArgs e)
@@ -886,65 +705,121 @@ namespace VBakery
                 }
             }
         }
-        
-                
-                
-                
-                
-        private void checkKitchenCheked(object sender, RoutedEventArgs e)
+
+        private void AddNameToBase(object sender, RoutedEventArgs e)
         {
-            accessKitchen.Text = "Повар";
-            Hidden.Text += "Повар";
-            accessKitchen.Background = Brushes.LightGreen;
+            if (priceFruct.Text == "")
+            {
+                downTrayBuyer.Content = "Не ввели название";
+                downTrayBuyer.Background = Brushes.LightCoral;
+            }
+            if (priceMan.Text == "")
+            {
+                downTrayBuyer.Content = "Не ввели название";
+                downTrayBuyer.Background = Brushes.LightCoral;
+            }
+            if (priceShoko.Text == "")
+            {
+                downTrayBuyer.Content = "Не ввели название";
+                downTrayBuyer.Background = Brushes.LightCoral;
+            }
+            if (priceMussoviy.Text == "")
+            {
+                downTrayBuyer.Content = "Не ввели название";
+                downTrayBuyer.Background = Brushes.LightCoral;
+            }
+            if (priceSvadebniy.Text == "")
+            {
+                downTrayBuyer.Content = "Не ввели название";
+                downTrayBuyer.Background = Brushes.LightCoral;
+            }
+            if (priceBirthday.Text == "")
+            {
+                downTrayBuyer.Content = "Не ввели название";
+                downTrayBuyer.Background = Brushes.LightCoral;
+            }
+            if (priceKids.Text == "")
+            {
+                downTrayBuyer.Content = "Не ввели название";
+                downTrayBuyer.Background = Brushes.LightCoral;
+            }
+            else
+            {
+                PriceForMenu toms = new()
+                {
+                    PriceFruct = priceFruct.Text,
+                    PriceMan = priceMan.Text,
+                    PriceShoko = priceShoko.Text,
+                    PriceMussoviy = priceMussoviy.Text,
+                    PriceSvadebniy = priceSvadebniy.Text,
+                    PriceBirthday = priceBirthday.Text,
+                    PriceKids = priceKids.Text
+                };
+                priceForMenusContext.PriceForMenus.Add(toms);
+                priceForMenusContext.SaveChanges();
+                downTrayBuyer.Content = "Добавлено";
+                downTrayBuyer.Background = Brushes.LightGreen;
+            }
         }
-        private void checkPymasterCheked(object sender, RoutedEventArgs e)
-        {
-            accessPaymast.Text = "Кассир";
-            Hidden.Text += "Кассир";
-            accessPaymast.Background = Brushes.LightGreen;
-        }
-        private void checkDeliveryCheked(object sender, RoutedEventArgs e)
-        {
-            accessDelivery.Text = "Доставщик";
-            Hidden.Text += "Доставщик";
-            accessDelivery.Background = Brushes.LightGreen;
-        }
-        private void checkBuyerCheked(object sender, RoutedEventArgs e)
-        {
-            accessBuyer.Text = "Покупатель";
-            Hidden.Text += "Покупатель";
-            accessBuyer.Background = Brushes.LightGreen;
-        }
-        private void checkSupervisorCheked(object sender, RoutedEventArgs e)
-        {
-            accessSupervisor.Text = "Директор";
-            Hidden.Text += "Директор";
-            accessSupervisor.Background = Brushes.LightGreen;
-        }
-        private void checkBuyerUnchecked(object sender, RoutedEventArgs e)
-        {
-            accessBuyer.Text = "";
-            accessBuyer.Background = Brushes.LightCoral;
-        }
-        private void checkKitchenUnchecked(object sender, RoutedEventArgs e)
-        {
-            accessKitchen.Text = "";
-            accessKitchen.Background = Brushes.LightCoral;
-        }
-        private void checkPymasterUnchecked(object sender, RoutedEventArgs e)
-        {
-            accessPaymast.Text = "";
-            accessPaymast.Background = Brushes.LightCoral;
-        }
-        private void checkDeliveryUnchecked(object sender, RoutedEventArgs e)
-        {
-            accessDelivery.Text = "";
-            accessDelivery.Background = Brushes.LightCoral;
-        }
-        private void checkSupervisorUnchecked(object sender, RoutedEventArgs e)
-        {
-            accessSupervisor.Text = "";
-            accessSupervisor.Background = Brushes.LightCoral;
-        }
+
+
+
+
+
+        //private void checkKitchenCheked(object sender, RoutedEventArgs e)
+        //{
+        //    accessKitchen.Text = "Повар";
+        //    Hidden.Text += "Повар";
+        //    accessKitchen.Background = Brushes.LightGreen;
+        //}
+        //private void checkPymasterCheked(object sender, RoutedEventArgs e)
+        //{
+        //    accessPaymast.Text = "Кассир";
+        //    Hidden.Text += "Кассир";
+        //    accessPaymast.Background = Brushes.LightGreen;
+        //}
+        //private void checkDeliveryCheked(object sender, RoutedEventArgs e)
+        //{
+        //    accessDelivery.Text = "Доставщик";
+        //    Hidden.Text += "Доставщик";
+        //    accessDelivery.Background = Brushes.LightGreen;
+        //}
+        //private void checkBuyerCheked(object sender, RoutedEventArgs e)
+        //{
+        //    accessBuyer.Text = "Покупатель";
+        //    Hidden.Text += "Покупатель";
+        //    accessBuyer.Background = Brushes.LightGreen;
+        //}
+        //private void checkSupervisorCheked(object sender, RoutedEventArgs e)
+        //{
+        //    accessSupervisor.Text = "Директор";
+        //    Hidden.Text += "Директор";
+        //    accessSupervisor.Background = Brushes.LightGreen;
+        //}
+        //private void checkBuyerUnchecked(object sender, RoutedEventArgs e)
+        //{
+        //    accessBuyer.Text = "";
+        //    accessBuyer.Background = Brushes.LightCoral;
+        //}
+        //private void checkKitchenUnchecked(object sender, RoutedEventArgs e)
+        //{
+        //    accessKitchen.Text = "";
+        //    accessKitchen.Background = Brushes.LightCoral;
+        //}
+        //private void checkPymasterUnchecked(object sender, RoutedEventArgs e)
+        //{
+        //    accessPaymast.Text = "";
+        //    accessPaymast.Background = Brushes.LightCoral;
+        //}
+        //private void checkDeliveryUnchecked(object sender, RoutedEventArgs e)
+        //{
+        //    accessDelivery.Text = "";
+        //    accessDelivery.Background = Brushes.LightCoral;
+        //}
+        //private void checkSupervisorUnchecked(object sender, RoutedEventArgs e)
+        //{
+        //    accessSupervisor.Text = "";
+        //    accessSupervisor.Background = Brushes.LightCoral;
+        //}
     }
 }

@@ -8,10 +8,10 @@
         public string Mobile { get; set; }
         public string Password { get; set; }
         public string DateOfRegistration { get; set; }
-        public string CheckKitchen { get; set; }
-        public string CheckPymaster { get; set; }
-        public string CheckDelivery { get; set; }
-        public string CheckBuyer { get; set; }
-        public string CheckSupervisor { get; set; }
+        //public string CheckKitchen { get; set; }
+        //public string CheckPymaster { get; set; }
+        //public string CheckDelivery { get; set; }
+        //public string CheckBuyer { get; set; }
+        //public string CheckSupervisor { get; set; }
     }
 }
