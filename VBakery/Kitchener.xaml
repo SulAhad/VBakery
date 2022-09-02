@@ -169,13 +169,19 @@
                         <Image x:Name="imageRefresh" Grid.Column="1" Grid.Row="0" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\refresh.png" Width="20" MouseDown="MouseDownRefresh"></Image>
                         <Image x:Name="imageRecepts" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\recepts.png" Width="20" Grid.Row="0" Grid.Column="2"  Margin="0 1 0 1" MouseDown="OpenRecepts"></Image>
                         <Image x:Name="imageChat" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\chat.png" Width="20" Grid.Row="0" Grid.Column="3"  Margin="0 1 0 1" MouseDown="OpenChat"></Image>
-                        <ScrollViewer
+                        <Grid
+                            
                             Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="8"
                             Grid.RowSpan="4"
                             >
-                            <DataGrid 
+                            <ScrollViewer>
+                                <WrapPanel Background="DarkCyan" x:Name="ScrollData">
+                                    
+                                </WrapPanel>
+                            </ScrollViewer>
+                            <!--<DataGrid 
                                 AlternatingRowBackground="White"
                                 RowBackground="AliceBlue"
                                 GridLinesVisibility="Horizontal"
@@ -275,8 +281,8 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                 </DataGrid.Columns>
-                            </DataGrid>
-                        </ScrollViewer>
+                            </DataGrid>-->
+                        </Grid>
                         <StackPanel
                             Background="AliceBlue"
                             Grid.Row="1"
