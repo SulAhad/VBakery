@@ -178,7 +178,10 @@
                             >
                             <ScrollViewer>
                                 <WrapPanel Background="DarkCyan" x:Name="ScrollData">
-                                    
+                                    <!--<Grid x:Name="stack">
+                                        <Label x:Name="id"></Label>
+                                        <Label x:Name="name"></Label>
+                                    </Grid>-->
                                 </WrapPanel>
                             </ScrollViewer>
                             <!--<DataGrid 

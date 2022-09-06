@@ -11,6 +11,7 @@
         public string StaffComment { get; set; }//комментарии для персонала 
         public string DeliveryDate { get; set; }//дата доставки
         public string OrderDateTime { get; set; }//дата заказа
-        public int OrderPrice { get; set; }//общая цена заказа
+        public float OrderPrice { get; set; }//общая цена заказа
     }
+
 }

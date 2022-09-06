@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using VBakery.DB;
 using VBakery.MenuDB;
 using VBakery.Model;
@@ -26,54 +27,33 @@ namespace VBakery
         readonly LogOrdersContext logOrders = new();
         readonly UsersContext usersContext = new();
         readonly PriceForMenusContext priceForMenusContext = new();
-        private ITypeDescriptorContext image;
-
+        readonly FirstMenuContext firstMenuContext = new();
+        readonly SecondMenuContext secondMenuContext = new();
+        readonly ThirdMenuContext thirdMenuContext = new();
+        public int countNums1 = 0;///Подсчет количества нажатий на цифровые кнопки 1 окно
+        public int countNums2 = 0;///Подсчет количества нажатий на цифровые кнопки 2 окно
+        public int countNums3 = 0;///Подсчет количества нажатий на цифровые кнопки 3 окно
+        public int countNums4 = 0;///Подсчет количества нажатий на цифровые кнопки 3 окно
+        public int countNums5 = 0;///Подсчет количества нажатий на цифровые кнопки 3 окно
+        public int countNums6 = 0;///Подсчет количества нажатий на цифровые кнопки 3 окно
         public Supervisor()
         {
             InitializeComponent();
-
-            //if(checkKitchen.IsChecked)
-            //{
-
-            //}
-            //if (checkPymaster.IsChecked == true)
-            //{
-            //    accessTextBoxRegistration.Text = "Кассир";
-            //}
-            //if (checkDelivery.IsChecked == true)
-            //{
-            //    accessTextBoxRegistration.Text = "Доставщик";
-            //}
-            //if (checkBuyer.IsChecked == true)
-            //{
-            //    accessTextBoxRegistration.Text = "Покупатель";
-            //}
-            //if (checkSupervisor.IsChecked == true)
-            //{
-            //    accessTextBoxRegistration.Text = "Директор";
-            //}
-
+            Menu1.ItemsSource = firstMenuContext.FirstMenus.ToList();
+            Menu2.ItemsSource = secondMenuContext.SecondMenus.ToList();
+            Menu3.ItemsSource = thirdMenuContext.ThirdMenus.ToList();
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
-
             MethodGetDataRecept();//Повар
-
             StartWork();//Кассир
-
             EndWork();//Кассир
             UpdateOrderForBuyer();
-
             UpdateChatIfClickSend();
-
             customerCount = orderForBuyersContext.OrderForBuyers.Count();//Подсчет количества продаж
             CountSales.Content = Convert.ToString(customerCount) + " " + "заказов";//Вывод результата подсчета
-
             System.Int32 BuyerCount = orderForBuyersContext.OrderForBuyers.Count();
             VisitBuyer.Text = Convert.ToString(BuyerCount);
-
             TotalSales.Content = orderForBuyersContext.OrderForBuyers.Sum(p => p.OrderPrice).ToString() + " " + "руб";//Получение общей суммы продаж из базы данных
-
             LogOrder.ItemsSource = logOrders.LogOrders.ToList();
-
             UserRegistration.ItemsSource = usersContext.Users.ToList();
         }
         public void UpdateChatIfClickSend()
@@ -103,8 +83,6 @@ namespace VBakery
         {
             this.Close();
         }//Кнопка закрыть окно
-
-
         public void ClickButtonSendMessage(object sender, RoutedEventArgs e)
         {
             if (MessageUser.Text != "")
@@ -142,8 +120,6 @@ namespace VBakery
                     break;
             }
         }//Клавиатура
-
-
         ////////////////Кассир
         public void StartWork()
         {
@@ -166,8 +142,6 @@ namespace VBakery
                 this.Close();
             }
         }//Кнопка выхода домой
-
-
         ///////////////////Повар
         private void AddNewRecipe(object sender, RoutedEventArgs e)
         {
@@ -255,8 +229,6 @@ namespace VBakery
                 }
             }
         }//Удалить запись рецепта
-
-
         ////////////////// //Покупатель
         private void RemoveLastOrder(object sender, RoutedEventArgs e)
         {
@@ -295,8 +267,6 @@ namespace VBakery
             VisitBuyer.Text = Convert.ToString(BuyerCount);
             DownTrayBuyerOrders.Content = "Обновлено --" + DateTime.Now.ToString();
         }//Обновить данные покупатель
-
-
         ////////////////Касса
         private void ButtonDeleteTimeBegin(object sender, RoutedEventArgs e)
         {
@@ -318,19 +288,6 @@ namespace VBakery
                 EndWork();
             }
         }//Касса конец работы кнопка удалить
-        //private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        //{
-        //    ScrollBar scrollBar = new();
-        //    scrollBar.Value = numeric.Value;
-        //    SetIdBuyer.Text = Convert.ToString(numeric.Value);
-        //} //Кнопка прокурутки номера в окне покупаетля
-        //private void ScrollBar_ValueChangedChat(object sender, RoutedPropertyChangedEventArgs<double> e)
-        //{
-        //    ScrollBar scrollBar = new();
-        //    scrollBar.Value = numericChat.Value;
-        //    SetIdChat.Text = Convert.ToString(numericChat.Value);
-        //}//Кнопка прокурутки номера в окне чата
-
         ///Разные методы
         public void DoNotHaveName()
         {
@@ -352,8 +309,6 @@ namespace VBakery
             downTrayBuyer.Content = "Добавлено в базу данных";
             downTrayBuyer.Background = Brushes.LightGreen;
         }//метод подтвержедения снизу строки
-
-
         ///Тестовые методы отпарвки данных
         private void ButtonClickDeleteChat(object sender, RoutedEventArgs e)
         {
@@ -505,57 +460,46 @@ namespace VBakery
         {
             Price.Text += 1;
         }
-
         public void ButnClick_2(object sender, RoutedEventArgs e)
         {
             Price.Text += 2;
         }
-
         public void ButnClick_3(object sender, RoutedEventArgs e)
         {
             Price.Text += 3;
         }
-
         public void ButnClick_4(object sender, RoutedEventArgs e)
         {
             Price.Text += 4;
         }
-
         public void ButnClick_5(object sender, RoutedEventArgs e)
         {
             Price.Text += 5;
         }
-
         public void ButnClick_6(object sender, RoutedEventArgs e)
         {
             Price.Text += 6;
         }
-
         public void ButnClick_7(object sender, RoutedEventArgs e)
         {
             Price.Text += 7;
         }
-
         public void ButnClick_8(object sender, RoutedEventArgs e)
         {
             Price.Text += 8;
         }
-
         public void ButnClick_9(object sender, RoutedEventArgs e)
         {
             Price.Text += 9;
         }
-
         public void ButnClick_0(object sender, RoutedEventArgs e)
         {
             Price.Text += 0;
         }
-
         public void ButnClickClearNums(object sender, RoutedEventArgs e)
         {
             Price.Text = "";
         }
-
         private void ButtonClickRegistrationUser(object sender, RoutedEventArgs e)
         {
             bool flag = true;
@@ -585,7 +529,6 @@ namespace VBakery
             }
             if (flag)
             {
-
                 User usersContext1 = new User
                 {
                     Name = nameTextBoxRegistration.Text,
@@ -593,12 +536,6 @@ namespace VBakery
                     Mobile = mobileTextBoxRegistration.Text,
                     Password = passwordTextBoxRegistration.Text,
                     DateOfRegistration = DateTime.Now.ToString(),
-                    //CheckKitchen =
-                    //accessKitchen.Text,
-                    //CheckPymaster = accessPaymast.Text,
-                    //CheckDelivery = accessDelivery.Text,
-                    //CheckBuyer = accessBuyer.Text,
-                    //CheckSupervisor = accessSupervisor.Text
                 };
                 usersContext.Users.Add(usersContext1);
                 usersContext.SaveChanges();
@@ -609,73 +546,52 @@ namespace VBakery
                 lastNameTextBoxRegistration.Text = "";
                 mobileTextBoxRegistration.Text = "";
                 passwordTextBoxRegistration.Text = "";
-                //accessBuyer.Text = "";
-                //accessBuyer.Background = Brushes.LightCoral;
-                //accessKitchen.Text = "";
-                //accessKitchen.Background = Brushes.LightCoral;
-                //accessPaymast.Text = "";
-                //accessPaymast.Background = Brushes.LightCoral;
-                //accessDelivery.Text = "";
-                //accessDelivery.Background = Brushes.LightCoral;
-                //accessSupervisor.Text = "";
-                //accessSupervisor.Background = Brushes.LightCoral;
             }
         }
         private void ButtonClick_1Reg(object sender, RoutedEventArgs e)
         {
             RegIdSearch.Text += 1;
         }
-
         private void ButtonClick_2Reg(object sender, RoutedEventArgs e)
         {
             RegIdSearch.Text += 2;
         }
-
         private void ButtonClick_3Reg(object sender, RoutedEventArgs e)
         {
             RegIdSearch.Text += 3;
         }
-
         private void ButtonClick_4Reg(object sender, RoutedEventArgs e)
         {
             RegIdSearch.Text += 4;
         }
-
         private void ButtonClick_5Reg(object sender, RoutedEventArgs e)
         {
             RegIdSearch.Text += 5;
         }
-
         private void ButtonClick_6Reg(object sender, RoutedEventArgs e)
         {
             RegIdSearch.Text += 6;
         }
-
         private void ButtonClick_7Reg(object sender, RoutedEventArgs e)
         {
             RegIdSearch.Text += 7;
         }
-
         private void ButtonClick_8Reg(object sender, RoutedEventArgs e)
         {
             RegIdSearch.Text += 8;
         }
-
         private void ButtonClick_9Reg(object sender, RoutedEventArgs e)
         {
             RegIdSearch.Text += 9;
         }
-
         private void ButtonClick_0Reg(object sender, RoutedEventArgs e)
         {
             RegIdSearch.Text += 0;
         }
-
         private void ButtonClickClearReg(object sender, RoutedEventArgs e)
         {
             RegIdSearch.Text = "";
         }
-
         private void ButtonClickDeleteReg(object sender, RoutedEventArgs e)
         {
             if (RegIdSearch.Text == "")
@@ -705,7 +621,6 @@ namespace VBakery
                 }
             }
         }
-
         private void AddNameToBase(object sender, RoutedEventArgs e)
         {
             if (priceFruct.Text == "")
@@ -761,65 +676,395 @@ namespace VBakery
                 downTrayBuyer.Background = Brushes.LightGreen;
             }
         }
+        private void ButtonAddMenu1(object sender, RoutedEventArgs e)
+        {
+            bool flag = true;
+            if (nameMenu1.Text == "")
+            {
+                downTrayPaymaster.Content = "Не ввели название!";
+                downTrayPaymaster.Background = Brushes.LightCoral;
+                flag = false;
+            }
+            if (priceMenu1.Text == "")
+            {
+                downTrayPaymaster.Content = "Не ввели название!";
+                downTrayPaymaster.Background = Brushes.LightCoral;
+                flag = false;
+            }
+            if(flag)
+            {
+                FirstMenu firstMenu = new()
+                {
+                    Name = nameMenu1.Text,
+                    Price = (string)priceMenu1.Text,
+                };
+                firstMenuContext.FirstMenus.Add(firstMenu);
+                firstMenuContext.SaveChanges();
+                Menu1.ItemsSource = firstMenuContext.FirstMenus.ToList();
+                downTrayPaymaster.Content = "Добавлено в меню!";
+                downTrayPaymaster.Background = Brushes.LightGreen;
+                nameMenu1.Text = "";
+                priceMenu1.Text = "";
+            }
+        }
+        private void ButtonAddMenu2(object sender, RoutedEventArgs e)
+        {
+            bool flag = true;
+            if (nameMenu2.Text == "")
+            {
+                downTrayPaymaster.Content = "Не ввели название!";
+                downTrayPaymaster.Background = Brushes.LightCoral;
+                flag = false;
+            }
+            if (priceMenu2.Text == "")
+            {
+                downTrayPaymaster.Content = "Не ввели название!";
+                downTrayPaymaster.Background = Brushes.LightCoral;
+                flag = false;
+            }
+            if(flag)
+            {
+                SecondMenu secondMenu = new()
+                {
+                    Name = nameMenu2.Text,
+                    Price = priceMenu2.Text,
+                };
+                secondMenuContext.SecondMenus.Add(secondMenu);
+                secondMenuContext.SaveChanges();
+                Menu2.ItemsSource = secondMenuContext.SecondMenus.ToList();
+                downTrayPaymaster.Content = "Добавлено в меню!";
+                downTrayPaymaster.Background = Brushes.LightGreen;
+                nameMenu2.Text = "";
+                priceMenu2.Text = "";
+            }
+        }
+        private void ButtonAddMenu3(object sender, RoutedEventArgs e)
+        {
+            bool flag = true;
+            if (nameMenu3.Text == "")
+            {
+                downTrayPaymaster.Content = "Не ввели название!";
+                downTrayPaymaster.Background = Brushes.LightCoral;
+                flag = false;
+            }
+            if (priceMenu3.Text == "")
+            {
+                downTrayPaymaster.Content = "Не ввели название!";
+                downTrayPaymaster.Background = Brushes.LightCoral;
+                flag = false;
+            }
+            if(flag)
+            {
+                ThirdMenu thirdMenu = new()
+                {
+                    Name = nameMenu3.Text,
+                    Price = priceMenu3.Text,
+                };
+                thirdMenuContext.ThirdMenus.Add(thirdMenu);
+                thirdMenuContext.SaveChanges();
+                Menu3.ItemsSource = thirdMenuContext.ThirdMenus.ToList();
+                downTrayPaymaster.Content = "Добавлено в меню!";
+                downTrayPaymaster.Background = Brushes.LightGreen;
+                nameMenu3.Text = "";
+                priceMenu3.Text = "";
+            }
+        }
+        public void ButtonOnClickNums1(object sender, RoutedEventArgs e)///Метод нажатия кнопки в цифровые кнопки
+        {
+            if (priceMenu1.Text.Length < 4)
+            {
+                var button = (Button)sender;
+                var num = button.Content;
+                priceMenu1.Text += num;
 
+            }
+            else
+            {
+                return;
+            }
+        }
+        private void priceMenu1_MouseDown(object sender, MouseButtonEventArgs e)///Действие при нажатие кнопки на окно цена 
+        {
+            countNums1 ++;
+            if (countNums1 <= 1)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Button button = new Button();
+                    button.Content = i;
+                    button.Click += ButtonOnClickNums1;
+                    button.Width = 45;
+                    button.Height = 45;
+                    StackPanelForNums1.Children.Add(button);
+                }
+            }
+        }
+        private void priceMenu2_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            countNums2 ++;
+            if (countNums2 <= 1)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Button button = new Button();
+                    button.Content = i;
+                    button.Click += ButtonOnClickNums2;
+                    button.Width = 45;
+                    button.Height = 45;
+                    StackPanelForNums2.Children.Add(button);
+                }
+            }
+        }
+        private void priceMenu3_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            countNums3++;
+            if (countNums3 <= 1)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Button button = new Button();
+                    button.Content = i;
+                    button.Click += ButtonOnClickNums3;
+                    button.Width = 45;
+                    button.Height = 45;
+                    StackPanelForNums3.Children.Add(button);
+                }
+            }
+        }
+        public void ButtonOnClickNums2(object sender, RoutedEventArgs e)///Метод нажатия кнопки в цифровые кнопки
+        {
+            if (priceMenu2.Text.Length < 4)
+            {
+                var button = (Button)sender;
+                var num = button.Content;
+                priceMenu2.Text += num;
 
+            }
+            else
+            {
+                return;
+            }
+        }
+        public void ButtonOnClickNums3(object sender, RoutedEventArgs e)///Метод нажатия кнопки в цифровые кнопки
+        {
+            if (priceMenu3.Text.Length < 4)
+            {
+                var button = (Button)sender;
+                var num = button.Content;
+                priceMenu3.Text += num;
 
+            }
+            else
+            {
+                return;
+            }
+        }
+        private void ButtonClearNums1(object sender, RoutedEventArgs e)
+        {
+            priceMenu1.Text = "";
+        }
+        private void ButtonClearNums2(object sender, RoutedEventArgs e)
+        {
+            priceMenu2.Text = "";
+        }
+        private void ButtonClearNums3(object sender, RoutedEventArgs e)
+        {
+            priceMenu3.Text = "";
+        }
+        private void InputIdForDeleteMenu1(object sender, MouseButtonEventArgs e)
+        {
+            countNums4++;
+            if (countNums4 <= 1)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Button button = new Button();
+                    button.Content = i;
+                    button.Click += ButtonOnClickNums4;
+                    button.Width = 30;
+                    button.Height = 30;
+                    numKeysForDelete1.Children.Add(button);
+                }
+            }
+        }  
+        private void InputIdForDeleteMenu2(object sender, MouseButtonEventArgs e)
+        {
+            countNums5++;
+            if (countNums5 <= 1)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Button button = new Button();
+                    button.Content = i;
+                    button.Click += ButtonOnClickNums5;
+                    button.Width = 30;
+                    button.Height = 30;
+                    numKeysForDelete2.Children.Add(button);
+                }
+            }
+        }
+        private void InputIdForDeleteMenu3(object sender, MouseButtonEventArgs e)
+        {
+            countNums6++;
+            if (countNums6 <= 1)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    Button button = new Button();
+                    button.Content = i;
+                    button.Click += ButtonOnClickNums6;
+                    button.Width = 30;
+                    button.Height = 30;
+                    numKeysForDelete3.Children.Add(button);
+                }
+            }
+        }
+        public void ButtonOnClickNums4(object sender, RoutedEventArgs e)///Метод нажатия кнопки в цифровые кнопки
+        {
+            if (inputIdForDeleteMenu1.Text.Length < 4)
+            {
+                var button = (Button)sender;
+                var num = button.Content;
+                inputIdForDeleteMenu1.Text += num;
 
+            }
+            else
+            {
+                return;
+            }
+        }
+        public void ButtonOnClickNums6(object sender, RoutedEventArgs e)///Метод нажатия кнопки в цифровые кнопки
+        {
+            if (inputIdForDeleteMenu3.Text.Length < 4)
+            {
+                var button = (Button)sender;
+                var num = button.Content;
+                inputIdForDeleteMenu3.Text += num;
 
-        //private void checkKitchenCheked(object sender, RoutedEventArgs e)
-        //{
-        //    accessKitchen.Text = "Повар";
-        //    Hidden.Text += "Повар";
-        //    accessKitchen.Background = Brushes.LightGreen;
-        //}
-        //private void checkPymasterCheked(object sender, RoutedEventArgs e)
-        //{
-        //    accessPaymast.Text = "Кассир";
-        //    Hidden.Text += "Кассир";
-        //    accessPaymast.Background = Brushes.LightGreen;
-        //}
-        //private void checkDeliveryCheked(object sender, RoutedEventArgs e)
-        //{
-        //    accessDelivery.Text = "Доставщик";
-        //    Hidden.Text += "Доставщик";
-        //    accessDelivery.Background = Brushes.LightGreen;
-        //}
-        //private void checkBuyerCheked(object sender, RoutedEventArgs e)
-        //{
-        //    accessBuyer.Text = "Покупатель";
-        //    Hidden.Text += "Покупатель";
-        //    accessBuyer.Background = Brushes.LightGreen;
-        //}
-        //private void checkSupervisorCheked(object sender, RoutedEventArgs e)
-        //{
-        //    accessSupervisor.Text = "Директор";
-        //    Hidden.Text += "Директор";
-        //    accessSupervisor.Background = Brushes.LightGreen;
-        //}
-        //private void checkBuyerUnchecked(object sender, RoutedEventArgs e)
-        //{
-        //    accessBuyer.Text = "";
-        //    accessBuyer.Background = Brushes.LightCoral;
-        //}
-        //private void checkKitchenUnchecked(object sender, RoutedEventArgs e)
-        //{
-        //    accessKitchen.Text = "";
-        //    accessKitchen.Background = Brushes.LightCoral;
-        //}
-        //private void checkPymasterUnchecked(object sender, RoutedEventArgs e)
-        //{
-        //    accessPaymast.Text = "";
-        //    accessPaymast.Background = Brushes.LightCoral;
-        //}
-        //private void checkDeliveryUnchecked(object sender, RoutedEventArgs e)
-        //{
-        //    accessDelivery.Text = "";
-        //    accessDelivery.Background = Brushes.LightCoral;
-        //}
-        //private void checkSupervisorUnchecked(object sender, RoutedEventArgs e)
-        //{
-        //    accessSupervisor.Text = "";
-        //    accessSupervisor.Background = Brushes.LightCoral;
-        //}
+            }
+            else
+            {
+                return;
+            }
+        }
+        public void ButtonOnClickNums5(object sender, RoutedEventArgs e)///Метод нажатия кнопки в цифровые кнопки
+        {
+            if (inputIdForDeleteMenu2.Text.Length < 4)
+            {
+                var button = (Button)sender;
+                var num = button.Content;
+                inputIdForDeleteMenu2.Text += num;
+
+            }
+            else
+            {
+                return;
+            }
+        }
+        private void ButtonClickDeleteMenu1(object sender, RoutedEventArgs e)///кнопка удаления Меню1
+        {
+            if (inputIdForDeleteMenu1.Text == "")
+            {
+                downTrayPaymaster.Content = "Не ввели номер!";
+                downTrayPaymaster.Background = Brushes.LightCoral;
+                SendButtonNotifications();
+            }
+            else
+            {
+                int key = Convert.ToInt32(inputIdForDeleteMenu1.Text.Trim());
+                var item = firstMenuContext.FirstMenus.Find(key);
+
+                if (item != null)
+                {
+                    firstMenuContext.FirstMenus.Remove(item);
+                    firstMenuContext.SaveChanges();
+                    Menu1.ItemsSource = firstMenuContext.FirstMenus.ToList();
+                    inputIdForDeleteMenu1.Text = "";
+                    downTrayPaymaster.Content = "Удалена запись:" + "==" + key + " --" + DateTime.Now.ToString();
+                    downTrayPaymaster.Background = Brushes.LightCoral;
+                    SendButtonNotifications();
+                }
+                else
+                {
+                    downTrayPaymaster.Content = "Нет такого значения!";
+                    downTrayPaymaster.Background = Brushes.LightCoral;
+                    SendButtonNotifications();
+                }
+            }
+        }///Удаление по номеру меню 1
+        private void ButtonClickDeleteMenu2(object sender, RoutedEventArgs e)///кнопка удаления Меню1
+        {
+            if (inputIdForDeleteMenu2.Text == "")
+            {
+                downTrayPaymaster.Content = "Не ввели номер!";
+                downTrayPaymaster.Background = Brushes.LightCoral;
+                SendButtonNotifications();
+            }
+            else
+            {
+                int key = Convert.ToInt32(inputIdForDeleteMenu2.Text.Trim());
+                var item = secondMenuContext.SecondMenus.Find(key);
+
+                if (item != null)
+                {
+                    secondMenuContext.SecondMenus.Remove(item);
+                    secondMenuContext.SaveChanges();
+                    Menu2.ItemsSource = secondMenuContext.SecondMenus.ToList();
+                    inputIdForDeleteMenu2.Text = "";
+                    downTrayPaymaster.Content = "Удалена запись:" + "==" + key + " --" + DateTime.Now.ToString();
+                    downTrayPaymaster.Background = Brushes.LightCoral;
+                    SendButtonNotifications();
+                }
+                else
+                {
+                    downTrayPaymaster.Content = "Нет такого значения!";
+                    downTrayPaymaster.Background = Brushes.LightCoral;
+                    SendButtonNotifications();
+                }
+            }
+        }///Удаление по номеру меню 2
+        private void ButtonClickDeleteMenu3(object sender, RoutedEventArgs e)///кнопка удаления Меню1
+        {
+            if (inputIdForDeleteMenu3.Text == "")
+            {
+                downTrayPaymaster.Content = "Не ввели номер!";
+                downTrayPaymaster.Background = Brushes.LightCoral;
+                SendButtonNotifications();
+            }
+            else
+            {
+                int key = Convert.ToInt32(inputIdForDeleteMenu3.Text.Trim());
+                var item = thirdMenuContext.ThirdMenus.Find(key);
+
+                if (item != null)
+                {
+                    thirdMenuContext.ThirdMenus.Remove(item);
+                    thirdMenuContext.SaveChanges();
+                    Menu3.ItemsSource = thirdMenuContext.ThirdMenus.ToList();
+                    inputIdForDeleteMenu3.Text = "";
+                    downTrayPaymaster.Content = "Удалена запись:" + "==" + key + " --" + DateTime.Now.ToString();
+                    downTrayPaymaster.Background = Brushes.LightCoral;
+                    SendButtonNotifications();
+                }
+                else
+                {
+                    downTrayPaymaster.Content = "Нет такого значения!";
+                    downTrayPaymaster.Background = Brushes.LightCoral;
+                    SendButtonNotifications();
+                }
+            }
+        }///Удаление по номеру меню 3
+        private void SendButtonNotifications()
+        {
+            DispatcherTimer dispatcherTimer = new();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 4);
+            dispatcherTimer.Start();
+        }///Таймер через 4 чекунды закрашивает нижний трей в исходный цвет
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            downTrayPaymaster.Content = "";
+            downTrayPaymaster.Background = Brushes.AliceBlue;
+        }///Таймер заданных параметров
     }
 }

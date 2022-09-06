@@ -1,51 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using VBakery.DB;
+using VBakery.MenuDB;
 using VBakery.Model;
-using Menu = VBakery.DB.Menu;
-
 namespace VBakery
 {
     public partial class PaymasterSales : Window
     {
-        LoginWindow loginWindow = new();
-        TimerEndsContext timerEndsContext = new();
-        TimerStartsContext timerStartsContext = new();
-        OrderForBuyersContext orderForBuyersContext = new();
-        
-        readonly MenuContext menuContext = new();
+        private readonly LoginWindow loginWindow = new();
+        private readonly TimerEndsContext timerEndsContext = new();
+        private readonly TimerStartsContext timerStartsContext = new();
+        private readonly OrderForBuyersContext orderForBuyersContext = new();
+        private readonly LogOrdersContext dbLogOrder = new();
+        public int clickDiscount = 0;
+        public int clickAllowance = 0;
+        public int countFirst;
+        public int countSecond;
+        public int countThird;
         public PaymasterSales()
         {
-
             InitializeComponent();
-            //FoodListAdd();
-            AddButton();
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
-
             subtotal.Text = "0";
             total.Text = "0";
-
-
-
             string time = DateTime.Now.ToString();
             OpenTime.Text = time;
-
             DispatcherTimer timer = new()
             {
                 Interval = new TimeSpan(0, 0, 1),
                 IsEnabled = true
             };
-
             timer.Tick += (o, t) => { Times.Text = DateTime.Now.ToString(); };
             timer.Start();
-
             TimeKitchener();
         }
         private void HandlerKeyDownEvent(object sender, KeyEventArgs e)
@@ -62,7 +53,7 @@ namespace VBakery
                     if (result == MessageBoxResult.Yes)
                     {
                         MainWindow mainWindow = new();
-                        this.Close();
+                        Close();
                         mainWindow.Close();
                     }
                     break;
@@ -70,26 +61,260 @@ namespace VBakery
                     break;
             }
         }//Клавиатура
-        
-        public void AddButton()
+        private void Button_Click_Total(object sender, RoutedEventArgs e)
         {
-            RecipesContext recipesContext = new();
-            foreach (Recipe recipe in recipesContext.Recipes)
+            total.Text = new DataTable().Compute(subtotal.Text, null).ToString();
+        }///Суммирование полей в общую сумму
+        private void Image_MouseDown_Clear(object sender, MouseButtonEventArgs e)
+        {
+            NumArea.Text = "";
+            TextArea.Text = "";
+            subtotal.Text = Convert.ToString(0);
+            total.Text = Convert.ToString(0);
+            Errors.Text = "";
+            ErrorsColor.Color = Color.FromRgb(135, 206, 250);
+        }///Картинка стрелка для очистки полей
+        private void Image_MouseDown_Lock(object sender, MouseButtonEventArgs e)
+        {
+            Close();
+            _ = loginWindow.ShowDialog();
+            TimerEnd endTime = new()
             {
-                Button button = new Button();
-                button.Content = recipe.NameRecipe;
-                button.FontSize = 14;
-                button.Width = 125;
-                button.Height = 125;
-                button.Name = "btn";
-                button.DataContext = recipe.PriceRecipe;
-                button.Click += ButtonOnClick;
-                this.WrapPanelAddButton.Children.Add(button);
-            }
-        }
-        public void ButtonOnClick(object sender, EventArgs eventArgs)
+                end = DateTime.Now.ToString()
+            };
+            _ = timerEndsContext.TimerEnds.Add(endTime);
+            _ = timerEndsContext.SaveChanges();
+
+        }///Блокировка экрана и запись в базу о выходе
+        private void TimeKitchener()
         {
-            var button = (Button)sender;
+            TimerStart time = new()
+            {
+                begin = OpenTime.Text,
+            };
+            _ = timerStartsContext.TimerStarts.Add(time);
+            _ = timerStartsContext.SaveChanges();
+        }///Время запуска приложения и запись в базу данных
+        public void TimerForEmty()
+        {
+            DispatcherTimer dispatcherTimer = new();
+            dispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 4);
+            dispatcherTimer.Start();
+        }///Диспетчер времени для отсчета времени для очистки уведмлений
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            Errors.Text = "";
+            ErrorsColor.Color = Color.FromRgb(135, 206, 250);
+        }///Исходное положение после отсчета таймера
+        private void Button_Click_GotoKitchen(object sender, RoutedEventArgs e)
+        {
+            if (total.Text == "0" || TextArea.Text == "")
+            {
+                Errors.Text = "Не ввели значения!";
+                ErrorsColor.Color = Color.FromRgb(240, 128, 128);
+                TimerForEmty();
+            }
+            else
+            {
+                clickDiscount = 0;
+                clickAllowance = 0;
+                Errors.Text = "Заказ отправлен повару!";
+                ErrorsColor.Color = Color.FromRgb(0, 100, 0);
+                TimerForEmty();
+                OrderForBuyer tim = new()
+                {
+                    BuyerName = "\"Кассир\"",
+                    NameProduct = TextArea.Text,
+                    StaffComment = commForKitchen.Text,
+                    OrderDateTime = DateTime.Now.ToString(),
+                    OrderPrice = (float)Convert.ToSingle(total.Text)
+                };
+                LogOrder logOrder = new LogOrder
+                {
+                    BuyerName = "\"Кассир\"",
+                    NameProduct = TextArea.Text,
+                    StaffComment = commForKitchen.Text,
+                    OrderDateTime = DateTime.Now.ToString(),
+                    OrderPrice = (float)Convert.ToSingle(total.Text)
+                };
+                _ = dbLogOrder.LogOrders.Add(logOrder);
+                _ = dbLogOrder.SaveChanges();
+                _ = orderForBuyersContext.OrderForBuyers.Add(tim);
+                _ = orderForBuyersContext.SaveChanges();
+                NumArea.Text = "";
+                TextArea.Text = "";
+                subtotal.Text = "0";
+                total.Text = "0"; 
+                commForKitchen.Text = "";
+            }
+        }///Кнопка отправки данных в базу данных
+        private void Button_Click_Discount(object sender, RoutedEventArgs e)
+        {
+            clickDiscount ++;
+            if(clickDiscount <= 1)
+            {
+                float Total = Convert.ToSingle(total.Text);
+                float Discount = Total / 100 * 5;
+                float Total_Discount = Total - Discount;
+                total.Text = Convert.ToString(Total_Discount);
+            }
+        }///Кнопка скидки на 5%
+        private void Button_Click_Allowance(object sender, RoutedEventArgs e)
+        {
+            clickAllowance++;
+            if(clickAllowance <= 1)
+            {
+                float Total = Convert.ToSingle(total.Text);
+                float Allowance = Total / 100 * 5;
+                float Total_Discount = Total + Allowance;
+                total.Text = Convert.ToString(Total_Discount);
+            } 
+        }///Кнопка надбавки на 5%
+        private void OpenCalculator(object sender, MouseButtonEventArgs e)
+        {
+            PaymasterCalculator paymasterCalculator = new();
+            _ = paymasterCalculator.ShowDialog();
+        }///Открыть калькулятор
+        private void Image_MouseDown_GetBackHome(object sender, MouseButtonEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show(
+            "Вы точно хотите выйти?",
+            "Сообщение",
+            MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                TimerEnd endTime = new()
+                {
+                    end = DateTime.Now.ToString()
+                };
+                _ = timerEndsContext.TimerEnds.Add(endTime);
+                _ = timerEndsContext.SaveChanges();
+                MainWindow mainWindow = new();
+                mainWindow.Show();
+                Close();
+            }
+        }///Кнопка выхода домой
+        private void OpenRecepts(object sender, MouseButtonEventArgs e)
+        {
+            Recepts recepts = new();
+            _ = recepts.ShowDialog();
+        }///Кнопка открыть рецепты
+        private void OpenChat(object sender, MouseButtonEventArgs e)
+        {
+            ChatRoom chatRoom = new();
+            _ = chatRoom.ShowDialog();
+            chatRoom.chatUser.Content = "Кассир";
+        }///Кнопка открыть чат
+        private void ButtonClickClose(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }///Верхняя кнопка закрыть окно
+        private void Image_MouseDown_FindOrder(object sender, MouseButtonEventArgs e)
+        {
+            Orders orders = new();
+            _ = orders.ShowDialog();
+        }///Кнопка открыть заказы
+        private void Label_MouseEnter(object sender, MouseEventArgs e)
+        {
+            MouseDownClickTotal.Background = Brushes.Gray;
+        }///Вхождение указателя в кнопку ИТОГ и изменения цвета
+        private void Label_MouseLeave(object sender, MouseEventArgs e)
+        {
+            MouseDownClickTotal.Background = Brushes.Black;
+        }///Выход указателя в кнопку ИТОГ и изменения цвета
+        private void Click_GotoKitchen_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Click_GotoKitchen.Background = Brushes.Gray;
+        }///Вхождение указателя в кнопку ОТПРАВИТЬ и изменения цвета
+        private void Click_GotoKitchen_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Click_GotoKitchen.Background = Brushes.LightCoral;
+        }///Выход указателя в кнопку ОТПРАВИТЬ и изменения цвета
+        private void Label_MouseDownFirstMenu(object sender, MouseButtonEventArgs e)
+        {
+            countFirst++;
+            if (countFirst <= 1)
+            {
+                AddButtonFirst();
+            }
+        }///Кнопка вызова первого блюда
+        private void Label_MouseDownSecondMenu(object sender, MouseButtonEventArgs e)
+        {
+            countSecond++;
+            if (countSecond <= 1)
+            {
+                AddButtonSecond();
+            }
+        }///Кнопка вызова второго блюда
+        private void Label_MouseDownThirdMenu(object sender, MouseButtonEventArgs e)
+        {
+            countThird++;
+            if (countThird <= 1)
+            {
+                AddButtonThird();
+            }
+        }///Кнопка вызова третьего блюда
+        public void AddButtonFirst()
+        {
+            FirstMenuContext firstMenuContext = new();
+            foreach (FirstMenu first in firstMenuContext.FirstMenus)
+            {
+                Button button = new()
+                {
+                    Content = first.Name,
+                    FontSize = 14,
+                    Width = 120,
+                    Height = 120,
+                    Margin = new Thickness(2, 2, 2, 2),
+                    Name = "btn",
+                    DataContext = first.Price
+                };
+                button.Click += ButtonOnClickFirst;
+                _ = WrapPanelAddButton1.Children.Add(button);
+            }
+        }///Создание кнопок для первого блюда
+        public void AddButtonSecond()
+        {
+            SecondMenuContext secondMenuContext = new();
+            foreach (SecondMenu second in secondMenuContext.SecondMenus)
+            {
+                Button button = new()
+                {
+                    Content = second.Name,
+                    FontSize = 14,
+                    Width = 120,
+                    Height = 120,
+                    Margin = new Thickness(2, 2, 2, 2),
+                    Name = "btn",
+                    DataContext = second.Price
+                };
+                button.Click += ButtonOnClickSecond;
+                _ = WrapPanelAddButton2.Children.Add(button);
+            }
+        }///Создание кнопок для второго блюда
+        private void AddButtonThird()
+        {
+            ThirdMenuContext thirdMenuContext = new();
+            foreach (ThirdMenu third in thirdMenuContext.ThirdMenus)
+            {
+                Button button = new()
+                {
+                    Content = third.Name,
+                    FontSize = 14,
+                    Width = 120,
+                    Height = 120,
+                    Margin = new Thickness(2, 2, 2, 2),
+                    Name = "btn",
+                    DataContext = third.Price
+                };
+                button.Click += ButtonOnClickThird;
+                _ = WrapPanelAddButton3.Children.Add(button);
+            }
+        }///Создание кнопок для третьего блюда
+        private void ButtonOnClickSecond(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
             string name = (string)button.Content;
             string price = (string)button.DataContext;
             if (subtotal.Text == "0")
@@ -106,535 +331,46 @@ namespace VBakery
                 TextArea.Text += name + "\r\n";
                 subtotal.Text += price;
             }
-        }
-        //public void Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 12;
-        //    string name = "Свекла";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_1(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 15;
-        //    string name = "макароны отварные";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_3(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 23;
-        //    string name = "Рассольник";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_4(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 16;
-        //    string name = "Салат из моркови с майонезом";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_5(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 15;
-        //    string name = "Рис";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_6(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 27;
-        //    string name = "Суп вермишелевый";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_7(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 13;
-        //    string name = "Салат из капусты";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_8(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 22;
-        //    string name = "Нарезка: огурцы, помидоры";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_9(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 4;
-        //    string name = "масло";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_10(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 3;
-        //    string name = "Хлеб ржаной";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_11(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 32;
-        //    string name = "Салат \"Лобио\"";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_12(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 8;
-        //    string name = "Зелень нарезка";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_13(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 15;
-        //    string name = "Компот из сухофруктов";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_14(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 5;
-        //    string name = "Соус красный";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_15(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 15;
-        //    string name = "Напиток ягодный";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_16(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 5;
-        //    string name = "Майонез";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_17(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 10;
-        //    string name = "Чай с лимоном";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_18(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 5;
-        //    string name = "Сметана";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        //private void Button_Click_19(object sender, RoutedEventArgs e)
-        //{
-        //    int price = 8;
-        //    string name = "Чай 0.2";
-        //    if (subtotal.Text == "0")
-        //    {
-        //        subtotal.Text = "";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //    else
-        //    {
-        //        subtotal.Text += "+";
-        //        NumArea.Text += price + "\r\n";
-        //        TextArea.Text += name + "\r\n";
-        //        subtotal.Text += price;
-        //    }
-        //}
-        private void Button_Click_Total(object sender, RoutedEventArgs e)
+        }///Действия для кнопок
+        public void ButtonOnClickFirst(object sender, EventArgs eventArgs)
         {
-            total.Text = new DataTable().Compute(subtotal.Text, null).ToString().Replace(',', '.');
-        }
-        private void Image_MouseDown_Clear(object sender, MouseButtonEventArgs e)
-        {
-            NumArea.Text = "";
-            TextArea.Text = "";
-            subtotal.Text = Convert.ToString(0);
-            total.Text = Convert.ToString(0);
-            Errors.Text = "";
-            ErrorsColor.Color = Color.FromRgb(135, 206, 250);
-        }
-        private void Image_MouseDown_Lock(object sender, MouseButtonEventArgs e)
-        {
-            PaymasterSales paymaster = new();
-            loginWindow.ShowDialog();
-            paymaster.Close();
-            TimerEnd endTime = new()
+            Button button = (Button)sender;
+            string name = (string)button.Content;
+            string price = (string)button.DataContext;
+            if (subtotal.Text == "0")
             {
-                end = DateTime.Now.ToString()
-            };
-            timerEndsContext.TimerEnds.Add(endTime);
-            timerEndsContext.SaveChanges();
-            
-        }
-        private void TimeKitchener()
-        {
-            TimerStart time = new TimerStart
-            {
-                begin = OpenTime.Text,
-            };
-            timerStartsContext.TimerStarts.Add(time);
-            timerStartsContext.SaveChanges();
-        }
-        public void TimerForEmty()
-        {
-            DispatcherTimer dispatcherTimer = new();
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 4);
-            dispatcherTimer.Start();
-        }
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            Errors.Text = "";
-            ErrorsColor.Color = Color.FromRgb(135, 206, 250);
-        }
-        private void Button_Click_GotoKitchen(object sender, RoutedEventArgs e)
-        {
-            if (total.Text == "0" || TextArea.Text == "")
-            {
-                Errors.Text = "Не ввели значения!";
-                ErrorsColor.Color = Color.FromRgb(240, 128, 128);
-                TimerForEmty();
+                subtotal.Text = "";
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
             else
             {
-                Errors.Text = "Заказ отправлен повару!";
-                ErrorsColor.Color = Color.FromRgb(0, 100, 0);
-                TimerForEmty();
-
-                OrderForBuyer tim = new()
-                {
-                    BuyerName = "\"Кассир\"",
-                    NameProduct = TextArea.Text,
-                    StaffComment = commForKitchen.Text,
-                    OrderDateTime = DateTime.Now.ToString(),
-                    OrderPrice = (int)Convert.ToSingle(total.Text)
-                };
-                LogOrdersContext dbLogOrder = new();
-                LogOrder logOrder = new LogOrder
-                {
-                    BuyerName = "\"Кассир\"",
-                    NameProduct = TextArea.Text,
-                    StaffComment = commForKitchen.Text,
-                    OrderDateTime = DateTime.Now.ToString(),
-                    OrderPrice = (int)Convert.ToSingle(total.Text)
-                };
-                dbLogOrder.LogOrders.Add(logOrder);
-                dbLogOrder.SaveChanges();
-                orderForBuyersContext.OrderForBuyers.Add(tim);
-                orderForBuyersContext.SaveChanges();
-                NumArea.Text = "";
-                TextArea.Text = "";
-                subtotal.Text = "0";
-                total.Text = "0"; 
-                commForKitchen.Text = "";
+                subtotal.Text += "+";
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
-        }
-        private void Button_Click_Discount(object sender, RoutedEventArgs e)
+        }///Действия для кнопок
+        public void ButtonOnClickThird(object sender, EventArgs eventArgs)
         {
-            float Total = Convert.ToSingle(total.Text);
-            float Discount = Total / 100 * 5;
-            float Total_Discount = Total - Discount;
-            total.Text = Convert.ToString(Total_Discount);
-        }
-        private void Button_Click_Allowance(object sender, RoutedEventArgs e)
-        {
-            float Total = Convert.ToSingle(total.Text);
-            float Allowance = Total / 100 * 5;
-            float Total_Discount = Total + Allowance;
-            total.Text = Convert.ToString(Total_Discount);
-        }
-        private void OpenCalculator(object sender, MouseButtonEventArgs e)
-        {
-            PaymasterCalculator paymasterCalculator = new();
-            paymasterCalculator.ShowDialog();
-        }
-        private void Image_MouseDown_GetBackHome(object sender, MouseButtonEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show(
-            "Вы точно хотите выйти?",
-            "Сообщение",
-            MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
+            Button button = (Button)sender;
+            string name = (string)button.Content;
+            string price = (string)button.DataContext;
+            if (subtotal.Text == "0")
             {
-                TimerEnd endTime = new()
-                {
-                    end = DateTime.Now.ToString()
-                };
-                timerEndsContext.TimerEnds.Add(endTime);
-                timerEndsContext.SaveChanges();
-                MainWindow mainWindow = new();
-                mainWindow.Show();
-                this.Close();
+                subtotal.Text = "";
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
             }
-        }
-        private void OpenRecepts(object sender, MouseButtonEventArgs e)
-        {
-            Recepts recepts = new();
-            recepts.ShowDialog();
-        }
-        private void openChat(object sender, MouseButtonEventArgs e)
-        {
-            ChatRoom chatRoom = new();
-            chatRoom.ShowDialog();
-            chatRoom.chatUser.Content = "Кассир";
-        }
-        private void ButtonClickClose(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-        private void Image_MouseDown_FindOrder(object sender, MouseButtonEventArgs e)
-        {
-            Orders orders = new();
-            orders.ShowDialog();
-        }
-
-        private void Label_MouseEnter(object sender, MouseEventArgs e)
-        {
-            MouseDownClickTotal.Background = Brushes.Gray;
-        }
-
-        private void Label_MouseLeave(object sender, MouseEventArgs e)
-        {
-            MouseDownClickTotal.Background = Brushes.Black;
-        }
-
-        private void Click_GotoKitchen_MouseEnter(object sender, MouseEventArgs e)
-        {
-            Click_GotoKitchen.Background = Brushes.Gray;
-        }
-
-        private void Click_GotoKitchen_MouseLeave(object sender, MouseEventArgs e)
-        {
-            Click_GotoKitchen.Background = Brushes.LightCoral;
-        }
-
+            else
+            {
+                subtotal.Text += "+";
+                NumArea.Text += price + "\r\n";
+                TextArea.Text += name + "\r\n";
+                subtotal.Text += price;
+            }
+        }///Действия для кнопок
     }
 }

@@ -50,7 +50,7 @@ namespace VBakery
             dateOrder.ToolTip = null;
             dateOrder.Background = Brushes.Transparent;
         }
-        private void SendButtonNotificdtions()
+        private void SendButtonNotifications()
         {
             DispatcherTimer dispatcherTimer = new();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
@@ -78,28 +78,28 @@ namespace VBakery
             {
                 name.ToolTip = "Не ввели имя";
                 name.Background = Brushes.LightCoral;
-                SendButtonNotificdtions();
+                SendButtonNotifications();
                 flag = false;
             }
             if (mobile.Text.Length != 11 )
             {
                 mobile.ToolTip = "Введите номер телефона";
                 mobile.Background = Brushes.LightCoral;
-                SendButtonNotificdtions();
+                SendButtonNotifications();
                 flag = false;
             }
             if (address.Text == "")
             {
                 address.ToolTip = "Не ввели адресс";
                 address.Background = Brushes.LightCoral;
-                SendButtonNotificdtions();
+                SendButtonNotifications();
                 flag = false;
             }
             if (dateOrder.Text == "")
             {
                 dateOrder.ToolTip = "Выберите дату доставки";
                 dateOrder.Background = Brushes.LightCoral;
-                SendButtonNotificdtions();
+                SendButtonNotifications();
             }
             if(flag)
             {

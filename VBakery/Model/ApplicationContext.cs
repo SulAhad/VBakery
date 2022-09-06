@@ -187,30 +187,43 @@ namespace VBakery
             optionsBuilder.UseSqlite("Data Source=Menu4.db");
         }
     }
-    public class SecondCourseContext : DbContext
+    public class FirstMenuContext : DbContext
     {
-        public DbSet<SecondCourse> SecondCourses => Set<SecondCourse>();
-        public SecondCourseContext()
+        public DbSet<FirstMenu> FirstMenus => Set<FirstMenu>();
+        public FirstMenuContext()
         {
             Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=SecondCourse.db");
+            optionsBuilder.UseSqlite("Data Source=FirstMenu.db");
         }
     }
-    public class ThirdCourseContext : DbContext
+    public class SecondMenuContext : DbContext
     {
-        public DbSet<ThirdCourse> ThirdCourses => Set<ThirdCourse>();
-        public ThirdCourseContext()
+        public DbSet<SecondMenu> SecondMenus => Set<SecondMenu>();
+        public SecondMenuContext()
         {
             Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=ThirdCourse.db");
+            optionsBuilder.UseSqlite("Data Source=SecondMenu.db");
+        }
+    }
+    public class ThirdMenuContext : DbContext
+    {
+        public DbSet<ThirdMenu> ThirdMenus => Set<ThirdMenu>();
+        public ThirdMenuContext()
+        {
+            Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source=ThirdMenu.db");
         }  
     }
     public class MenuContext : DbContext

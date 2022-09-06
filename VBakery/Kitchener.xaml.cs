@@ -1,37 +1,25 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using VBakery.DB;
-using System.Linq;
 using VBakery.Model;
 using System.Windows.Controls;
-
 namespace VBakery
 {
     public partial class Kitchener : Window
     {
-        
         public Kitchener()
         {
             InitializeComponent();
             AddButton();
-            //UpdateOrderForBuyer();
-
-
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
-
             imageHome.ToolTip = "Выйти на главную страницу";
             imageRecepts.ToolTip = "Открыть рецепты";
             imageChat.ToolTip = "Открыть лист претензий";
-
-            
-            
         }
         public void AddButton()
         {
-            
             OrderForBuyersContext orderForBuyersContext = new();
             foreach (OrderForBuyer order in orderForBuyersContext.OrderForBuyers)
             {
@@ -42,32 +30,42 @@ namespace VBakery
                 label.Width = 200;
                 label.Background = Brushes.LightGray;
                 label.Margin = new Thickness(1, 1, 1, 1);
-                label.Name = "label1";
+                label.Name = "name";
                 label.MouseDown += ButtonOnClick;
                 label.VerticalAlignment = VerticalAlignment.Top;
                 label.HorizontalAlignment = HorizontalAlignment.Center;
-
                 this.ScrollData.Children.Add(label);
+
+                //Grid border = new();
+                //border.Background = Brushes.LightGray;
+                //border.Width = 200;
+                //border.Margin = new Thickness(1, 1, 1, 1);
+                //border.Name = "stack";
+                //border.MouseDown += ButtonOnClick;
+                //border.VerticalAlignment = VerticalAlignment.Top;
+                //border.HorizontalAlignment = HorizontalAlignment.Center;
+                //this.ScrollData.Children.Add(border);
             }
         }
         public void ButtonOnClick(object sender, EventArgs eventArgs)
         {
+            
             var label = (Label)sender;
 
             int id = (int)label.DataContext;
+            InputIdForDelete.Text = Convert.ToString(id);
+            //using OrderForBuyersContext db = new OrderForBuyersContext();
 
-            using OrderForBuyersContext db = new OrderForBuyersContext();
-
-            var item = db.OrderForBuyers.Find(id);
-            if (item != null)
-            {
-                db.OrderForBuyers.Remove(item);
-                db.SaveChanges();
-                MessageBox.Show("Удалено");
-                InputIdForDelete.Text = "";
-                //this.ScrollData.UpdateLayout(label);
-                //UserOrder.ItemsSource = db.OrderForBuyers.ToList();
-            }
+            //var item = db.OrderForBuyers.Find(id);
+            //if (item != null)
+            //{
+            //    db.OrderForBuyers.Remove(item);
+            //    db.SaveChanges();
+            //    MessageBox.Show("Удалено");
+            //    InputIdForDelete.Text = "";
+            //    //this.ScrollData.UpdateLayout(label);
+            //    //UserOrder.ItemsSource = db.OrderForBuyers.ToList();
+            //}
             
             //var label = (Label)sender;
             //int key = Convert.ToInt32(InputIdForDelete.Text.Trim());
@@ -98,7 +96,7 @@ namespace VBakery
         //}
         private void MouseDownRefresh(object sender, MouseButtonEventArgs e)
         {
-
+            
         }
         public void MouseDownGotoHome(object sender, MouseButtonEventArgs e)
         {
@@ -212,7 +210,7 @@ namespace VBakery
                     DownTray.Background = Brushes.LightGreen;
                     DownTray.Content = "Удалена запись --" + InputIdForDelete.Text;
                     InputIdForDelete.Text = "";
-                    //UserOrder.ItemsSource = db.OrderForBuyers.ToList();
+                    AddButton();
                 }
                 else
                 {

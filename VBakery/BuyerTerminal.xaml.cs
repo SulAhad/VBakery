@@ -281,12 +281,6 @@ namespace VBakery
                 VisibilityButton();
             }
         }
-
-        //private void GoToOrder_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    BuyerToOrder buyerToOrder = new();
-        //    buyerToOrder.ShowDialog();
-        //}
         private void MouseDownGoToOrder(object sender, RoutedEventArgs e)
         {
             BuyerToOrder buyerToOrder = new();
@@ -297,30 +291,18 @@ namespace VBakery
         }
         private void Image_MouseEnterFruct(object sender, MouseEventArgs e)
         {
-            //ImageFruct.Width = 250;
-            //ImageFruct.Height = 250;
-            //ContentFruct.FontSize = 22;
             ImageFruct.Background = Brushes.Pink;
         }
         private void Image_MouseLeaveFruct(object sender, MouseEventArgs e)
         {
-            //ImageFruct.Width = 200;
-            //ImageFruct.Height = 200;
-            //ContentFruct.FontSize = 19;
             ImageFruct.Background = Brushes.White;
         }
         private void Image_MouseEnterMan(object sender, MouseEventArgs e)
         {
-            //ImageMan.Width = 250;
-            //ImageMan.Height = 250;
-            //ContentMan.FontSize = 22;
             ImageMan.Background = Brushes.Pink;
         }
         private void Image_MouseLeaveMan(object sender, MouseEventArgs e)
         {
-            //ImageMan.Width = 200;
-            //ImageMan.Height = 200;
-            //ContentMan.FontSize = 19;
             ImageMan.Background = Brushes.White;
         }
         private void Image_MouseEnterShokolad(object sender, MouseEventArgs e)

@@ -155,7 +155,7 @@
         <Image Grid.Row="2" Grid.Column="0" Margin="1 1 0 1" Width="40"
                Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\calculator.png" MouseDown="OpenCalculator" ></Image>
         <Image Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\recepts.png" Width="40" Grid.Row="2" Grid.Column="1"  Margin="0 1 0 1" MouseDown="OpenRecepts"></Image>
-        <Image Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\chat.png" Width="40" Grid.Row="2" Grid.Column="2"  Margin="0 1 0 1" MouseDown="openChat" ></Image>
+        <Image Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\chat.png" Width="40" Grid.Row="2" Grid.Column="2"  Margin="0 1 0 1" MouseDown="OpenChat" ></Image>
         
         <Rectangle Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="3" Margin="1 1 1 1">
             <Rectangle.Fill>
@@ -167,16 +167,16 @@
         <Image Grid.Row="2" Grid.Column="4" Width="20" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\strelka.png" MouseDown="Image_MouseDown_Clear"></Image>
         <Image MouseDown="Image_MouseDown_FindOrder" Grid.Row="2" Grid.Column="5" Width="20" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\poisk.png"></Image>
         <Image Grid.Row="2" Grid.Column="6" Width="20" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\dom.png" MouseDown="Image_MouseDown_GetBackHome"></Image>
-        <Rectangle Grid.Column="7" Grid.Row="2" Grid.ColumnSpan="3" Margin="2 2 2 2">
+        <!--<Rectangle Grid.Column="7" Grid.Row="2" Grid.ColumnSpan="3" Margin="2 2 2 2">
             <Rectangle.Fill>
                 <LinearGradientBrush>
                     <GradientStop Color="LightGreen" Offset="0"></GradientStop>
                 </LinearGradientBrush>
             </Rectangle.Fill>
-        </Rectangle>
-        <Label Content="I" Grid.Column="7" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Margin="2 2 0 1"></Label>
-        <Label Content="II" Grid.Column="8" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"  Margin="0 2 0 1"></Label>
-        <Label Content="III" Grid.Column="9" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"  Margin="0 2 0 1"></Label>
+        </Rectangle>-->
+        <!--<Label  Content="I" Grid.Column="7" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Margin="2 2 0 1"></Label>
+        <Label  Content="II" Grid.Column="8" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"  Margin="0 2 0 1"></Label>
+        <Label  Content="III" Grid.Column="9" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20"  Margin="0 2 0 1"></Label>-->
 
         <Rectangle Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4"
             Grid.RowSpan="6" Margin="1 1 1 1">
@@ -186,101 +186,82 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <ScrollViewer Grid.Column="7" 
-            Grid.Row="3"
-            Grid.ColumnSpan="3"
-            Grid.RowSpan="7" VerticalScrollBarVisibility="Hidden">
-            <WrapPanel x:Name="WrapPanelAddButton"></WrapPanel>
-        </ScrollViewer>
-        
-        <!--<Button Grid.Column="7" Grid.Row="3" Margin="1 1 1 1" Click="Button_Click">
-            <TextBlock x:Name="BtnClickText" TextAlignment="Center" FontSize="13"></TextBlock>
-        </Button>
-        <Button Grid.Column="8" Grid.Row="3" Margin="1 1 1 1" Click="Button_Click_1">
-            <TextBlock x:Name="BtnClickText2" TextAlignment="Center" FontSize="13"></TextBlock>
-        </Button>
-        <Button Grid.Column="9" Grid.Row="3" Margin="1 1 1 1" Click="Button_Click_3" >
-            <TextBlock x:Name="BtnClickText3" TextAlignment="Center" FontSize="13"></TextBlock>
-        </Button>-->
-        <!--<Button Grid.Column="9" Grid.Row="4" Margin="1 1 1 1" Click="Button_Click_4">
-            <TextBlock TextAlignment="Center" FontSize="13">Салат из моркови<LineBreak/>с майонезом</TextBlock>
-        </Button>
-        <Button Grid.Column="7" Grid.Row="4" Margin="1 1 1 1" Click="Button_Click_5">
-            <TextBlock TextAlignment="Center" FontSize="13">Рис</TextBlock>
-        </Button>
-        <Button Grid.Column="8" Grid.Row="4" Margin="1 1 1 1" Click="Button_Click_6">
-            <TextBlock TextAlignment="Center" FontSize="13">Суп<LineBreak/>вермишелевый</TextBlock>
-        </Button>
-        <Button Grid.Column="9" Grid.Row="5" Margin="1 1 1 1" Click="Button_Click_7">
-            <TextBlock TextAlignment="Center" FontSize="13">Салат<LineBreak/>из капусты</TextBlock>
-        </Button>
-        <Button Grid.Column="9" Grid.Row="6" Margin="1 1 1 1" Click="Button_Click_8">
-            <TextBlock TextAlignment="Center" FontSize="13">Нарезка:<LineBreak/>огурцы, помидоры</TextBlock>
-        </Button>
-        <Button Grid.Column="9" Grid.Row="7" Margin="1 1 1 1" Click="Button_Click_9">
-            <TextBlock TextAlignment="Center" FontSize="13">масло</TextBlock>
-        </Button>
-        <Button Grid.Column="9" Grid.Row="8" Margin="1 1 1 1" Click="Button_Click_10">
-            <TextBlock TextAlignment="Center" FontSize="13">Хлеб ржаной</TextBlock>
-        </Button>
-        <Button Grid.Column="9" Grid.Row="9" Margin="1 1 1 1" Click="Button_Click_11">
-            <TextBlock TextAlignment="Center" FontSize="13">Салат<LineBreak/>"Лобио"</TextBlock>
-        </Button>
-        <Button Grid.Column="9" Grid.Row="10" Margin="1 1 1 1" Click="Button_Click_12">
-            <TextBlock TextAlignment="Center" FontSize="13">Зелень<LineBreak/>нарезка</TextBlock>
-        </Button>
-        <Button  Grid.Column="8" Grid.Row="5" Margin="1 1 1 1" Click="Button_Click_13">
-            <TextBlock TextAlignment="Center" FontSize="13">Компот<LineBreak/>из сухофруктов</TextBlock>
-        </Button>
-        <Button Grid.Column="8" Grid.Row="6" Margin="1 1 1 1" Click="Button_Click_14">
-            <TextBlock TextAlignment="Center" FontSize="13">Соус красный</TextBlock>
-        </Button>
-        <Button Grid.Column="8" Grid.Row="7" Margin="1 1 1 1" Click="Button_Click_15">
-            <TextBlock TextAlignment="Center" FontSize="13">Напиток<LineBreak/>ягодный</TextBlock>
-        </Button>
-        <Button Grid.Column="8" Grid.Row="8" Margin="1 1 1 1" Click="Button_Click_16" >
-            <TextBlock TextAlignment="Center" FontSize="13">Майонез</TextBlock>
-        </Button>
-        <Button Grid.Column="8" Grid.Row="9" Margin="1 1 1 1" Click="Button_Click_17">
-            <TextBlock TextAlignment="Center" FontSize="13">Чай с<LineBreak/>лимоном</TextBlock>
-        </Button>
-        <Button Grid.Column="8" Grid.Row="10" Margin="1 1 1 1" Click="Button_Click_18">
-            <TextBlock TextAlignment="Center" FontSize="13">Сметана</TextBlock>
-        </Button>
-        <Button Grid.Column="7" Grid.Row="5" Margin="1 1 1 1" Click="Button_Click_19">
-            <TextBlock TextAlignment="Center" FontSize="13">Чай 0.2</TextBlock>
-        </Button>-->
-
-        <!--<ListBox 
-            Grid.Row="3"
-            Grid.Column="7"
+        <TabControl
+            Background="Transparent"
+            Grid.Column="7" 
+            Grid.Row="2"
             Grid.ColumnSpan="3"
             Grid.RowSpan="7"
-            Background="Transparent"
-            BorderBrush="Transparent"
-            x:Name="ButtonFirst"
-            >
-            <ListBox.ItemTemplate>
-                <DataTemplate >
-                    <WrapPanel ItemHeight="100" ItemWidth="100" Orientation="Horizontal" FlowDirection="LeftToRight">
-                        <Button
-                            Click="DBUpdateInArray"
-                            BorderBrush="Transparent"
-                            Content="{Binding name}"
-                            x:Name="buyerNameHeader1" 
-                            Foreground="Black"
-                            FontSize="13"
-                            FontFamily="Segoe UI">
-                        </Button>
-                    </WrapPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>-->
-        <!--<Button Grid.Column="7" Grid.Row="6" Margin="1 1 1 1"></Button>
-        <Button Grid.Column="7" Grid.Row="7" Margin="1 1 1 1"></Button>
-        <Button Grid.Column="7" Grid.Row="8" Margin="1 1 1 1"></Button>
-        <Button Grid.Column="7" Grid.Row="9" Margin="1 1 1 1"></Button>
-        <Button Grid.Column="7" Grid.Row="10" Margin="1 1 1 1"></Button>-->
+             BorderThickness="0 0 0 0" BorderBrush="Transparent">
+            <TabItem 
+                Background="LightGreen"
+                Width="127"
+                Height="95"
+                Margin="0 1 1 1 "
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                FontFamily="Segoe UI"
+                BorderThickness="0 0 0 0" BorderBrush="Transparent"
+                >
+                <TabItem.Header >
+                    <Label
+                        MouseDown="Label_MouseDownFirstMenu"
+                        Content="I"
+                        FontSize="22">
+
+                    </Label>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ScrollViewer BorderThickness="0 0 0 0" BorderBrush="Transparent" Background="Transparent" VerticalScrollBarVisibility="Hidden">
+                        <WrapPanel x:Name="WrapPanelAddButton1"></WrapPanel>
+                    </ScrollViewer>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem
+                Width="127"
+                Height="95"
+                Margin="1 1 1 1 "
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Background="LightGreen"
+                FontFamily="Segoe UI">
+                <TabItem.Header>
+                    <Label
+                        MouseDown="Label_MouseDownSecondMenu"
+                        Content="II"
+                        FontSize="22">
+
+                    </Label>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ScrollViewer Background="Transparent" VerticalScrollBarVisibility="Hidden">
+                        <WrapPanel x:Name="WrapPanelAddButton2"></WrapPanel>
+                    </ScrollViewer>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem
+                Width="126"
+                Height="95"
+                Margin="1 1 0 1 "
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Background="LightGreen"
+                FontFamily="Segoe UI">
+                <TabItem.Header>
+                    <Label
+                        MouseDown="Label_MouseDownThirdMenu"
+                        Content="III"
+                        FontSize="22">
+
+                    </Label>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <ScrollViewer Background="Transparent" VerticalScrollBarVisibility="Hidden">
+                        <WrapPanel x:Name="WrapPanelAddButton3"></WrapPanel>
+                    </ScrollViewer>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
         <ScrollViewer
             Grid.Row="3"
             Grid.Column="0"
@@ -329,7 +310,6 @@
             >
             </TextBox>
         </ScrollViewer>
-
         <ScrollViewer
             Grid.Row="3"
             Grid.Column="3"
@@ -345,14 +325,6 @@
             >
             </TextBlock>
         </ScrollViewer>
-        <!--<Rectangle Grid.Column="0" Grid.Row="9"
-            Grid.RowSpan="2" Margin="1 1 1 1">
-            <Rectangle.Fill>
-                <LinearGradientBrush>
-                    <GradientStop Color="White" Offset="0"></GradientStop>
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>-->
         <Button
             Click="Button_Click_Discount"
             Grid.Row="9"
@@ -461,9 +433,6 @@
             <Label.Content>
                 <AccessText TextWrapping="Wrap" Text="Отправить заказ"/>
             </Label.Content>
-            <!--<TextBlock
-                TextAlignment="Center">Отправить<LineBreak/>заказ
-            <LineBreak/>повару</TextBlock>-->
         </Label>
         <Rectangle Grid.Column="0" Grid.Row="11"
             Grid.ColumnSpan="11" Margin="1 1 1 1">

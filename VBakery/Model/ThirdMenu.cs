@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace VBakery.MenuDB
 {
-    public class SecondCourse
+    public class ThirdMenu
     {
         public int Id { get; set; }
-        public string name { get; set; }
-        public int price { get; set; }
+        public string Name { get; set; }
+        public string Price { get; set; }
     }
 }
