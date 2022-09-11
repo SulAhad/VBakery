@@ -94,22 +94,18 @@
         </Label>
         <Image Grid.Column="1" Grid.Row="1" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\refresh.png" Width="20" MouseDown="MouseDownRefreshRecepts">
         </Image>
-        <ScrollViewer 
-            Grid.Row="2" 
+        <DataGrid 
+                    Grid.Row="2" 
             Grid.Column="0" 
             Grid.ColumnSpan="8" 
             ScrollViewer.VerticalScrollBarVisibility="Auto"
-            FontFamily="Segoe UI">
-            <StackPanel 
-                Orientation="Vertical">
-                <DataGrid 
                     x:Name="ReceptList" 
                     FontSize="16" 
                     FontWeight="Normal" 
                     AutoGenerateColumns="False"
                     FontFamily="Segoe UI">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn
+            <DataGrid.Columns>
+                <DataGridTextColumn
                             x:Name="Id"
                             FontWeight="Light"
                             Binding="{Binding Id}"  
@@ -117,42 +113,42 @@
                             Header="№" 
                             Width="*"
                             FontFamily="Segoe UI"/>
-                        <DataGridTemplateColumn  
+                <DataGridTemplateColumn  
                             IsReadOnly="True" 
                             Header="Название рецепта" 
                             Width="200">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock
                                         x:Name="NameRecipe"
                                         Text="{Binding NameRecipe}"
                                         TextWrapping="Wrap"
                                         FontWeight="Light"
                                         FontFamily="Segoe UI"
                                         >
-                                    </TextBlock>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn 
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn 
                             IsReadOnly="True" 
                             Header="Состав" 
                             Width="600"
                             CanUserResize="False"
                             MinWidth="200">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock 
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock 
                                         FontWeight="Light"
                                         x:Name="TextRecipe"
                                         Text="{Binding TextRecipe}" 
                                         TextWrapping="Wrap"
                                         FontFamily="Segoe UI">
-                                    </TextBlock>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn 
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn 
                             x:Name="PriceRecipe" 
                             Binding="{Binding PriceRecipe}" 
                             IsReadOnly="False" 
@@ -160,9 +156,7 @@
                             FontWeight="Light"
                             Width="*"
                             FontFamily="Segoe UI"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
-        </ScrollViewer>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

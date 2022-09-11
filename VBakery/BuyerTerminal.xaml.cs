@@ -14,12 +14,12 @@ namespace VBakery
     {
         static Supervisor supervisor = new();
         
-        public string priceMan = supervisor.priceMan.Text;
-        public string priceShoko = supervisor.priceShoko.Text;
-        public string priceMussoviy = supervisor.priceMussoviy.Text;
-        public string priceSvadebniy = supervisor.priceSvadebniy.Text;
-        public string priceBirthday = supervisor.priceBirthday.Text;
-        public string priceKids = supervisor.priceKids.Text;
+        //public string priceMan = supervisor.priceMan.Text;
+        //public string priceShoko = supervisor.priceShoko.Text;
+        //public string priceMussoviy = supervisor.priceMussoviy.Text;
+        //public string priceSvadebniy = supervisor.priceSvadebniy.Text;
+        //public string priceBirthday = supervisor.priceBirthday.Text;
+        //public string priceKids = supervisor.priceKids.Text;
         readonly PriceForMenusContext priceForMenusContext = new();
         public BuyerTerminal()
         {

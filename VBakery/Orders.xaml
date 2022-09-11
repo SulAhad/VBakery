@@ -94,13 +94,11 @@
         </Label>
         <Image Grid.Column="1" Grid.Row="1" Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\refresh.png" Width="20" MouseDown="MouseDownRefreshRecepts">
         </Image>
-        <ScrollViewer
-                            Grid.Row="1"
+        <DataGrid 
+                Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="8"
                             Grid.RowSpan="4"
-                            >
-            <DataGrid 
                                 AlternatingRowBackground="White"
                                 RowBackground="AliceBlue"
                                 GridLinesVisibility="Horizontal"
@@ -110,8 +108,8 @@
                                 AutoGenerateColumns="False" 
                                 FontFamily="Segoe UI"
                                 >
-                <DataGrid.Columns>
-                    <DataGridTextColumn
+            <DataGrid.Columns>
+                <DataGridTextColumn
                                         x:Name="id"
                                         FontWeight="Light"
                                         Binding="{Binding Id}"  
@@ -119,88 +117,87 @@
                                         Header="№" 
                                         Width="50"
                                         FontFamily="Segoe UI"/>
-                    <DataGridTemplateColumn 
+                <DataGridTemplateColumn 
                                         x:Name="name"
                                         IsReadOnly="True" 
                                         Header="Имя"
                                         Width="100">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock 
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
                                                     Text="{Binding BuyerName}"  
                                                     TextWrapping="Wrap">
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn 
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn 
                                         x:Name="nameProduct" 
                                         IsReadOnly="True" 
                                         Header="Название продукта" 
                                         Width="200">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock 
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
                                                     Text="{Binding NameProduct}"  
                                                     TextWrapping="Wrap">
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn 
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn 
                                         x:Name="comm" 
                                         IsReadOnly="True" 
                                         Header="Комментарии" 
                                         Width="300">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock 
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
                                                     Text="{Binding StaffComment}"  
                                                     TextWrapping="Wrap">
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn 
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn 
                                         x:Name="dateTime"
                                         IsReadOnly="True" 
                                         Header="Дата заявки"
                                         Width="100">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock 
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
                                                     Text="{Binding OrderDateTime}"  
                                                     TextWrapping="Wrap">
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn 
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn 
                                                         x:Name="total"
                                                         IsReadOnly="True" 
                                                         Header="Сумма заявки"
                                                         Width="auto">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock 
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock 
                                                     FontFamily="Segoe UI"
                                                     FontWeight="Light"
                                                     Text="{Binding OrderPrice}"  
                                                     TextWrapping="Wrap">
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-        </ScrollViewer>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

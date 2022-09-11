@@ -9,32 +9,25 @@ namespace VBakery
 {
     public partial class LoginWindowRegistration : Window
     {
-        private string _phone;
         public LoginWindowRegistration()
         {
             InitializeComponent();
 
             Name.Text = null;
             LastName.Text = null;
-            Mobile.Text = null;
             Password.Password = null;
             SecondPassword.Password = null;
-
             Name.Text = Name.Text.Trim(' ');
             LastName.Text = LastName.Text.Trim(' ');
-            Mobile.Text = Mobile.Text.Trim(' ');
             Password.Password = Password.Password.Trim(' ');
             SecondPassword.Password = SecondPassword.Password.Trim(' ');
 
         }
-
         private void Button_ClickRegistration(object sender, RoutedEventArgs e)
         {
             bool flag = true;
-
             Name.Text = Name.Text.Trim(' ');
             LastName.Text = LastName.Text.Trim(' ');
-            Mobile.Text = Mobile.Text.Trim(' ');
             Password.Password = Password.Password.Trim(' ');
             SecondPassword.Password = SecondPassword.Password.Trim(' ');
 
@@ -49,13 +42,6 @@ namespace VBakery
             {
                 LastName.ToolTip = "Не ввели фамилию";
                 LastName.Background = Brushes.LightCoral;
-                TimerForEmty();
-                flag = false;
-            }
-            if (Mobile.Text.Length <= 10)
-            {
-                Mobile.ToolTip = "Не ввели телефон";
-                Mobile.Background = Brushes.LightCoral;
                 TimerForEmty();
                 flag = false;
             }
@@ -75,7 +61,6 @@ namespace VBakery
                 {
                     Name = Name.Text,
                     LastName = LastName.Text,
-                    Mobile = Mobile.Text,
                     Password = Password.Password,
                     DateOfRegistration = DateTime.Now.ToString()
                 };
@@ -99,11 +84,9 @@ namespace VBakery
         {
             Name.Background = new SolidColorBrush(Colors.Transparent);
             LastName.Background = new SolidColorBrush(Colors.Transparent);
-            Mobile.Background = new SolidColorBrush(Colors.Transparent);
             Password.Background = new SolidColorBrush(Colors.Transparent);
             Name.ToolTip = null;
             LastName.ToolTip = null;
-            Mobile.ToolTip = null;
             Password.ToolTip = null;
         }
     }

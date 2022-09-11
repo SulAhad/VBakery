@@ -9,6 +9,7 @@ namespace VBakery
 {
     public partial class Kitchener : Window
     {
+        OrderForBuyersContext orderForBuyersContext = new();
         public Kitchener()
         {
             InitializeComponent();
@@ -17,10 +18,11 @@ namespace VBakery
             imageHome.ToolTip = "Выйти на главную страницу";
             imageRecepts.ToolTip = "Открыть рецепты";
             imageChat.ToolTip = "Открыть лист претензий";
+            
         }
         public void AddButton()
         {
-            OrderForBuyersContext orderForBuyersContext = new();
+            
             foreach (OrderForBuyer order in orderForBuyersContext.OrderForBuyers)
             {
                 Label label = new();
@@ -96,7 +98,7 @@ namespace VBakery
         //}
         private void MouseDownRefresh(object sender, MouseButtonEventArgs e)
         {
-            
+            ScrollData.Tag = orderForBuyersContext.OrderForBuyers.EntityType.ToString();
         }
         public void MouseDownGotoHome(object sender, MouseButtonEventArgs e)
         {

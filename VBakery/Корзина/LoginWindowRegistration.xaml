@@ -78,7 +78,7 @@
                 </TextBox>
             </StackPanel>
         </Border>
-            <Border 
+            <!--<Border 
             VerticalAlignment="Top"
             HorizontalAlignment="Center"
             Height="80"
@@ -107,7 +107,7 @@
                     </TextBox>
 
                 </StackPanel>
-            </Border>
+            </Border>-->
             <Border 
             VerticalAlignment="Top"
             HorizontalAlignment="Center"
