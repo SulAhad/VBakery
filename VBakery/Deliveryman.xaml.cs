@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using System.Windows;
-using System.Windows.Controls.Primitives;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
+
 namespace VBakery
 {
     public partial class Deliveryman : Window
@@ -12,13 +13,32 @@ namespace VBakery
         public Deliveryman()
         {
             InitializeComponent();
-            UpdateOrderForDelivery();
+            UpdateDataBase();
+            AddButtons();
         }
-        public void UpdateOrderForDelivery()
+        public void TimerForEmpty()
         {
-            using OrderForDeliverysContext db = new();
-            UserList.ItemsSource = db.OrderForDeliverys.ToList();
+            DispatcherTimer dispatcherTimer = new();
+            dispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 4);
+            dispatcherTimer.Start();
+        }///Диспетчер времени для отсчета времени для очистки уведмлений
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            DownTray.Content = "";
+            DownTray.Background = Brushes.AliceBlue;
+        }///Исходное положение после отсчета таймера
+        public void DownTrayWindow()
+        {
+            DownTray.Background = Brushes.LightGreen;
             DownTray.Content = "Обновлено --" + DateTime.Now.ToString();
+        }
+        public void UpdateDataBase()
+        {
+            OrderForBuyersContext orderForBuyersContext = new();
+            UserList.ItemsSource = orderForBuyersContext.OrderForBuyers.Where(p => p.OrderStatus == "Выполнено" ).ToList();
+            DownTrayWindow();
+            TimerForEmpty();
         }
         private void HandlerKeyDownEvent(object sender, KeyEventArgs e)
         {
@@ -35,7 +55,7 @@ namespace VBakery
         }//Клавиатура
         private void MouseDownRefresh(object sender, MouseButtonEventArgs e)
         {
-            UpdateOrderForDelivery();
+            UpdateDataBase();
         }
         private void MouseDownGotoHome(object sender, MouseButtonEventArgs e)
         {
@@ -49,7 +69,7 @@ namespace VBakery
                 mainWindow.Show();
                 this.Close();
             }
-        }
+    }
         private void OpenRecepts(object sender, MouseButtonEventArgs e)
         {
             Recepts recepts = new();
@@ -80,16 +100,66 @@ namespace VBakery
         {
             this.Close();
         }
-        //private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        //{
-        //    ScrollBar scrollBar = new();
-        //    scrollBar.Value = numeric.Value;
-        //    findId.Text = Convert.ToString(numeric.Value);
-        //}
         private void ButtonDelete(object sender, RoutedEventArgs e)
         {
-            using OrderForDeliverysContext db = new();
-
+            if (InputIdForDelete.Text == "")
+            {
+                DownTray.Content = "Не ввели номер!";
+                DownTray.Background = Brushes.LightCoral;
+            }
+            else
+            {
+                OrderForBuyersContext buyersContext = new();
+                InputIdForDelete.Text = InputIdForDelete.Text.Trim();
+                int key = Convert.ToInt32(InputIdForDelete.Text.Trim());
+                var item = buyersContext.OrderForBuyers.Find(key);
+                if (item != null)
+                {
+                    buyersContext.OrderForBuyers.Remove(item);
+                    buyersContext.SaveChanges();
+                    DownTray.Background = Brushes.LightGreen;
+                    DownTray.Content = "Удалена запись --" + InputIdForDelete.Text;
+                    InputIdForDelete.Text = "";
+                    UserList.ItemsSource = buyersContext.OrderForBuyers.ToList();
+                }
+                else
+                {
+                    MessageBox.Show("Не найдено такое значение!");
+                }
+            }
+        }
+        public void ButtonClickClear(object sender, RoutedEventArgs e)
+        {
+            InputIdForDelete.Text = "";
+        }
+        private void MouseDownLock(object sender, MouseButtonEventArgs e)
+        {
+            LoginWindow loginWindow = new();
+            loginWindow.Show();
+            this.Close();
+        }
+        public void AddButtons()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Button button = new Button();
+                button.Content = i;
+                button.Click += ButtonClick;
+                button.Width = 50;
+                button.Height = 50;
+                button.Margin = new Thickness(2, 2, 2, 2);
+                wrapPanelNums.Children.Add(button);
+            }
+        }
+        public void ButtonClick(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var num = button.Content;
+            InputIdForDelete.Text += num;
+        }
+        private void OrderDelivered(object sender, RoutedEventArgs e)
+        {
+            using OrderForBuyersContext db = new OrderForBuyersContext();
             if (InputIdForDelete.Text == "")
             {
                 DownTray.Content = "Не ввели номер!";
@@ -98,76 +168,23 @@ namespace VBakery
             else
             {
                 InputIdForDelete.Text = InputIdForDelete.Text.Trim();
-
+                string text = "Доставлено";
                 int key = Convert.ToInt32(InputIdForDelete.Text.Trim());
-
-                var item = db.OrderForDeliverys.Find(key);
-
+                var item = db.OrderForBuyers.Find(key);
                 if (item != null)
                 {
-                    db.OrderForDeliverys.Remove(item);
+                    item.OrderStatus = text;
                     db.SaveChanges();
                     DownTray.Background = Brushes.LightGreen;
-                    DownTray.Content = "Удалена запись --" + InputIdForDelete.Text;
+                    DownTray.Content = "Запись изменена --" + InputIdForDelete.Text;
                     InputIdForDelete.Text = "";
-                    UserList.ItemsSource = db.OrderForDeliverys.ToList();
+                    UpdateDataBase();
                 }
                 else
                 {
                     MessageBox.Show("Не найдено такое значение!");
                 }
             }
-        }
-        public void ButtonClick_1(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 1;
-        }
-        public void ButtonClick_2(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 2;
-        }
-        public void ButtonClick_3(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 3;
-        }
-        public void ButtonClick_4(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 4;
-        }
-        public void ButtonClick_5(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 5;
-        }
-        public void ButtonClick_6(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 6;
-        }
-        public void ButtonClick_7(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 7;
-        }
-        public void ButtonClick_8(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 8;
-        }
-        public void ButtonClick_9(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 9;
-        }
-        public void ButtonClick_0(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 0;
-        }
-        public void ButtonClickClear(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text = "";
-        }
-        private void MouseDownLock(object sender, MouseButtonEventArgs e)
-        {
-            Deliveryman deliveryman = new();
-            deliveryman.Close();
-            LoginWindow loginWindow = new();
-            loginWindow.ShowDialog();
         }
     }
 }

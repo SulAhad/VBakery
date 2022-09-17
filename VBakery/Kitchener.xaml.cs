@@ -7,9 +7,9 @@ using VBakery.Model;
 using System.Windows.Controls;
 namespace VBakery
 {
-    public partial class Kitchener : Window
+    public partial class Kitchener: Window
     {
-        OrderForBuyersContext orderForBuyersContext = new();
+
         public Kitchener()
         {
             InitializeComponent();
@@ -18,63 +18,73 @@ namespace VBakery
             imageHome.ToolTip = "Выйти на главную страницу";
             imageRecepts.ToolTip = "Открыть рецепты";
             imageChat.ToolTip = "Открыть лист претензий";
-            
+        }
+        public void ButtonClickPlus(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = WindowState.Maximized;
+            }
+        }
+        public void ButtonClickMinus(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+        public void ButtonClickClose(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
         public void AddButton()
         {
-            
+            OrderForBuyersContext orderForBuyersContext = new();
             foreach (OrderForBuyer order in orderForBuyersContext.OrderForBuyers)
             {
-                Label label = new();
-                label.Content = order.NameProduct;
-                label.DataContext = order.Id;
-                label.FontSize = 12;
-                label.Width = 200;
-                label.Background = Brushes.LightGray;
-                label.Margin = new Thickness(1, 1, 1, 1);
-                label.Name = "name";
-                label.MouseDown += ButtonOnClick;
-                label.VerticalAlignment = VerticalAlignment.Top;
-                label.HorizontalAlignment = HorizontalAlignment.Center;
-                this.ScrollData.Children.Add(label);
+                StackPanel stackPanel = new();
+                stackPanel.DataContext = order.Id;
+                stackPanel.MouseDown += ButtonOnClick;
 
-                //Grid border = new();
-                //border.Background = Brushes.LightGray;
-                //border.Width = 200;
-                //border.Margin = new Thickness(1, 1, 1, 1);
-                //border.Name = "stack";
-                //border.MouseDown += ButtonOnClick;
-                //border.VerticalAlignment = VerticalAlignment.Top;
-                //border.HorizontalAlignment = HorizontalAlignment.Center;
-                //this.ScrollData.Children.Add(border);
+                Label label = new();
+                label.Content = order.Id;
+                label.Margin = new Thickness(1, 1, 1, 0);
+                label.Background = Brushes.LightBlue;
+
+                Label label1 = new();
+                label1.Content = order.NameProduct;
+                label1.Margin = new Thickness(1, 0, 1, 0);
+                label1.Background = Brushes.LightBlue;
+
+                Label label2 = new();
+                label2.Content = order.OrderStatus;
+                label2.Margin = new Thickness(1, 0, 1, 1);
+                if(order.OrderStatus == "Выполнено")
+                {
+                    label2.Background = Brushes.Red;
+                }
+                else
+                {
+                    label2.Background = Brushes.LightBlue;
+                }
+
+                
+                if (order.OrderStatus == "В процессе")
+                {
+                    stackPanel.Children.Add(label);
+                    stackPanel.Children.Add(label1);
+                    stackPanel.Children.Add(label2);
+                }
+
+                this.ScrollData.Children.Add(stackPanel);
             }
         }
         public void ButtonOnClick(object sender, EventArgs eventArgs)
         {
-            
-            var label = (Label)sender;
-
-            int id = (int)label.DataContext;
-            InputIdForDelete.Text = Convert.ToString(id);
-            //using OrderForBuyersContext db = new OrderForBuyersContext();
-
-            //var item = db.OrderForBuyers.Find(id);
-            //if (item != null)
-            //{
-            //    db.OrderForBuyers.Remove(item);
-            //    db.SaveChanges();
-            //    MessageBox.Show("Удалено");
-            //    InputIdForDelete.Text = "";
-            //    //this.ScrollData.UpdateLayout(label);
-            //    //UserOrder.ItemsSource = db.OrderForBuyers.ToList();
-            //}
-            
-            //var label = (Label)sender;
-            //int key = Convert.ToInt32(InputIdForDelete.Text.Trim());
-            //string id = (string)label.DataContext;
-            //key = (int)label.Content;
-            ////labelId = Convert.ToInt32(InputIdForDelete.Text);
-
+            var stack = (StackPanel)sender;
+            int text = (int)stack.DataContext;
+            InputIdForDelete.Text = Convert.ToString(text);
         }
         private void HandlerKeyDownEvent(object sender, KeyEventArgs e)
         {
@@ -89,16 +99,13 @@ namespace VBakery
                     break;
             }
         }//Клавиатура
-        //public void UpdateOrderForBuyer()
-        //{
-        //    using OrderForBuyersContext db = new();
-        //    UserOrder.ItemsSource = db.OrderForBuyers.ToList();
-        //    DownTray.Background = Brushes.LightGreen;
-        //    DownTray.Content = "Обновлено --" + DateTime.Now.ToString();
-        //}
         private void MouseDownRefresh(object sender, MouseButtonEventArgs e)
         {
-            ScrollData.Tag = orderForBuyersContext.OrderForBuyers.EntityType.ToString();
+            this.ScrollData.Children.Clear();
+            AddButton();
+            DownTray.Background = Brushes.LightGreen;
+            DownTray.Content = "Обновлено --" + DateTime.Now.ToString();
+
         }
         public void MouseDownGotoHome(object sender, MouseButtonEventArgs e)
         {
@@ -124,26 +131,6 @@ namespace VBakery
             chatRoom.ShowDialog();
             chatRoom.chatUser.Content = "Повар";
         }
-        private void ButtonClickPlus(object sender, RoutedEventArgs e)
-        {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                this.WindowState = WindowState.Normal;
-            }
-            else
-            {
-                this.WindowState = WindowState.Maximized;
-            }
-        }
-        private void ButtonClickMinus(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
-        private void ButtonClickClose(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
         private void ButtonClickAdd(object sender, RoutedEventArgs e)
         {
             if (AddName.Text == "" || AddMobile.Text == "" || AddWeight.Text == "" || AddnameProduct.Text == "" || AddAddress.Text == "" || AddComm.Text == "")
@@ -155,7 +142,7 @@ namespace VBakery
             {
                 using OrderForBuyersContext db = new();
                 {
-                    OrderForBuyer BuyerKitchener = new ()
+                    OrderForBuyer BuyerKitchener = new()
                     {
                         BuyerName = "\"Повар\"" + "\n" + AddName.Text,
                         BuyerMobile = AddMobile.Text,
@@ -163,7 +150,8 @@ namespace VBakery
                         NameProduct = AddnameProduct.Text,
                         DeliveryDate = AddAddress.Text,
                         StaffComment = AddComm.Text,
-                        OrderDateTime = DateTime.Now.ToString()
+                        OrderDateTime = DateTime.Now.ToString(),
+                        OrderStatus = "В процессе"
                     };
                     LogOrdersContext dbLogOrder = new();
                     LogOrder logOrder = new LogOrder
@@ -212,6 +200,7 @@ namespace VBakery
                     DownTray.Background = Brushes.LightGreen;
                     DownTray.Content = "Удалена запись --" + InputIdForDelete.Text;
                     InputIdForDelete.Text = "";
+                    this.ScrollData.Children.Clear();
                     AddButton();
                 }
                 else
@@ -220,63 +209,48 @@ namespace VBakery
                 }
             }
         }
-        //private void ScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        //{
-        //    ScrollBar scrollBar = new();
-        //    scrollBar.Value = numeric.Value;
-        //    DeleteAndGoToDelivery.Text = Convert.ToString(numeric.Value);
-        //}
-
-        public void ButtonClick_1(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 1;
-        }
-        public void ButtonClick_2(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 2;
-        }
-        public void ButtonClick_3(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 3;
-        }
-        public void ButtonClick_4(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 4;
-        }
-        public void ButtonClick_5(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 5;
-        }
-        public void ButtonClick_6(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 6;
-        }
-        public void ButtonClick_7(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 7;
-        }
-        public void ButtonClick_8(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 8;
-        }
-        public void ButtonClick_9(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 9;
-        }
-        public void ButtonClick_0(object sender, RoutedEventArgs e)
-        {
-            InputIdForDelete.Text += 0;
-        }
         public void ButtonClickClear(object sender, RoutedEventArgs e)
         {
             InputIdForDelete.Text = "";
         }
-
         private void MouseDownLock(object sender, MouseButtonEventArgs e)
         {
             LoginWindow loginWindow = new();
-            loginWindow.ShowDialog();
+            loginWindow.Show();
             this.Close();
+        }
+        private void ButtonClickDone(object sender, RoutedEventArgs e)
+        {
+            using OrderForBuyersContext db = new OrderForBuyersContext();
+
+            if (InputIdForDelete.Text == "")
+            {
+                DownTray.Content = "Не ввели номер!";
+                DownTray.Background = Brushes.LightCoral;
+            }
+            else
+            {
+                InputIdForDelete.Text = InputIdForDelete.Text.Trim();
+                InputIdForDelete.Text = InputIdForDelete.Text.Trim();
+                string text = "Выполнено";
+                int key = Convert.ToInt32(InputIdForDelete.Text.Trim());
+                var item = db.OrderForBuyers.Find(key);
+
+                if (item != null)
+                {
+                    item.OrderStatus = text;
+                    db.SaveChanges();
+                    DownTray.Background = Brushes.LightGreen;
+                    DownTray.Content = "Запись обновлена --" + InputIdForDelete.Text;
+                    InputIdForDelete.Text = "";
+                    this.ScrollData.Children.Clear();
+                    AddButton();
+                }
+                else
+                {
+                    MessageBox.Show("Нет такого значения!");
+                }
+            }
         }
     }
 }

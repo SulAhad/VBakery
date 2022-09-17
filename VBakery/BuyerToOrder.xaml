@@ -273,6 +273,7 @@
             >
         </TextBlock>
         <DatePicker
+            
             Width="auto"
             Margin="2 2 2 2"
             BorderBrush="Wheat"

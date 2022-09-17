@@ -326,6 +326,8 @@
             </TextBlock>
         </ScrollViewer>
         <Button
+            Visibility="Hidden"
+            x:Name="ButtonDiscount"
             Click="Button_Click_Discount"
             Grid.Row="9"
             Grid.Column="0"
@@ -336,6 +338,8 @@
             >
         </Button>
         <Button
+            Visibility="Hidden"
+            x:Name="ButtonAllowance"
             Click="Button_Click_Allowance"
             Grid.Row="10"
             Grid.Column="0"

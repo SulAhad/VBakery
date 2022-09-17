@@ -12,6 +12,7 @@
         public string DeliveryDate { get; set; }//дата доставки
         public string OrderDateTime { get; set; }//дата заказа
         public float OrderPrice { get; set; }//общая цена заказа
+        public string OrderStatus { get; set; }//статус заказа от повара
     }
 
 }

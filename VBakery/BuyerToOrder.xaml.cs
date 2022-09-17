@@ -10,13 +10,12 @@ namespace VBakery
 {
     public partial class BuyerToOrder : Window
     {
-        BuyerTerminal buyerTerminal = new();
         public BuyerToOrder()
         {
             InitializeComponent();
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
             CommToolTip.ToolTip = "Необязательно";
-
+            BuyerTerminal buyerTerminal = new();
             InputOrderArea.Text += buyerTerminal.TextAreaTrash.Text;
         }
         private void HandlerKeyDownEvent(object sender, KeyEventArgs e)
@@ -26,7 +25,7 @@ namespace VBakery
                 case Key.Enter:
                     break;
                 case Key.Escape:
-                    Close();
+                    this.Close();
                     break;
 
                 default:
@@ -112,18 +111,7 @@ namespace VBakery
                     DeliveryDate = dateOrder.Text,
                     OrderPrice = Convert.ToInt32(TotalPrice.Text),
                     OrderDateTime = DateTime.Now.ToString(),
-                };
-                OrderForDeliverysContext dbDelivery = new();
-                OrderForDelivery order = new OrderForDelivery
-                {
-                    BuyerName = "\"Киоск\"" + " " + name.Text,
-                    BuyerMobile = mobile.Text,
-                    NameProduct = InputOrderArea.Text,
-                    DeliveryAddress = address.Text,
-                    StaffComment = comm.Text,
-                    DeliveryDate = dateOrder.Text,
-                    OrderPrice = Convert.ToInt32(TotalPrice.Text),
-                    OrderDateTime = DateTime.Now.ToString()
+                    OrderStatus = "В процессе"
                 };
                 LogOrdersContext dbLogOrder = new();
                 LogOrder logOrder = new LogOrder
@@ -139,12 +127,10 @@ namespace VBakery
                 };
                 db.OrderForBuyers.Add(tim);
                 db.SaveChanges();
-                dbDelivery.OrderForDeliverys.Add(order);
-                dbDelivery.SaveChanges();
                 dbLogOrder.LogOrders.Add(logOrder);
                 dbLogOrder.SaveChanges();
 
-                MessageBox.Show("Спасибо" + "\n" + name.Text + "\n" + "за заказ");
+                MessageBox.Show("Спасибо от нашей компании Вам" + "\n" + name.Text + "\n" + "за заказ");
                 this.Close();
             }
         }
@@ -152,12 +138,10 @@ namespace VBakery
         {
             this.Close();
         }
-
         private void SendOrderButton_MouseEnter(object sender, MouseEventArgs e)
         {
             SendOrderButton.Background = Brushes.Gray;
         }
-
         private void SendOrderButton_MouseLeave(object sender, MouseEventArgs e)
         {
             SendOrderButton.Background = Brushes.Transparent;

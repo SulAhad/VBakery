@@ -14,17 +14,6 @@ namespace VBakery
     public partial class Supervisor : Window
     {
         private readonly int customerCount;
-        private readonly RecipesContext recipesContext = new();
-        private readonly MessagesContext messagesContext = new();
-        private readonly OrderForBuyersContext orderForBuyersContext = new();
-        private readonly TimerStartsContext timerStartsContext = new();
-        private readonly TimerEndsContext timerEndsContext = new();
-        private readonly LogOrdersContext logOrders = new();
-        private readonly UsersContext usersContext = new();
-        private readonly PriceForMenusContext priceForMenusContext = new();
-        private readonly FirstMenuContext firstMenuContext = new();
-        private readonly SecondMenuContext secondMenuContext = new();
-        private readonly ThirdMenuContext thirdMenuContext = new();
         public int countNums1;///Подсчет количества нажатий на цифровые кнопки 1 окно
         public int countNums2;///Подсчет количества нажатий на цифровые кнопки 2 окно
         public int countNums3;///Подсчет количества нажатий на цифровые кнопки 3 окно
@@ -39,8 +28,11 @@ namespace VBakery
         public Supervisor()
         {
             InitializeComponent();
+            FirstMenuContext firstMenuContext = new();
             stackPanelMenu1.ItemsSource = firstMenuContext.FirstMenus.ToList();
+            SecondMenuContext secondMenuContext = new();
             stackPanelMenu2.ItemsSource = secondMenuContext.SecondMenus.ToList();
+            ThirdMenuContext thirdMenuContext = new();
             stackPanelMenu3.ItemsSource = thirdMenuContext.ThirdMenus.ToList();
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
             MethodGetDataRecept();//Повар
@@ -48,20 +40,25 @@ namespace VBakery
             EndWork();//Кассир
             UpdateOrderForBuyer();
             UpdateChatIfClickSend();
+            OrderForBuyersContext orderForBuyersContext = new();
             customerCount = orderForBuyersContext.OrderForBuyers.Count();//Подсчет количества продаж
             CountSales.Content = Convert.ToString(customerCount) + " " + "заказов";//Вывод результата подсчета
             System.Int32 BuyerCount = orderForBuyersContext.OrderForBuyers.Count();
             VisitBuyer.Text = Convert.ToString(BuyerCount);
             TotalSales.Content = orderForBuyersContext.OrderForBuyers.Sum(p => p.OrderPrice).ToString() + " " + "руб";//Получение общей суммы продаж из базы данных
+            LogOrdersContext logOrders = new();
             LogOrder.ItemsSource = logOrders.LogOrders.ToList();
+            UsersContext usersContext = new();
             UserRegistration.ItemsSource = usersContext.Users.ToList();
         }
         public void UpdateChatIfClickSend()
         {
+            MessagesContext messagesContext = new();
             Chat.ItemsSource = messagesContext.Messages.ToList();
         }//Обновить чат если нажата кнопка отправить
         public void UpdateOrderForBuyer()
         {
+            OrderForBuyersContext orderForBuyersContext = new();
             UserOrder.ItemsSource = orderForBuyersContext.OrderForBuyers.ToList();
         }//Обновить список Заказов
         public void ButtonClickPlus(object sender, RoutedEventArgs e)
@@ -85,6 +82,7 @@ namespace VBakery
         }//Кнопка закрыть окно
         public void ClickButtonSendMessage(object sender, RoutedEventArgs e)
         {
+            MessagesContext messagesContext = new();
             if (MessageUser.Text != "")
             {
                 Message toms = new()
@@ -123,10 +121,12 @@ namespace VBakery
         ////////////////Кассир
         public void StartWork()
         {
+            TimerStartsContext timerStartsContext = new();
             ListBeginTime.ItemsSource = timerStartsContext.TimerStarts.ToList();
         }//Кассир начало работы
         public void EndWork()
         {
+            TimerEndsContext timerEndsContext = new();
             ListEndTime.ItemsSource = timerEndsContext.TimerEnds.ToList();
         }//Кассир конец работы
         public void GoBackToHome(object sender, RoutedEventArgs e)
@@ -162,6 +162,7 @@ namespace VBakery
             }
             else
             {
+                RecipesContext recipesContext = new();
                 Recipe toms = new()
                 {
                     NameRecipe = nameRecipe.Text,
@@ -185,12 +186,14 @@ namespace VBakery
         }//Повар получить данные рецепта из сервера
         private void MethodGetDataRecept()
         {
+            RecipesContext recipesContext = new();
             ReceptList.ItemsSource = recipesContext.Recipes.ToList();
             DownTrayDeleteRecept.Content = "Обновлено:" + DateTime.Now.ToString();
             DownTrayDeleteRecept.Background = Brushes.LightGreen;
         }//Повар получить данные рецепта из сервера
         private void ButtonClickDeleteFirstID(object sender, RoutedEventArgs e)
         {
+            RecipesContext recipesContext = new();
             var item = recipesContext.Recipes.FirstOrDefault();
             if (item != null)
             {
@@ -203,6 +206,7 @@ namespace VBakery
         }//Кнопка удалить первую ID Кухня
         private void RemoveLastData(object sender, RoutedEventArgs e)
         {
+            RecipesContext recipesContext = new();
             if (SetId.Text == "")
             {
                 DownTrayDeleteRecept.Content = "Не ввели номер!";
@@ -232,6 +236,7 @@ namespace VBakery
         ////////////////// //Покупатель
         private void RemoveLastOrder(object sender, RoutedEventArgs e)
         {
+            OrderForBuyersContext orderForBuyersContext = new();
             if (InputIdForDelete.Text == "")
             {
                 DownTrayBuyerOrders.Content = "Не ввели номер!";
@@ -262,6 +267,7 @@ namespace VBakery
         }//Удалить заказ покупаетля
         private void GetDataBuyer(object sender, RoutedEventArgs e)
         {
+            OrderForBuyersContext orderForBuyersContext = new();
             UpdateOrderForBuyer();
             System.Int32 BuyerCount = orderForBuyersContext.OrderForBuyers.Count();
             VisitBuyer.Text = Convert.ToString(BuyerCount);
@@ -270,6 +276,7 @@ namespace VBakery
         ////////////////Касса
         private void ButtonDeleteTimeBegin(object sender, RoutedEventArgs e)
         {
+            TimerStartsContext timerStartsContext = new();
             TimerStart user = timerStartsContext.TimerStarts.FirstOrDefault();
             if (user != null)
             {
@@ -280,6 +287,7 @@ namespace VBakery
         }//Касса начало работы кнопка удалить
         private void ButtonDeleteTimeEnd(object sender, RoutedEventArgs e)
         {
+            TimerEndsContext timerEndsContext = new();
             TimerEnd user = timerEndsContext.TimerEnds.FirstOrDefault();
             if (user != null)
             {
@@ -290,6 +298,7 @@ namespace VBakery
         }//Касса конец работы кнопка удалить
         private void ButtonClickDeleteChat(object sender, RoutedEventArgs e)
         {
+            MessagesContext messagesContext = new();
             var item = messagesContext.Messages.FirstOrDefault();
             if (item == null)
             {
@@ -310,6 +319,7 @@ namespace VBakery
         } //кнопка удаления чата первой строки
         private void ButtonRemoveId(object sender, RoutedEventArgs e)
         {
+            MessagesContext messagesContext = new();
             if (InputIdForDeleteChat.Text == "")
             {
                 downTrayChatRoom.Content = "Не ввели номер!";
@@ -381,6 +391,7 @@ namespace VBakery
         }
         private void ButtonClickRegistrationUser(object sender, RoutedEventArgs e)
         {
+            UsersContext usersContext = new();
             bool flag = true;
             if (nameTextBoxRegistration.Text == "")
             {
@@ -421,6 +432,7 @@ namespace VBakery
         }
         private void ButtonClickDeleteReg(object sender, RoutedEventArgs e)
         {
+            UsersContext usersContext = new();
             if (RegIdSearch.Text == "")
             {
                 DownTrayRegistration.Content = "Не ввели номер!";
@@ -430,26 +442,55 @@ namespace VBakery
             {
                 int key = Convert.ToInt32(RegIdSearch.Text.Trim());
                 var item = usersContext.Users.Find(key);
-
                 if (item != null)
                 {
-                    usersContext.Users.Remove(item);
-                    usersContext.SaveChanges();
-                    UpdateChatIfClickSend();
-                    DownTrayRegistration.Content = "Удалена запись:" + " " + key + " --" + DateTime.Now.ToString();
-                    DownTrayRegistration.Background = Brushes.LightCoral;
-                    RegIdSearch.Text = "";
-                    UserRegistration.ItemsSource = usersContext.Users.ToList();
+                    var login = usersContext.Users.Count();
+                    if (login <= 1)
+                    {
+                        MessageBoxResult result = MessageBox.Show(
+                        "Вы точно хотите удалить?",
+                        "Последний пользователь, при удалении программа перезапустится!",
+                        MessageBoxButton.YesNo);
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            usersContext.Users.Remove(item);
+                            usersContext.SaveChanges();
+                            LoginWindow loginWindow = new();
+                            loginWindow.Show();
+                            this.Close();
+                        }
+                    }
+                    else
+                    {
+                        usersContext.Users.Remove(item);
+                        usersContext.SaveChanges();
+                        UpdateChatIfClickSend();
+                        DownTrayRegistration.Content = "Удалена запись:" + " " + key + " --" + DateTime.Now.ToString();
+                        DownTrayRegistration.Background = Brushes.LightCoral;
+                        RegIdSearch.Text = "";
+                        UserRegistration.ItemsSource = usersContext.Users.ToList();
+                    }
                 }
                 else
                 {
-                    DownTrayRegistration.Content = "Нет такого значения!";
+                    DownTrayRegistration.Content = "Нет такого номера!";
                     DownTrayRegistration.Background = Brushes.LightCoral;
+                    RegIdSearch.Text = "";
+                    DispatcherTimer dispatcherTimer = new();
+                    dispatcherTimer.Tick += new EventHandler(DispatcherTimer_TickUsers);
+                    dispatcherTimer.Interval = new TimeSpan(0, 0, 4);
+                    dispatcherTimer.Start();
                 }
             }
         }
+        private void DispatcherTimer_TickUsers(object sender, EventArgs e)
+        {
+            DownTrayRegistration.Content = "";
+            DownTrayRegistration.Background = Brushes.LightCyan;
+        }
         private void ButtonAddMenu1(object sender, RoutedEventArgs e)
         {
+            FirstMenuContext firstMenuContext = new();
             bool flag = true;
             if (nameMenu1.Text == "")
             {
@@ -481,6 +522,7 @@ namespace VBakery
         }
         private void ButtonAddMenu2(object sender, RoutedEventArgs e)
         {
+            SecondMenuContext secondMenuContext = new();
             bool flag = true;
             if (nameMenu2.Text == "")
             {
@@ -512,6 +554,7 @@ namespace VBakery
         }
         private void ButtonAddMenu3(object sender, RoutedEventArgs e)
         {
+            ThirdMenuContext thirdMenuContext = new();
             bool flag = true;
             if (nameMenu3.Text == "")
             {
@@ -770,6 +813,7 @@ namespace VBakery
         }
         private void ButtonClickDeleteMenu1(object sender, RoutedEventArgs e)///кнопка удаления Меню1
         {
+            FirstMenuContext firstMenuContext = new();
             if (inputIdForDeleteMenu1.Text == "")
             {
                 downTrayPaymaster.Content = "Не ввели номер!";
@@ -801,6 +845,7 @@ namespace VBakery
         }///Удаление по номеру меню 1
         private void ButtonClickDeleteMenu2(object sender, RoutedEventArgs e)///кнопка удаления Меню1
         {
+            SecondMenuContext secondMenuContext = new();
             if (inputIdForDeleteMenu2.Text == "")
             {
                 downTrayPaymaster.Content = "Не ввели номер!";
@@ -832,6 +877,7 @@ namespace VBakery
         }///Удаление по номеру меню 2
         private void ButtonClickDeleteMenu3(object sender, RoutedEventArgs e)///кнопка удаления Меню1
         {
+            ThirdMenuContext thirdMenuContext = new();
             if (inputIdForDeleteMenu3.Text == "")
             {
                 downTrayPaymaster.Content = "Не ввели номер!";
@@ -864,11 +910,11 @@ namespace VBakery
         private void SendButtonNotifications()
         {
             DispatcherTimer dispatcherTimer = new();
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Tick += new EventHandler(DispatcherTimer_TickPaymaster);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 4);
             dispatcherTimer.Start();
         }///Таймер через 4 чекунды закрашивает нижний трей в исходный цвет
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        private void DispatcherTimer_TickPaymaster(object sender, EventArgs e)
         {
             downTrayPaymaster.Content = "";
             downTrayPaymaster.Background = Brushes.AliceBlue;

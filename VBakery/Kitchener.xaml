@@ -177,7 +177,7 @@
                             Grid.RowSpan="4"
                             >
                             <ScrollViewer>
-                                <WrapPanel Background="DarkCyan" x:Name="ScrollData">
+                                <WrapPanel  x:Name="ScrollData" Background="DarkCyan" >
                                     <!--<Grid x:Name="stack">
                                         <Label x:Name="id"></Label>
                                         <Label x:Name="name"></Label>
@@ -302,7 +302,6 @@
                                 HorizontalAlignment="Center"
                                 Orientation="Horizontal">
                                 <TextBox
-                                    IsReadOnly="True"
                                     x:Name="InputIdForDelete"
                                     Grid.Row="4"
                                     Grid.Column="5"
@@ -316,25 +315,6 @@
                                     FontSize="20">
 
                                 </TextBox>
-                                <!--<ScrollBar 
-                                Value="1"
-                                Minimum="1" 
-                                Maximum="9999"
-                                SmallChange="1"
-                                ValueChanged="ScrollBar_ValueChanged"
-                                x:Name="numeric" RenderTransformOrigin="0.5,0.5"
-                                >
-                                    <ScrollBar.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform/>
-                                            <SkewTransform/>
-                                            <RotateTransform Angle="180.546"/>
-                                            <TranslateTransform/>
-                                        </TransformGroup>
-                                    </ScrollBar.RenderTransform>
-                                </ScrollBar>-->
-
-
                             </StackPanel>
                             <TextBlock
                                 x:Name="tb"
@@ -343,21 +323,6 @@
                                 
                             </TextBlock>
                             <Button Click="ButtonClickClear" Width="150" Height="20" Content="Очистить" Margin="1 1 1 10"></Button>
-                            <WrapPanel
-                                Width="auto"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center">
-                                <Button Margin="1 1 1 1" Click="ButtonClick_1" Width="45" Height="40">1</Button>
-                                <Button Margin="1 1 1 1" Click="ButtonClick_2" Width="45" Height="40">2</Button>
-                                <Button Margin="1 1 1 1" Click="ButtonClick_3" Width="45" Height="40">3</Button>
-                                <Button Margin="1 1 1 1" Click="ButtonClick_4" Width="45" Height="40">4</Button>
-                                <Button Margin="1 1 1 1" Click="ButtonClick_5" Width="45" Height="40">5</Button>
-                                <Button Margin="1 1 1 1" Click="ButtonClick_6" Width="45" Height="40">6</Button>
-                                <Button Margin="1 1 1 1" Click="ButtonClick_7" Width="45" Height="40">7</Button>
-                                <Button Margin="1 1 1 1" Click="ButtonClick_8" Width="45" Height="40">8</Button>
-                                <Button Margin="1 1 1 1" Click="ButtonClick_9" Width="45" Height="40">9</Button>
-                                <Button Margin="1 1 1 1" Click="ButtonClick_0" Width="45" Height="40">0</Button>
-                            </WrapPanel>
                             <Border
                             Grid.Column="5"
                             Grid.Row="4"
@@ -373,9 +338,17 @@
                                 Content="Удалить"
                                 FontFamily="Segoe UI"></Button>
                             </Border>
+                            <Button
+                                Background="LightGreen"
+                                Margin="1 50 1 1"
+                                Height="100"
+                                Click="ButtonClickDone"
+                                FontSize="22"
+                                Content="Выполнено">
 
+                            </Button>
                         </StackPanel>
-                        <Image Margin="1 1 1 30 " Source="/block.png" Width="50" Height="50" Grid.Row="4" Grid.Column="8"  MouseDown="MouseDownLock" VerticalAlignment="Bottom"
+                        <Image Margin="1 1 1 30 " Source="E:\Мои проекты\C#\VBakery\VBakery\Images\Icons\block.png" Width="50" Height="50" Grid.Row="4" Grid.Column="8"  MouseDown="MouseDownLock" VerticalAlignment="Bottom"
                                HorizontalAlignment="Center"></Image>
                     </Grid>
                 </TabItem.Content>

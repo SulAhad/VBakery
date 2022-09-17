@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-
 namespace VBakery
 {
     public partial class Recepts : Window

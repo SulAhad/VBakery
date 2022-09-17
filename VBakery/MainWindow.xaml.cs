@@ -1,8 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 
 namespace VBakery
 {
@@ -11,7 +9,6 @@ namespace VBakery
         public MainWindow()
         {
             InitializeComponent();
-            
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
         }
         private void HandlerKeyDownEvent(object sender, KeyEventArgs e)
@@ -31,13 +28,13 @@ namespace VBakery
         {
             PaymasterSales paymasterSales = new();
             paymasterSales.Show();
-            Close();
+            this.Close();
         }
         private void Kitchener_MouseDown(object sender, RoutedEventArgs e)
         {
             Kitchener kitchener = new();
             kitchener.Show();
-            Close();
+            this.Close();
         }
         private void Deliveryman_MouseDown(object sender, RoutedEventArgs e)
         {
@@ -49,11 +46,13 @@ namespace VBakery
         {
             BuyerTerminal buyerTerminal = new();
             buyerTerminal.Show();
+            this.Close();
         }
         public void Supervisor_MouseDown(object sender, RoutedEventArgs e)
         {
             Supervisor supervisor = new();
             supervisor.Show();
+            this.Close();
         }
         private void Supervisor_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -63,36 +62,36 @@ namespace VBakery
         {
             Supervisor.Background = Brushes.Transparent;
         }
-        private void buyer_MouseEnter(object sender, MouseEventArgs e)
+        private void Buyer_MouseEnter(object sender, MouseEventArgs e)
         {
             buyer.Background = Brushes.Gray;
         }
-        private void buyer_MouseLeave(object sender, MouseEventArgs e)
+        private void Buyer_MouseLeave(object sender, MouseEventArgs e)
         {
             buyer.Background = Brushes.Transparent;
         }
-        private void deliveryman_MouseEnter(object sender, MouseEventArgs e)
+        private void Deliveryman_MouseEnter(object sender, MouseEventArgs e)
         {
             deliveryman.Background = Brushes.Gray;
         }
-        private void deliveryman_MouseLeave(object sender, MouseEventArgs e)
+        private void Deliveryman_MouseLeave(object sender, MouseEventArgs e)
         {
             deliveryman.Background = Brushes.Transparent;
         }
-        private void kitchener_MouseEnter(object sender, MouseEventArgs e)
+        private void Kitchener_MouseEnter(object sender, MouseEventArgs e)
         {
             kitchener.Background = Brushes.Gray;
         }
-        private void kitchener_MouseLeave(object sender, MouseEventArgs e)
+        private void Kitchener_MouseLeave(object sender, MouseEventArgs e)
         {
             kitchener.Background = Brushes.Transparent;
         }
-        private void paymaster_MouseEnter(object sender, MouseEventArgs e)
+        private void Paymaster_MouseEnter(object sender, MouseEventArgs e)
         {
             
             paymaster.Background = Brushes.Gray;
         }
-        private void paymaster_MouseLeave(object sender, MouseEventArgs e)
+        private void Paymaster_MouseLeave(object sender, MouseEventArgs e)
         {
             paymaster.Background = Brushes.Transparent;
         }

@@ -58,8 +58,8 @@
             FontSize="36"
             Background="Transparent"
             MouseDown="Paymaster_MouseDown"
-            MouseEnter="paymaster_MouseEnter"
-            MouseLeave="paymaster_MouseLeave"
+            MouseEnter="Paymaster_MouseEnter"
+            MouseLeave="Paymaster_MouseLeave"
             >
         </Label>
         <Label
@@ -75,8 +75,8 @@
             FontSize="36"
             BorderBrush="Transparent" 
             MouseDown="Kitchener_MouseDown"
-            MouseEnter="kitchener_MouseEnter"
-            MouseLeave="kitchener_MouseLeave"
+            MouseEnter="Kitchener_MouseEnter"
+            MouseLeave="Kitchener_MouseLeave"
             >
         </Label>
         <Label
@@ -93,8 +93,8 @@
             MouseDown="Deliveryman_MouseDown"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            MouseEnter="deliveryman_MouseEnter"
-            MouseLeave="deliveryman_MouseLeave"
+            MouseEnter="Deliveryman_MouseEnter"
+            MouseLeave="Deliveryman_MouseLeave"
             >
         </Label>
         <Label
@@ -111,8 +111,8 @@
             MouseDown="Buyer_MouseDown"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            MouseEnter="buyer_MouseEnter"
-            MouseLeave="buyer_MouseLeave"
+            MouseEnter="Buyer_MouseEnter"
+            MouseLeave="Buyer_MouseLeave"
             >
         </Label>
         <Label

@@ -39,7 +39,7 @@
                     <TextBox
                         Background="Transparent"
                         Foreground="Wheat"
-                        x:Name="Name"
+                        x:Name="NameUser"
                         Margin="0 5 0 0"
                         Width="200"
                         Height="30"
@@ -47,38 +47,7 @@
                     </TextBox>
             </StackPanel>
         </Border>
-        <Border 
-            VerticalAlignment="Top"
-            HorizontalAlignment="Center"
-            Height="80"
-            Width="300"
-            Background="Transparent" 
-            BorderBrush="DarkGray" 
-            BorderThickness="1,0,1,1">
-            <StackPanel>
-                <Label
-                Content="Введите Фамилию"
-                Foreground="Wheat"
-                FontSize="16"
-                VerticalContentAlignment="Center"
-                HorizontalContentAlignment="Center"
-                >
-
-                </Label>
-                <TextBox
-                    Background="Transparent"
-                        Foreground="Wheat"
-                    x:Name="LastName"
-                Margin="0 5 0 0"
-                Width="200"
-                Height="30"
-                FontSize="16"
-                >
-
-                </TextBox>
-            </StackPanel>
-        </Border>
-            <!--<Border 
+            <Border 
             VerticalAlignment="Top"
             HorizontalAlignment="Center"
             Height="80"
@@ -88,7 +57,7 @@
             BorderThickness="1,0,1,1">
                 <StackPanel>
                     <Label
-                Content="Номер телефона"
+                Content="Введите Фамилию"
                 Foreground="Wheat"
                 FontSize="16"
                 VerticalContentAlignment="Center"
@@ -97,17 +66,18 @@
 
                     </Label>
                     <TextBox
-                        Background="Transparent"
+                    Background="Transparent"
                         Foreground="Wheat"
-                        x:Name="Mobile"
+                    x:Name="LastName"
                 Margin="0 5 0 0"
                 Width="200"
                 Height="30"
-                FontSize="16">
-                    </TextBox>
+                FontSize="16"
+                >
 
+                    </TextBox>
                 </StackPanel>
-            </Border>-->
+            </Border>
             <Border 
             VerticalAlignment="Top"
             HorizontalAlignment="Center"
@@ -160,6 +130,7 @@
                     </PasswordBox>
                 </StackPanel>
             </Border>
+            
             <Button
                 Background="Transparent"
                         Foreground="Wheat"
@@ -174,6 +145,23 @@
                 >
             </Button>
         </StackPanel>
-        
+        <Label
+            Margin="50 50 0 0 "
+            x:Name="LabelGetBackLoginWindow"
+            Padding="1 1 1 1"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            MouseEnter="Label_MouseEnter"
+            MouseLeave="Label_MouseLeave"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Content="Назад"
+            Width="150"
+            Background="Transparent"
+            Foreground="White"
+            Height="20"
+            MouseDown="ButtonClickBackToLoginWindow">
+
+        </Label>
     </Grid>
 </Window>

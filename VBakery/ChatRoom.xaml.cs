@@ -12,9 +12,7 @@ namespace VBakery
         public ChatRoom()
         {
             InitializeComponent();
-
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
-
             UpdateChatIfClickSend();
         }
         private void HandlerKeyDownEvent(object sender, KeyEventArgs e)

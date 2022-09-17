@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -12,31 +10,11 @@ namespace VBakery
 {
     public partial class BuyerTerminal : Window
     {
-        static Supervisor supervisor = new();
-        
-        //public string priceMan = supervisor.priceMan.Text;
-        //public string priceShoko = supervisor.priceShoko.Text;
-        //public string priceMussoviy = supervisor.priceMussoviy.Text;
-        //public string priceSvadebniy = supervisor.priceSvadebniy.Text;
-        //public string priceBirthday = supervisor.priceBirthday.Text;
-        //public string priceKids = supervisor.priceKids.Text;
-        readonly PriceForMenusContext priceForMenusContext = new();
         public BuyerTerminal()
         {
             InitializeComponent();
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandlerKeyDownEvent);
             CakeList();
-
-            //PriceFruct.Content = priceForMenusContext.PriceForMenus.OrderBy(p => p.PriceFruct).ToString();
-
-            ////PriceFruct.Content = priceFruct + " " + "руб.кг";
-            //PriceMan.Content = priceMan + " " + "руб.кг";
-            //PriceShoko.Content = priceShoko + " " + "руб.кг";
-            //PriceMussoviy.Content = priceMussoviy + " " + "руб.кг";
-            //PriceSvadebniy.Content = priceSvadebniy + " " + "руб.кг";
-            //PriceBirthday.Content = priceBirthday + " " + "руб.кг";
-            //PriceKids.Content = priceKids + " " + "руб.кг";
-            
         }
         private void CakeList()
         {
@@ -79,7 +57,7 @@ namespace VBakery
                 case Key.Enter:
                     break;
                 case Key.Escape:
-                    Close();
+                    this.Close();
                     break;
 
                 default:
@@ -287,6 +265,7 @@ namespace VBakery
             buyerToOrder.InputOrderArea.Text = TextAreaTrash.Text;
             buyerToOrder.TotalPrice.Text = totalPrice.Text;
             buyerToOrder.ShowDialog();
+            this.Close();
 
         }
         private void Image_MouseEnterFruct(object sender, MouseEventArgs e)

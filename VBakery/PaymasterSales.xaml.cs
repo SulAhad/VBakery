@@ -12,16 +12,12 @@ namespace VBakery
 {
     public partial class PaymasterSales : Window
     {
-        private readonly LoginWindow loginWindow = new();
-        private readonly TimerEndsContext timerEndsContext = new();
-        private readonly TimerStartsContext timerStartsContext = new();
-        private readonly OrderForBuyersContext orderForBuyersContext = new();
-        private readonly LogOrdersContext dbLogOrder = new();
         public int clickDiscount = 0;
         public int clickAllowance = 0;
         public int countFirst;
         public int countSecond;
         public int countThird;
+        public int totalButton;
         public PaymasterSales()
         {
             InitializeComponent();
@@ -63,28 +59,60 @@ namespace VBakery
         }//Клавиатура
         private void Button_Click_Total(object sender, RoutedEventArgs e)
         {
-            total.Text = new DataTable().Compute(subtotal.Text, null).ToString();
+            if(subtotal.Text != "0")
+            {
+                totalButton++;
+                if (totalButton <= 1)
+                {
+                    total.Text = new DataTable().Compute(subtotal.Text, null).ToString();
+                    ButtonDiscount.Visibility = Visibility.Visible;
+                    ButtonAllowance.Visibility = Visibility.Visible;
+                    WrapPanelAddButton1.IsEnabled = false;
+                    WrapPanelAddButton2.IsEnabled = false;
+                    WrapPanelAddButton3.IsEnabled = false;
+                    MouseDownClickTotal.IsEnabled = false;
+                }
+            }
+            else
+            {
+                Errors.Text = "Не выбран меню";
+                ErrorsColor.Color = Color.FromRgb(255, 255, 255);
+                TimerForEmty();
+            }
+            
         }///Суммирование полей в общую сумму
         private void Image_MouseDown_Clear(object sender, MouseButtonEventArgs e)
         {
+            totalButton = 0;
+            clickDiscount = 0;
             NumArea.Text = "";
             TextArea.Text = "";
             subtotal.Text = Convert.ToString(0);
             total.Text = Convert.ToString(0);
             Errors.Text = "";
             ErrorsColor.Color = Color.FromRgb(135, 206, 250);
+            ButtonDiscount.Visibility = Visibility.Hidden;
+            ButtonAllowance.Visibility = Visibility.Hidden;
+            ButtonDiscount.Background = Brushes.White;
+            ButtonAllowance.Background = Brushes.White;
+            WrapPanelAddButton1.IsEnabled = true;
+            WrapPanelAddButton2.IsEnabled = true;
+            WrapPanelAddButton3.IsEnabled = true;
+            MouseDownClickTotal.IsEnabled = true;
+
         }///Картинка стрелка для очистки полей
         private void Image_MouseDown_Lock(object sender, MouseButtonEventArgs e)
         {
-            Close();
-            _ = loginWindow.ShowDialog();
+            LoginWindow loginWindow = new();
+            loginWindow.Show();
             TimerEnd endTime = new()
             {
                 end = DateTime.Now.ToString()
             };
-            _ = timerEndsContext.TimerEnds.Add(endTime);
-            _ = timerEndsContext.SaveChanges();
-
+            TimerEndsContext timerEndsContext = new();
+            timerEndsContext.TimerEnds.Add(endTime);
+            timerEndsContext.SaveChanges();
+            this.Close();
         }///Блокировка экрана и запись в базу о выходе
         private void TimeKitchener()
         {
@@ -92,8 +120,9 @@ namespace VBakery
             {
                 begin = OpenTime.Text,
             };
-            _ = timerStartsContext.TimerStarts.Add(time);
-            _ = timerStartsContext.SaveChanges();
+            TimerStartsContext timerStartsContext = new();
+            timerStartsContext.TimerStarts.Add(time);
+            timerStartsContext.SaveChanges();
         }///Время запуска приложения и запись в базу данных
         public void TimerForEmty()
         {
@@ -109,6 +138,8 @@ namespace VBakery
         }///Исходное положение после отсчета таймера
         private void Button_Click_GotoKitchen(object sender, RoutedEventArgs e)
         {
+            OrderForBuyersContext orderForBuyersContext = new();
+            LogOrdersContext dbLogOrder = new();
             if (total.Text == "0" || TextArea.Text == "")
             {
                 Errors.Text = "Не ввели значения!";
@@ -128,7 +159,8 @@ namespace VBakery
                     NameProduct = TextArea.Text,
                     StaffComment = commForKitchen.Text,
                     OrderDateTime = DateTime.Now.ToString(),
-                    OrderPrice = (float)Convert.ToSingle(total.Text)
+                    OrderPrice = (float)Convert.ToSingle(total.Text),
+                    OrderStatus = Convert.ToString("В процессе")
                 };
                 LogOrder logOrder = new LogOrder
                 {
@@ -147,6 +179,15 @@ namespace VBakery
                 subtotal.Text = "0";
                 total.Text = "0"; 
                 commForKitchen.Text = "";
+                ButtonDiscount.Visibility = Visibility.Hidden;
+                ButtonAllowance.Visibility = Visibility.Hidden;
+                ButtonDiscount.Background = Brushes.White;
+                ButtonAllowance.Background = Brushes.White;
+                WrapPanelAddButton1.IsEnabled = true;
+                WrapPanelAddButton2.IsEnabled = true;
+                WrapPanelAddButton3.IsEnabled = true;
+                MouseDownClickTotal.IsEnabled = true;
+                totalButton = 0;
             }
         }///Кнопка отправки данных в базу данных
         private void Button_Click_Discount(object sender, RoutedEventArgs e)
@@ -158,6 +199,8 @@ namespace VBakery
                 float Discount = Total / 100 * 5;
                 float Total_Discount = Total - Discount;
                 total.Text = Convert.ToString(Total_Discount);
+                ButtonDiscount.Background = Brushes.Gray;
+                ButtonAllowance.Visibility = Visibility.Hidden;
             }
         }///Кнопка скидки на 5%
         private void Button_Click_Allowance(object sender, RoutedEventArgs e)
@@ -169,6 +212,8 @@ namespace VBakery
                 float Allowance = Total / 100 * 5;
                 float Total_Discount = Total + Allowance;
                 total.Text = Convert.ToString(Total_Discount);
+                ButtonDiscount.Visibility = Visibility.Hidden;
+                ButtonAllowance.Background = Brushes.Gray;
             } 
         }///Кнопка надбавки на 5%
         private void OpenCalculator(object sender, MouseButtonEventArgs e)
@@ -188,8 +233,9 @@ namespace VBakery
                 {
                     end = DateTime.Now.ToString()
                 };
-                _ = timerEndsContext.TimerEnds.Add(endTime);
-                _ = timerEndsContext.SaveChanges();
+                TimerEndsContext timerEndsContext = new();
+                timerEndsContext.TimerEnds.Add(endTime);
+                timerEndsContext.SaveChanges();
                 MainWindow mainWindow = new();
                 mainWindow.Show();
                 Close();

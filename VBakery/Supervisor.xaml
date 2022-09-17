@@ -166,7 +166,7 @@
                     <Label 
                         Padding="1 1 1 1"
                         Content="Покупатель" 
-                        Width="120" 
+                        Width="auto" 
                         FontSize="14" 
                         Height="20" 
                         FontWeight="Normal"
@@ -181,12 +181,12 @@
                                 <Label
                                     VerticalContentAlignment="Center"
                                     Padding="1 1 1 1"
-                                        Width="120" 
-                                        FontSize="12" 
+                                        Width="auto" 
+                                        FontSize="14" 
                                         Height="20" 
                                         FontWeight="Normal"
                                         FontFamily="Segoe UI"
-                                        Content="Заказы Покупателя">
+                                        Content="Заказы Покупателей">
                                 </Label>
                             </TabItem.Header>
                             <TabItem.Content>
@@ -365,6 +365,23 @@
                                                                 FontFamily="Segoe UI"
                                                                 FontWeight="Light"
                                                                 Text="{Binding OrderPrice}"  
+                                                                TextWrapping="Wrap"
+                                                                HorizontalAlignment="Center">
+                                                        </TextBlock>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTemplateColumn 
+                                                    x:Name="status"
+                                                    IsReadOnly="True" 
+                                                    Header="Отметка о готовности"
+                                                    Width="100">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock 
+                                                                FontFamily="Segoe UI"
+                                                                FontWeight="Light"
+                                                                Text="{Binding OrderStatus}"  
                                                                 TextWrapping="Wrap"
                                                                 HorizontalAlignment="Center">
                                                         </TextBlock>
@@ -566,7 +583,7 @@
                     <Label 
                         Padding="1 1 1 1"
                         Content="Повар" 
-                        Width="120" 
+                        Width="auto" 
                         FontSize="14" 
                         Height="20" 
                         FontWeight="Normal"
@@ -582,7 +599,7 @@
                                     <TextBlock 
                                         Text="Редактировать рецепты" 
                                         Width="auto" 
-                                        FontSize="15" 
+                                        FontSize="14" 
                                         Height="20" 
                                         FontWeight="Normal"
                                         FontFamily="Segoe UI">
@@ -765,6 +782,7 @@
                             <TabItem>
                                 <TabItem.Header >
                                     <TextBlock
+                                        Width="auto"
                                         Text="Рецепты"
                                         FontSize="14"
                                         Height="20"
@@ -996,7 +1014,7 @@
                         Padding="1 1 1 1"
                         FontFamily="Segoe UI"
                         Content="Чат"
-                        Width="120"
+                        Width="auto"
                         FontSize="14"
                         Height="20"
                         >
@@ -1239,7 +1257,7 @@
                     <Label
                         Padding="1 1 1 1"
                         Content="Кассир"
-                        Width="120"
+                        Width="auto"
                         FontSize="14"
                         Height="20"
                         FontFamily="Segoe UI"
@@ -1254,7 +1272,7 @@
                                     <Label
                                         Content="Статистика"
                                         Width="auto"
-                                        FontSize="12"
+                                        FontSize="14"
                                         Height="20"
                                         FontFamily="Segoe UI"
                                         Padding="1 1 1 1">
@@ -1493,7 +1511,7 @@
                                     <Label
                                         Content="Редактирование МЕНЮ"
                                         Width="auto"
-                                        FontSize="12"
+                                        FontSize="14"
                                         Height="20"
                                         FontFamily="Segoe UI"
                                         Padding="1 1 1 1">
@@ -2083,7 +2101,7 @@
                     <Label
                         Padding="1 1 1 1"
                         Content="Архив Заказов"
-                        Width="150"
+                        Width="auto"
                         FontSize="14"
                         Height="20"
                         FontFamily="Segoe UI">
@@ -2252,7 +2270,7 @@
                     <Label
                         Padding="1 1 1 1"
                         Content="Зарегистрированные пользователи"
-                        Width="250"
+                        Width="auto"
                         FontSize="14"
                         Height="20"
                         FontFamily="Segoe UI"
